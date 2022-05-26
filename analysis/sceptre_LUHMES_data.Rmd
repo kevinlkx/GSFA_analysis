@@ -22,8 +22,8 @@ Normalized and scaled data used for GSFA are stored in obj@assays$RNA@scale.data
 
 Scripts for running the analysis:
 
-* [R script](../code/sceptre_analysis.R).
-* [sbatch script](../code/run_sceptre_cropseq_data.sbatch).
+* [R script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/sceptre_analysis.R).
+* [sbatch script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_sceptre_cropseq_data.sbatch).
 
 ```{bash, eval=FALSE}
 cd /project2/xinhe/kevinluo/GSFA/log
