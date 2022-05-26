@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Kaixuan Luo" />
+
+<meta name="date" content="2022-05-24" />
+
+<title>test SCEPTRE on example data</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">GSFA_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">test SCEPTRE on example data</h1>
+<h4 class="author">Kaixuan Luo</h4>
+<h4 class="date">2022-05-24</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-05-26
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it's best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220524)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220524code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220524)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree4628ab4585a01995e48dac1fba4a00c022c30ad1targetblank4628ab4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/4628ab4585a01995e48dac1fba4a00c022c30ad1" target="_blank">4628ab4</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree4628ab4585a01995e48dac1fba4a00c022c30ad1targetblank4628ab4a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/4628ab4585a01995e48dac1fba4a00c022c30ad1" target="_blank">4628ab4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
+
+Untracked files:
+    Untracked:  code/run_sceptre_LUHMES_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
+    Untracked:  code/sceptre_LUHMES_data.R
+    Untracked:  code/sceptre_Tcells_stimulated_data.R
+    Untracked:  code/sceptre_Tcells_unstimulated_data.R
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+    Deleted:    code/README.md
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/test_sceptre.Rmd</code>) and HTML (<code>docs/test_sceptre.html</code>) files. If you've configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/4628ab4585a01995e48dac1fba4a00c022c30ad1/analysis/test_sceptre.Rmd" target="_blank">4628ab4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-05-26
+</td>
+<td>
+test SCEPTRE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<p>This vignette illustrates application of <code>sceptre</code> to an example high-multiplicity-of-infection (MOI) single-cell CRISPR screen dataset. We begin by installing and loading all required packages, including the up-to-date version of <code>sceptre</code>.</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;katsevich-lab/sceptre&quot;)
+install.packages(&quot;tidyverse&quot;)
+install.packages(&quot;cowplot&quot;)</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(cowplot)
+library(Matrix)
+library(sceptre)</code></pre>
+<p>We proceed in seven steps.</p>
+<div id="step-1-prepare-the-data" class="section level2">
+<h2>Step 1: Prepare the data</h2>
+<p>The first step is to prepare the data to pass to <code>sceptre</code>. We must prepare three separate data objects: the gene-by-cell expression matrix, the gRNA-by-cell expression matrix, and the cell-specific matrix of covariates.</p>
+<div id="gene-and-grna-expression-matrices" class="section level3">
+<h3>Gene and gRNA expression matrices</h3>
+<p>We load the example gene-by-cell and gRNA-by-cell expression matrices that are included in the <code>sceptre</code> package.</p>
+<pre class="r"><code>data(gene_matrix)
+data(gRNA_matrix)</code></pre>
+<p>Briefly, <code>gene_matrix</code> (respectively, <code>gRNA_matrix</code>) is a 20 x 40,000 (respectively, 50 x 40,000) matrix of gene (respectively, gRNA) unique molecular identifier (UMI) counts. The data are taken from the <a href="https://www.sciencedirect.com/science/article/pii/S009286741831554X">paper</a> &quot;A genome-wide framework for mapping gene regulation via cellular genetic screens&quot; by Gasperini et al., 2019. The authors used a CRISPRi-based assay to target 5,000+ putative enhancers in a population of K562 cells. The authors additionally targeted 200+ gene transcription start sites (TSSs) and designed a library of 50 non-targeting gRNAs to serve as negative controls. Genes, gRNAs, and cells are all down-sampled to reduce the size of the data. One can use the commands <code>?gene_matrix</code> and <code>?gRNA_matrix</code> to read more about these data.</p>
+<p>The row names of <code>gene_matrix</code> and <code>gRNA_matrix</code> are the gene IDs and gRNA IDs, respectively. The gRNA IDs are gRNA-specific oligonucleotide barcodes. In general the gRNA IDs must be strings that uniquely identify each gRNA. The column names, meanwhile, are the cell barcodes. Next, <code>gene_matrix</code> and <code>gRNA_matrix</code> are sparse matrices (as implemented by the <code>Matrix</code> package). In general these matrices can be either sparse matrices or standard (dense) R matrices. We print a few rows and columns of <code>gene_matrix</code> and <code>gRNA_matrix</code> to get a sense of what the data look like.</p>
+<pre class="r"><code>options(width = 300)
+# gene_matrix; rows are genes, columns are cells
+gene_matrix[1:10, 1:3]
+#&gt; 10 x 3 sparse Matrix of class &quot;dgTMatrix&quot;
+#&gt;                 CTCGAAAGTCCATGAT-1_2B_7 GACACGCTCAAAGACA-1_2B_4 GGCTCGATCTGTGCAA-1_1B_1
+#&gt; ENSG00000111057                       1                       5                       1
+#&gt; ENSG00000121211                       .                       1                       .
+#&gt; ENSG00000134809                       3                      10                       1
+#&gt; ENSG00000166902                       1                       3                       .
+#&gt; ENSG00000172809                      12                      19                      33
+#&gt; ENSG00000105298                       .                       .                       .
+#&gt; ENSG00000108389                       .                       1                       .
+#&gt; ENSG00000157985                       .                       .                       .
+#&gt; ENSG00000107731                       .                       .                       .
+#&gt; ENSG00000184357                       .                       1                       .
+
+# gRNA matrix; rows are gRNAs, columns are cells
+gRNA_matrix[1:10, 1:3]
+#&gt; 10 x 3 sparse Matrix of class &quot;dgTMatrix&quot;
+#&gt;                      CTCGAAAGTCCATGAT-1_2B_7 GACACGCTCAAAGACA-1_2B_4 GGCTCGATCTGTGCAA-1_1B_1
+#&gt; TGTCAGTCCTCCCTCCCCCA                       .                       .                       .
+#&gt; CTAAACAGTGAAAGTCACAG                       .                       .                       .
+#&gt; GCTCCAATCATATTCTAGAG                       .                       .                       .
+#&gt; GATGAAACCTAAGGGCACAC                       .                       .                       .
+#&gt; TGCAGACGAGTGTCTCAGAG                       .                       .                       .
+#&gt; TCATCTTGAAGTCAGCTCCA                       .                       .                       3
+#&gt; GAGAATGGCATGGAGCTCAA                       .                       .                       .
+#&gt; AGAGCAAGAGAGCAACTCCG                       .                       .                       .
+#&gt; CAGCAATTCTACCTTCAGGT                       .                       .                       .
+#&gt; TTTGGTTGTTGCAAATGAGG                       .                       .                       .</code></pre>
+<p>We also plot a histogram of the counts of an arbitrarily selected gene (&quot;ENSG00000111057&quot;) and gRNA (&quot;TGTCAGTCCTCCCTCCCCCA&quot;) to visualize the data.</p>
+<pre class="r"><code>example_gene &lt;- gene_matrix[&quot;ENSG00000111057&quot;,]
+example_gRNA &lt;- gRNA_matrix[&quot;TGTCAGTCCTCCCTCCCCCA&quot;,]
+
+hist_gene &lt;- ggplot(data = example_gene %&gt;% tibble(count = .) %&gt;% filter(count &gt;= 1, count &lt;= 40), mapping = aes(x = count)) +
+  geom_histogram(binwidth = 3, col = &quot;black&quot;, fill = &quot;dodgerblue3&quot;, alpha = 0.7) +
+  scale_y_continuous(trans=&#39;log10&#39;, expand = c(0, NA)) + xlab(&quot;Gene expressions&quot;) + ylab(&quot;&quot;) + theme_bw(base_size = 10)
+
+hist_gRNA &lt;- ggplot(data = example_gRNA %&gt;% tibble(count = .) %&gt;% filter(count &gt;= 1, count &lt;= 40), mapping = aes(x = count)) +
+  geom_histogram(binwidth = 3, col = &quot;black&quot;, fill = &quot;orchid4&quot;, alpha = 0.7) +
+  scale_y_continuous(trans=&#39;log10&#39;, expand = c(0, NA)) + xlab(&quot;gRNA expressions&quot;) + ylab(&quot;&quot;) + theme_bw(base_size = 10)
+
+plot_grid(hist_gene, hist_gRNA, labels = c(&quot;a&quot;, &quot;b&quot;))</code></pre>
+<p><img src="figure/test_sceptre.Rmd/plot_hist-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>As expected, the data are highly discrete counts. Note that we do <em>not</em> normalize either the gene or gRNA expression matrices, opting instead to work directly with the raw counts.</p>
+</div>
+<div id="cell-wise-covariate-matrix" class="section level3">
+<h3>Cell-wise covariate matrix</h3>
+<p>Next, we load the cell-wise covariate matrix, <code>covariate_matrix</code>.</p>
+<pre class="r"><code>data(covariate_matrix)
+head(covariate_matrix)
+#&gt;                         lg_gRNA_lib_size lg_gene_lib_size     p_mito        batch
+#&gt; CTCGAAAGTCCATGAT-1_2B_7         6.023448         9.276783 0.03861979 prep_batch_2
+#&gt; GACACGCTCAAAGACA-1_2B_4         6.561031        10.274982 0.04499379 prep_batch_2
+#&gt; GGCTCGATCTGTGCAA-1_1B_1         8.196988         9.744375 0.02460745 prep_batch_1
+#&gt; CTGGTCTGTGGGTATG-1_2B_7         5.929589         9.260368 0.03326996 prep_batch_2
+#&gt; TCTGGAAGTACATGTC-1_2A_5         7.134094        10.002880 0.07319942 prep_batch_2
+#&gt; AACTGGTGTAGAGCTG-1_1A_4         5.655992         8.875567 0.01327186 prep_batch_1</code></pre>
+<p><code>covariate_matrix</code> is a 40,000 x 4 data frame of &quot;technical factors,&quot; or covariates. The row names of this data frame are the cell barcodes. The covariates are as follows:</p>
+<ul>
+<li><p>Log-transformed gene library size (<code>lg_gene_lib_size</code>); this vector can be computed via <code>log(colSums(gene_matrix))</code></p></li>
+<li><p>Log-transformed gRNA library size (<code>lg_gRNA_lib_size</code>); this vector can be computed via <code>log(colSums(gRNA_matrix))</code></p></li>
+<li><p>Sequencing batch (<code>batch</code>)</p></li>
+<li><p>Percentage of gene transcripts that map to mitochondrial genes (<code>p_mito</code>)</p></li>
+</ul>
+<p>We strongly recommend that users include the same four covariates (i.e., <code>lg_gene_lib_size</code>, <code>lg_gRNA_lib_size</code>, <code>batch</code>, and <code>p_mito</code>) in their own cell-wise covariate matrix.</p>
+</div>
+</div>
+<div id="step-2-assign-perturbation-identities-to-cells" class="section level2">
+<h2>Step 2: Assign perturbation identities to cells</h2>
+<p>The second step is to impute perturbation assignments onto the cells. For a given gRNA and cell, we label the cell as having been <em>perturbed</em> by the gRNA if the UMI count of the gRNA within the cell exceeds a user-specified, integer-valued threshold; otherwise, we label the cell has having been <em>unperturbed</em> by the gRNA. The default threshold that we use for this purpose is 3, which we have found to work well in practice. This simple thresholding routine is implemented by the function <code>threshold_gRNA_matrix</code>.</p>
+<pre class="r"><code>perturbation_matrix &lt;- threshold_gRNA_matrix(gRNA_matrix)
+
+# `perturbation_matrix` is a thresholded version of `gRNA_matrix`
+perturbation_matrix[1:10, 1:3]
+#&gt; 10 x 3 sparse Matrix of class &quot;lgTMatrix&quot;
+#&gt;                      CTCGAAAGTCCATGAT-1_2B_7 GACACGCTCAAAGACA-1_2B_4 GGCTCGATCTGTGCAA-1_1B_1
+#&gt; TGTCAGTCCTCCCTCCCCCA                       .                       .                       .
+#&gt; CTAAACAGTGAAAGTCACAG                       .                       .                       .
+#&gt; GCTCCAATCATATTCTAGAG                       .                       .                       .
+#&gt; GATGAAACCTAAGGGCACAC                       .                       .                       .
+#&gt; TGCAGACGAGTGTCTCAGAG                       .                       .                       .
+#&gt; TCATCTTGAAGTCAGCTCCA                       .                       .                       |
+#&gt; GAGAATGGCATGGAGCTCAA                       .                       .                       .
+#&gt; AGAGCAAGAGAGCAACTCCG                       .                       .                       .
+#&gt; CAGCAATTCTACCTTCAGGT                       .                       .                       .
+#&gt; TTTGGTTGTTGCAAATGAGG                       .                       .                       .</code></pre>
+<p><strong>Note</strong>: We draw a terminological distinction between a &quot;gRNA count&quot; and a &quot;perturbation.&quot; A &quot;gRNA count&quot; is the number of transcripts (in UMIs) that we observe for a given gRNA in a given cell; a &quot;perturbation&quot; is an assignment of a gRNA to a cell, obtained by thresholding a gRNA count. A &quot;perturbation matrix&quot; is a binary matrix of gRNA-to-cell assignments.</p>
+<p><strong>Note</strong>: Step 2 is optional; users instead can pass the raw gRNA count matrix to the <code>sceptre</code> function, in which case the matrix is thresholded internally to produce a perturbation matrix. (This option, though convenient, precludes the possibility of <em>combining</em> gRNAs and thus is not recommended; see below.)</p>
+<p><strong>Note</strong>: Users optionally can implement their own strategy for converting the gRNA count matrix into a perturbation matrix.</p>
+</div>
+<div id="step-3-combine-perturbations" class="section level2">
+<h2>Step 3: Combine perturbations</h2>
+<p>The third step is to combine gRNAs that target the same chromosomal location. Information about the genomic position that each gRNA targets is available in the <code>gRNA_groups_table</code>, which we explore below.</p>
+<pre class="r"><code>data(&quot;gRNA_groups_table&quot;)
+gRNA_groups_table[c(1, 2, 31, 32, 41, 42),] 
+#&gt; # A tibble: 6 × 3
+#&gt;   gRNA_id              gRNA_group gRNA_type 
+#&gt;   &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;     
+#&gt; 1 TGTCAGTCCTCCCTCCCCCA chr10.2250 enh_target
+#&gt; 2 CTAAACAGTGAAAGTCACAG chr10.2250 enh_target
+#&gt; 3 AGAGGTAACCAAAATAGCAA NTC_2      non_target
+#&gt; 4 ATATGTAACCTCCAGAATGA NTC_2      non_target
+#&gt; 5 CAGGCTTTGCGGACGACGGG KRT18_TSS  tss_target
+#&gt; 6 GCTTTGCGGACGACGGTGGG KRT18_TSS  tss_target</code></pre>
+<p>The <code>gRNA_groups_table</code> data frame has three columns:</p>
+<ul>
+<li><p><code>gRNA_id</code>: the ID of an individual gRNA</p></li>
+<li><p><code>gRNA_group</code>: the &quot;group&quot; to which a given gRNA belongs. Gasperini et al. designed exactly two gRNAs to target each putative enhancer or TSS; gRNAs that target the same putative enhancer or TSS are paired to form groups of size two. Nontargeting gRNAs, meanwhile, are paired randomly, also forming groups of size two.</p>
+<p>Note that in general, a gRNA group can contain any nonzero number of gRNAs.</p></li>
+<li><p><code>target_type</code>: one of <code>enh_target</code>, <code>tss_target</code>, and <code>non_target</code>, indicating whether a given gRNA is enhancer-targeting, TSS-targeting, and non-targeting.</p></li>
+</ul>
+<p>For example, the gRNAs &quot;GCTCTTGGCTGGAGAATGCA&quot; and &quot;GTTGCAGATGAGGCAACCGA&quot; target the putative enhancer located at <em>chr10.1318</em> and are grouped.</p>
+<pre class="r"><code>gRNA_groups_table[1:2,]
+#&gt; # A tibble: 2 × 3
+#&gt;   gRNA_id              gRNA_group gRNA_type 
+#&gt;   &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;     
+#&gt; 1 TGTCAGTCCTCCCTCCCCCA chr10.2250 enh_target
+#&gt; 2 CTAAACAGTGAAAGTCACAG chr10.2250 enh_target</code></pre>
+<p>Similarly, the gRNAs &quot;CCCGCGCGCCGCACGGACGG&quot; and &quot;GCGGATCGGGGCAAGGCTCG&quot; target the TSS of gene <em>HDGF</em> and are grouped.</p>
+<pre class="r"><code>gRNA_groups_table[41:42,]
+#&gt; # A tibble: 2 × 3
+#&gt;   gRNA_id              gRNA_group gRNA_type 
+#&gt;   &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;     
+#&gt; 1 CAGGCTTTGCGGACGACGGG KRT18_TSS  tss_target
+#&gt; 2 GCTTTGCGGACGACGGTGGG KRT18_TSS  tss_target</code></pre>
+<p>Finally, the non-targeting gRNAs &quot;AATATTCTCCCTCATTCTGG&quot; and &quot;TTAAAATTGATTCTGCCACT&quot; are paired randomly to form a group called &quot;NTC_2.&quot;</p>
+<pre class="r"><code>gRNA_groups_table[31:32,]
+#&gt; # A tibble: 2 × 3
+#&gt;   gRNA_id              gRNA_group gRNA_type 
+#&gt;   &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;     
+#&gt; 1 AGAGGTAACCAAAATAGCAA NTC_2      non_target
+#&gt; 2 ATATGTAACCTCCAGAATGA NTC_2      non_target</code></pre>
+<p>The function <code>combine_perturbations</code> takes as arguments a <code>perturbation_matrix</code> (i.e., the thresholded <code>gRNA_matrix</code>) and a <code>gRNA_groups_table</code> and collapses gRNAs in the same group into a single &quot;combined&quot; gRNA. The data frame <code>gRNA_groups_table</code> must have columns <code>gRNA_id</code> and <code>gRNA_group</code>, as above.</p>
+<pre class="r"><code>combined_perturbation_matrix &lt;- combine_perturbations(perturbation_matrix = perturbation_matrix,
+                                                      gRNA_groups_table = gRNA_groups_table)</code></pre>
+<p>The ouput matrix, <code>combined_perturbation_matrix</code>, is a 25 x 40,000 binary matrix, with rows corresponding to the 25 &quot;gRNA groups&quot; within <code>gRNA_groups_table</code>. The column names (i.e., the cell barcodes) remain unchanged.</p>
+<pre class="r"><code>dim(combined_perturbation_matrix)
+#&gt; [1]    25 40000
+combined_perturbation_matrix[1:10,1:3]
+#&gt; 10 x 3 sparse Matrix of class &quot;lgCMatrix&quot;
+#&gt;            CTCGAAAGTCCATGAT-1_2B_7 GACACGCTCAAAGACA-1_2B_4 GGCTCGATCTGTGCAA-1_1B_1
+#&gt; chr10.2250                       .                       .                       .
+#&gt; chr14.2077                       .                       .                       .
+#&gt; chr1.6211                        .                       .                       |
+#&gt; chr17.1748                       .                       .                       .
+#&gt; chr17.3995                       .                       .                       .
+#&gt; chr17.5367                       .                       .                       .
+#&gt; chr17.875                        .                       .                       .
+#&gt; chr18.248                        .                       .                       .
+#&gt; chr19.2680                       .                       .                       .
+#&gt; chr19.633                        .                       .                       .</code></pre>
+<p><strong>Note</strong>: Step 3 is optional but recommended; <code>sceptre</code> works on either combined or uncombined perturbation matrices.</p>
+<p><strong>Note</strong>: The <code>gRNA_type</code> column in <code>gRNA_groups_table</code> is optional but useful for bookkeeping purposes.</p>
+</div>
+<div id="step-4-determine-which-pairs-to-analyze" class="section level2">
+<h2>Step 4: Determine which pairs to analyze</h2>
+<p>Step 4 is to determine the pairs of genes and gRNA groups to analyze. It is common to analyze pairs of genes and gRNA groups that are in close physical proximity to uncover <em>cis</em>-regulatory relationships. The data frame <code>gene_gRNA_group_pairs</code> contains the 120 pairs of genes and gRNA groups that we will analyze in our analysis.</p>
+<pre class="r"><code>data(gene_gRNA_group_pairs)
+nrow(gene_gRNA_group_pairs)
+#&gt; [1] 120
+gene_gRNA_group_pairs[c(1:2, 6:7, 21:22),]
+#&gt; # A tibble: 6 × 3
+#&gt;   gene_id         gRNA_group pair_type       
+#&gt;   &lt;chr&gt;           &lt;chr&gt;      &lt;fct&gt;           
+#&gt; 1 ENSG00000111057 KRT18_TSS  positive_control
+#&gt; 2 ENSG00000121211 MND1_TSS   positive_control
+#&gt; 3 ENSG00000105298 chr19.633  candidate       
+#&gt; 4 ENSG00000108389 chr17.3995 candidate       
+#&gt; 5 ENSG00000111057 NTC_2      negative_control
+#&gt; 6 ENSG00000121211 NTC_2      negative_control</code></pre>
+<p>The <code>gene_gRNA_group_pairs</code> data frame contains three columns: <code>gene_id</code>, <code>gRNA_group</code>, and <code>pair_type</code>. The gene IDs (respectively, gRNA groups) in <code>gene_gRNA_group_pairs</code> must be a subset of the gene IDs (respectively, gRNA groups) in <code>gene_matrix</code> (respectively, <code>combined_perturbation_matrix</code>). The <code>pair_type</code> column gives the &quot;type&quot; of each pair, one of <code>positive_control</code> (for TSS-targeting gRNA groups paired to their target gene), <code>candidate</code> (for putative enhancer-targeting gRNA groups paired to a nearby gene), and <code>negative_control</code> (for pairs of genes and gRNA groups that consist of a non-targeting gRNA group).</p>
+<p>The negative control pairs were constructed by pairing each non-targeting gRNA group to the entire set of genes, as is standard. When a large number of genes and non-targeting gRNA groups is available, it is common to analyze a random subset of the non-targeting gRNA group-gene pairs to reduce computational cost. We recommend analyzing at least as many negative control pairs as there are candidate pairs.</p>
+<p><strong>Note</strong>: The <code>pair_type</code> column, while helpful for bookkeeping purposes, is optional.</p>
+<p><strong>Note</strong>: Negative control and positive control pairs are <em>not</em> required to run <code>sceptre</code>; however, negative and positive control pairs are extremely useful for checking the calibration and power of <code>sceptre</code> (see Step 7, below) and therefore are strongly recommended.</p>
+</div>
+<div id="step-5-determine-the-sidedness-of-the-test" class="section level2">
+<h2>Step 5: Determine the sidedness of the test</h2>
+<p>The fourth step is to determine the sideness of the statistical test. If we are testing for an <em>increase</em> (respectively, <em>decrease</em>) in gene expression in response to the perturbation, then we should use a <em>right</em>-sided (respectively, <em>left</em>-sided) test. On the other hand, if we are testing for an increase <em>or</em> decrease in gene expression, then we should use a <em>two</em>-sided test.</p>
+<p>Whether we seek to test for an increase or decrease in gene expression (or either and increase <em>or</em> decrease) depends on (i) the genomic element being targeted, (ii) the CRISPR modality being used, and (iii) whether we are testing an association in <em>cis</em> or in <em>trans</em>. For example, if we perturb a putative enhancer via CRISPRi and test for an association between that enhancer and a gene in <em>cis</em>, then we should should test for a <em>decrease</em> in expression and therefore use a <em>left</em>-sided test. The following table summarizes whether a left-, right-, or two-tailed tailed test is appropriate as a function of the aforementioned variables.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Target element</th>
+<th align="center">CRISPR modality</th>
+<th align="center"><em>Cis</em> or <em>trans</em></th>
+<th align="center">Testing for...</th>
+<th align="center">Sidedness</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Enhancer or TSS</td>
+<td align="center">CRISPRi or CRISPRko</td>
+<td align="center"><em>Cis</em></td>
+<td align="center">Decrease in expression</td>
+<td align="center">Left</td>
+</tr>
+<tr class="even">
+<td align="center">Silencer</td>
+<td align="center">CRISPRi or CRISPRko</td>
+<td align="center"><em>Cis</em></td>
+<td align="center">Increase in expression</td>
+<td align="center">Right</td>
+</tr>
+<tr class="odd">
+<td align="center">Enhancer or TSS</td>
+<td align="center">CRISPRa</td>
+<td align="center"><em>Cis</em></td>
+<td align="center">Increase in expression</td>
+<td align="center">Right</td>
+</tr>
+<tr class="even">
+<td align="center">Silencer</td>
+<td align="center">CRISPRa</td>
+<td align="center"><em>Cis</em></td>
+<td align="center">Decrease in expression</td>
+<td align="center">Left</td>
+</tr>
+<tr class="odd">
+<td align="center">Any</td>
+<td align="center">Any</td>
+<td align="center"><em>Trans</em></td>
+<td align="center">Increase <em>or</em> Decrease</td>
+<td align="center">Both</td>
+</tr>
+</tbody>
+</table>
+<p>The direction of <em>trans</em> relationships is less certain than that of <em>cis</em> relationships, as <em>trans</em> relationships typically are mediated by one or more transcription factors. We therefore recommend using a two-sided test for all tests of <em>trans</em> relationships.</p>
+<p>We use a left-tailed test for the example data, as suggested by the first row of the table.</p>
+<pre class="r"><code>side &lt;- &quot;left&quot;</code></pre>
+</div>
+<div id="step-6-run-the-method" class="section level2">
+<h2>Step 6: Run the method</h2>
+<p>The sixth step is to call the function <code>run_sceptre_high_moi</code> on the data. The most important arguments to this function are <code>gene_matrix</code>, <code>combined_perturbation_matrix</code>, <code>covariate_matrix</code>, <code>gene_gRNA_group_pairs</code>, and <code>side</code>, all of which we prepared above. <code>run_sceptre_high_moi</code> has several additional, optional arguments, which are set to reasonable defaults. One can read more about <code>run_sceptre_high_moi</code> by checking the documentation (<code>?run_sceptre_high_moi</code>). The function takes about 40 second to run on the example data on an 8-core Macbook Pro.</p>
+<pre class="r"><code>cat(sprintf(&#39;Dimenstion of gene expression matrix: %d rows %d columns.\n&#39;, nrow(gene_matrix), ncol(gene_matrix)))
+#&gt; Dimenstion of gene expression matrix: 20 rows 40000 columns.
+cat(sprintf(&#39;Dimenstion of combined perturbation matrix: %d rows %d columns.\n&#39;, nrow(combined_perturbation_matrix), ncol(combined_perturbation_matrix)))
+#&gt; Dimenstion of combined perturbation matrix: 25 rows 40000 columns.
+cat(sprintf(&#39;Dimenstion of covariate matrix: %d rows %d columns.\n&#39;, nrow(covariate_matrix), ncol(covariate_matrix)))
+#&gt; Dimenstion of covariate matrix: 40000 rows 4 columns.
+cat(sprintf(&#39;Dimenstion of gene gRNA-group pairs: %d rows %d columns.\n&#39;, nrow(gene_gRNA_group_pairs), ncol(gene_gRNA_group_pairs)))
+#&gt; Dimenstion of gene gRNA-group pairs: 120 rows 3 columns.
+cat(sprintf(&#39;Number of gene gRNA-group pairs included: %d rows \n&#39;, nrow(gene_gRNA_group_pairs)))
+#&gt; Number of gene gRNA-group pairs included: 120 rows</code></pre>
+<pre class="r"><code>system.time(
+  result &lt;- run_sceptre_high_moi(gene_matrix = gene_matrix,
+                               combined_perturbation_matrix = combined_perturbation_matrix,
+                               covariate_matrix = covariate_matrix,
+                               gene_gRNA_group_pairs = gene_gRNA_group_pairs,
+                               side = side))
+#&gt; Check /tmp/RtmpDV97Gi/logs for more detailed status updates.
+#&gt; Running checks and setting up directory structure.  ✓
+#&gt; Running gene precomputations.  ✓
+#&gt; Running perturbation precomputations.  ✓
+#&gt; Running perturbation-to-gene association tests. ✓
+#&gt; Collecting and returning results.
+#&gt; Joining, by = c(&quot;gene_id&quot;, &quot;gRNA_id&quot;)
+#&gt;  ✓
+#&gt;     user   system  elapsed 
+#&gt; 9714.885   84.206  252.229</code></pre>
+<p><strong>Note</strong>: Users can supply the raw gRNA expression matrix they obtained from Step 1 or the perturbation matrix they obtained from Step 2 to the <code>combined_perturbation_matrix</code> argument, in which case <code>sceptre</code> treats each gRNA as its own group of one. We recommend against this usage unless the data consist of only a single gRNA per target.</p>
+</div>
+<div id="step-7.-analyze-the-results" class="section level2">
+<h2>Step 7. Analyze the results</h2>
+<p>The output of <code>run_sceptre_high_moi</code> is a data frame called <code>result</code>, which is simply <code>gene_gRNA_pairs</code> with two additional columns: <code>p_value</code>, and <code>z_value</code>. <code>p_value</code> is the SCEPTRE <em>p</em>-value for a given pair, and <code>z_value</code> is the z-value of a negative binomial GLM fitted to the data for a given pair. Positive z-values indicate increased expression, and negative z-values indicate decreased expression. We examine several rows of <code>result</code> below.</p>
+<pre class="r"><code>head(result, 10)
+#&gt; # A tibble: 10 × 5
+#&gt;    gene_id         gRNA_id    pair_type         p_value z_value
+#&gt;    &lt;chr&gt;           &lt;chr&gt;      &lt;fct&gt;               &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1 ENSG00000111057 KRT18_TSS  positive_control 2.22e-16 -12.5  
+#&gt;  2 ENSG00000121211 MND1_TSS   positive_control 2.22e-16  -9.74 
+#&gt;  3 ENSG00000134809 TIMM10_TSS positive_control 2.22e-16 -14.0  
+#&gt;  4 ENSG00000166902 MRPL16_TSS positive_control 2.22e-16  -9.80 
+#&gt;  5 ENSG00000172809 RPL38_TSS  positive_control 2.21e-13 -14.3  
+#&gt;  6 ENSG00000105298 chr19.633  candidate        4.29e- 1  -0.217
+#&gt;  7 ENSG00000108389 chr17.3995 candidate        8.36e- 1   0.936
+#&gt;  8 ENSG00000157985 chr2.7132  candidate        1.62e- 1  -0.984
+#&gt;  9 ENSG00000107731 chr10.2250 candidate        4.39e- 2  -1.27 
+#&gt; 10 ENSG00000184357 chr6.1291  candidate        8.49e- 1   0.797</code></pre>
+<div id="negative-control-pairs" class="section level3">
+<h3>Negative control pairs</h3>
+<p>We must verify that the test is correctly calibrated. To this end we create a QQ-plot of the <em>p</em>-values corresponding to the negative control pairs. We extract the negative control <em>p</em>-values from the <code>result</code> data frame and pass them to the function <code>make_qq_plot</code>.</p>
+<pre class="r"><code>neg_control_p_vals &lt;- result %&gt;% filter(pair_type == &quot;negative_control&quot;) %&gt;% pull(p_value)
+qq_plot &lt;- make_qq_plot(neg_control_p_vals)
+plot(qq_plot)</code></pre>
+<p><img src="figure/test_sceptre.Rmd/unnamed-chunk-19-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>The QQ-plot is a visual diagnostic that displays the extent to which the negative control <em>p</em>-values deviate from the expected uniform distribution. The points, each of which represents a <em>p</em>-value, should lie roughly along the diagonal line. If the points do not lie along the diagonal, then the test is poorly calibrated and the results are unreliable. The gray region is a 95% pointwise confidence band.</p>
+<p>A reasonable rule of thumb for interpreting the QQ-plot is as follows: if all (or nearly all) of the points with an expected null <em>p-</em>value of 0.1 or less fall within the confidence band, then we can be confident that the test is correctly calibrated. In other words, if nearly all the points to the <em>right</em> of 0.1 (dashed red line) on the <em>x</em>-axis fall within the gray region, then we have good reason to trust the results. This rule of thumb is satisfied on the example data, as seen above.</p>
+<p>A forthcoming article will give recommendations for what to do if the QQ-plot reveals that the test is miscalibrated. We do not expect this to happen commonly.</p>
+</div>
+<div id="positive-control-pairs" class="section level3">
+<h3>Positive control pairs</h3>
+<p>Next, to verify that the test is powerful (i.e., that the test is capable of detecting true relationships), we assess the power of the test on the positive control pairs. We extract the positive control <em>p</em>-values and examine their values.</p>
+<pre class="r"><code>pos_control_p_vals &lt;- result %&gt;% filter(pair_type == &quot;positive_control&quot;) %&gt;% pull(p_value)
+pos_control_p_vals
+#&gt; [1] 2.220446e-16 2.220446e-16 2.220446e-16 2.220446e-16 2.208234e-13</code></pre>
+<p>The positive control <em>p</em>-values are all small, indicating that the test is powerful.</p>
+</div>
+<div id="candidate-pairs" class="section level3">
+<h3>Candidate pairs</h3>
+<p>Finally, we produce the discovery set. We extract the <em>p</em>-values corresponding to the candidate pairs and apply a Benjamini-Hochberg (BH) correction to adjust for multiple testing.</p>
+<pre class="r"><code>candidate_pair_results &lt;- result %&gt;% filter(pair_type == &quot;candidate&quot;)
+candidate_pair_results_p_adj &lt;- candidate_pair_results %&gt;%
+  mutate(p_val_adj = p.adjust(p_value, method = &quot;BH&quot;))
+head(candidate_pair_results_p_adj)
+#&gt; # A tibble: 6 × 6
+#&gt;   gene_id         gRNA_id    pair_type p_value z_value p_val_adj
+#&gt;   &lt;chr&gt;           &lt;chr&gt;      &lt;fct&gt;       &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+#&gt; 1 ENSG00000105298 chr19.633  candidate  0.429   -0.217     0.737
+#&gt; 2 ENSG00000108389 chr17.3995 candidate  0.836    0.936     0.906
+#&gt; 3 ENSG00000157985 chr2.7132  candidate  0.162   -0.984     0.537
+#&gt; 4 ENSG00000107731 chr10.2250 candidate  0.0439  -1.27      0.431
+#&gt; 5 ENSG00000184357 chr6.1291  candidate  0.849    0.797     0.906
+#&gt; 6 ENSG00000090060 chr14.2077 candidate  0.179   -1.02      0.537</code></pre>
+<p>We call pairs with an adjusted <em>p</em>-value of less or equal than 0.1 significant; the discovery set (i.e., the set of significant pairs) has a false discovery rate (FDR) of 10%.</p>
+<pre class="r"><code>discovery_set &lt;- candidate_pair_results_p_adj %&gt;% filter(p_val_adj &lt;= 0.1)</code></pre>
+<p>The discovery set in this case is empty, as we tested only fifteen candidate pairs.</p>
+<p><strong>Note</strong>: It is crucial to apply BH <em>only</em> to the pairs in the discovery set (i.e., the candidate pairs). Including positive control or negative control pairs in the discovery set causes BH to become excessively liberal or conservative, respectively.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()
+#&gt; R version 4.0.4 (2021-02-15)
+#&gt; Platform: x86_64-pc-linux-gnu (64-bit)
+#&gt; Running under: Scientific Linux 7.4 (Nitrogen)
+#&gt; 
+#&gt; Matrix products: default
+#&gt; BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+#&gt; 
+#&gt; locale:
+#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C            
+#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+#&gt; 
+#&gt; attached base packages:
+#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt;  [1] fstcore_0.9.12  sceptre_0.1.0   Matrix_1.4-1    cowplot_1.1.1   forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8     purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6    ggplot2_3.3.5   tidyverse_1.3.1 workflowr_1.7.0
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] httr_1.4.2        sass_0.4.1        jsonlite_1.8.0    foreach_1.5.2     modelr_0.1.8      bslib_0.3.1       assertthat_0.2.1  getPass_0.2-2     highr_0.9         cellranger_1.1.0  yaml_2.3.5        pillar_1.7.0      backports_1.4.1   lattice_0.20-45   glue_1.6.2        digest_0.6.29    
+#&gt; [17] promises_1.2.0.1  rvest_1.0.2       colorspace_2.0-3  htmltools_0.5.2   httpuv_1.6.5      pkgconfig_2.0.3   broom_0.8.0       haven_2.5.0       scales_1.2.0      processx_3.5.3    whisker_0.4       later_1.3.0       tzdb_0.3.0        git2r_0.30.1      generics_0.1.2    farver_2.1.0     
+#&gt; [33] ellipsis_0.3.2    withr_2.5.0       fst_0.9.8         cli_3.2.0         magrittr_2.0.3    crayon_1.5.1      readxl_1.4.0      evaluate_0.15     ps_1.6.0          fs_1.5.2          fansi_1.0.3       doParallel_1.0.17 xml2_1.3.3        data.table_1.14.2 tools_4.0.4       hms_1.1.1        
+#&gt; [49] lifecycle_1.0.1   munsell_0.5.0     reprex_2.0.1      callr_3.7.0       compiler_4.0.4    jquerylib_0.1.4   rlang_1.0.2       grid_4.0.4        iterators_1.0.14  rstudioapi_0.13   labeling_0.4.2    rmarkdown_2.13    codetools_0.2-18  gtable_0.3.0      DBI_1.1.2         R6_2.5.1         
+#&gt; [65] lubridate_1.8.0   knitr_1.38        fastmap_1.1.0     utf8_1.2.2        rprojroot_2.0.2   stringi_1.7.6     parallel_4.0.4    Rcpp_1.0.8.3      vctrs_0.4.1       dbplyr_2.1.1      tidyselect_1.1.2  xfun_0.30</code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
