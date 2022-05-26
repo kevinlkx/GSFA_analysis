@@ -7,6 +7,11 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r knitr-opts, include=FALSE}
+knitr::opts_chunk$set(comment = "#",collapse = TRUE,results = "hold",
+                      fig.align = "center",dpi = 120)
+```
+
 ## About the data sets
 
 CROP-seq datasets: `/project2/xinhe/yifan/Factor_analysis/shared_data/`
@@ -35,16 +40,14 @@ library(sceptre)
 library(Seurat)
 ```
 
+### Prepare input data for SCEPTRE
+
 Load the LUHMES data
 ```{r load-data}
 LUHMES_data <- readRDS('/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds')
 datadir <- '/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data'
-outdir <- '/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data/sceptre_output'
-
-if(!dir.exists(outdir)) dir.create(outdir, recursive = TRUE)
 ```
 
-### Prepare input data
 We first prepare three separate data objects required to run SCEPTRE: 
 the gene expression matrix, the perturbation matrix, and the covariate matrix.
 
@@ -77,9 +80,9 @@ combined_perturbation_matrix[1:10,1:3]
 range(combined_perturbation_matrix)
 ```
 
-### Specify the gene-gRNA group pairs to test for association
+Specify the gene-gRNA group pairs to test for association
 
-We include the genes used for GSFA in this analysis
+We include the 6k genes used for GSFA in this analysis
 ```{r select-genes}
 # Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA
 scaled_gene_matrix <- LUHMES_data@assays$RNA@scale.data
@@ -105,7 +108,7 @@ saveRDS(gene_gRNA_group_pairs, file.path(datadir, "gene.gRNA.group.pairs.rds"))
 ```
 
 ### Run SCEPTRE
-```{r load-input-data, eval=FALSE}
+```{r load-input-data}
 load(file.path(datadir, "data.matrices.RData"))
 gene_gRNA_group_pairs <- readRDS(file.path(datadir, "gene.gRNA.group.pairs.rds"))
 
@@ -126,11 +129,13 @@ result <- run_sceptre_high_moi(gene_matrix = gene_matrix,
                                storage_dir = outdir, 
                                full_output = TRUE)
 
-# saveRDS(result, file.path(outdir, 'sceptre.result.rds'))
+outdir <- '/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data/sceptre_output'
+saveRDS(result, file.path(outdir, 'sceptre.result.rds'))
 ```
 
 ### Analyze the results
-```{r analyze-result}
+```{r load-result}
+outdir <- '/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data/sceptre_output'
 result <- readRDS(file.path(outdir, 'sceptre.result.rds'))
 head(result, 10)
 ```
