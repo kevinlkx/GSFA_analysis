@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Kaixuan Luo" />
+
+<meta name="date" content="2022-05-25" />
+
+<title>Run SCEPTRE on CD8+ T Cell (stimulated and unstimulated) CROP-seq data</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">GSFA_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Run SCEPTRE on CD8+ T Cell (stimulated and unstimulated) CROP-seq data</h1>
+<h4 class="author">Kaixuan Luo</h4>
+<h4 class="date">2022-05-25</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-05-26
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it's best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220524)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220524code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220524)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong4d9841a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> 4d9841a </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrong4d9841a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version 4d9841a. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/test_sceptre.Rmd
+    Untracked:  code/run_sceptre_LUHMES_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
+    Untracked:  code/sceptre_LUHMES_data.R
+    Untracked:  code/sceptre_Tcells_stimulated_data.R
+    Untracked:  code/sceptre_Tcells_unstimulated_data.R
+    Untracked:  sceptre_real_data.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/sceptre_TCells_data.Rmd</code>) and HTML (<code>docs/sceptre_TCells_data.html</code>) files. If you've configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+4d9841a
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-05-26
+</td>
+<td>
+updated SCEPTRE results for T cells
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="about-the-data-sets" class="section level2">
+<h2>About the data sets</h2>
+<p>CROP-seq datasets: <code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code> The data are Seurat objects, with raw gene counts stored in <a href="mailto:obj@assays$RNA@counts">obj@assays$RNA@counts</a>, and cell meta data stored in <a href="mailto:obj@meta.data">obj@meta.data</a>. Normalized and scaled data used for GSFA are stored in <a href="mailto:obj@assays$RNA@scale.data">obj@assays$RNA@scale.data</a> , the rownames of which are the 6k genes used for GSFA.</p>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<p>Scripts for running the analysis:</p>
+<ul>
+<li><a href="../code/sceptre_analysis.R">R script</a>.</li>
+<li><a href="../code/run_sceptre_cropseq_data.sbatch">sbatch script</a>.</li>
+</ul>
+<pre class="bash"><code>cd /project2/xinhe/kevinluo/GSFA/log
+
+sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_sceptre_cropseq_data.sbatch /project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/simulated_data
+
+sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_sceptre_cropseq_data.sbatch /project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/unsimulated_data</code></pre>
+<p>Load packages</p>
+<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
+library(cowplot)
+library(Matrix)
+library(sceptre)
+library(Seurat)</code></pre>
+<div id="prepare-input-data-for-sceptre" class="section level3">
+<h3>Prepare input data for SCEPTRE</h3>
+<p>Load the T Cells CROP-seq data</p>
+<pre class="r"><code>TCells_data &lt;- readRDS(&#39;/project2/xinhe/yifan/Factor_analysis/shared_data/TCells_cropseq_data_seurat.rds&#39;)</code></pre>
+<p>We first prepare three separate data objects required to run SCEPTRE: the gene expression matrix, the perturbation matrix, and the covariate matrix.</p>
+<p>Separate stimulated and unstimulated cells into two data sets, and run those separately.</p>
+<pre class="r"><code>metadata &lt;- TCells_data@meta.data
+metadata[1:5, ]
+
+table(metadata$orig.ident)
+
+stimulated_cells &lt;- rownames(metadata)[which(endsWith(metadata$orig.ident, &quot;S&quot;))]
+cat(length(stimulated_cells), &quot;stimulated cells. \n&quot;)
+unstimulated_cells &lt;- rownames(metadata)[which(endsWith(metadata$orig.ident, &quot;N&quot;))]
+cat(length(unstimulated_cells), &quot;unstimulated cells. \n&quot;)
+#                      orig.ident nCount_RNA nFeature_RNA ARID1A BTLA C10orf54
+# D1S_AAACCTGAGCGATTCT TCells_D1S       8722         2642      0    0        0
+# D1S_AAACCTGCAAGCCGTC TCells_D1S       7296         2356      0    1        0
+# D1S_AAACCTGCAGGGCATA TCells_D1S       6467         2154      0    0        0
+# D1S_AAACCTGGTAAGGGCT TCells_D1S      12151         3121      0    0        0
+# D1S_AAACCTGGTAGCGCTC TCells_D1S      11170         2964      0    0        1
+#                      CBLB CD3D CD5 CDKN1B DGKA DGKZ HAVCR2 LAG3 LCP2 MEF2D
+# D1S_AAACCTGAGCGATTCT    0    0   0      0    0    0      0    0    0     0
+# D1S_AAACCTGCAAGCCGTC    0    0   0      0    0    0      0    0    0     0
+# D1S_AAACCTGCAGGGCATA    0    0   0      0    0    0      0    0    0     0
+# D1S_AAACCTGGTAAGGGCT    1    0   0      0    0    0      0    0    0     0
+# D1S_AAACCTGGTAGCGCTC    0    0   0      0    0    0      0    0    0     0
+#                      NonTarget PDCD1 RASA2 SOCS1 STAT6 TCEB2 TMEM222 TNFRSF9
+# D1S_AAACCTGAGCGATTCT         0     0     0     0     0     1       0       0
+# D1S_AAACCTGCAAGCCGTC         0     0     0     0     0     0       0       0
+# D1S_AAACCTGCAGGGCATA         0     0     0     0     1     0       0       0
+# D1S_AAACCTGGTAAGGGCT         0     0     0     0     0     0       0       0
+# D1S_AAACCTGGTAGCGCTC         0     0     0     0     0     0       0       0
+#                      percent_mt gRNA_umi_count
+# D1S_AAACCTGAGCGATTCT   3.370787              1
+# D1S_AAACCTGCAAGCCGTC   5.921053              1
+# D1S_AAACCTGCAGGGCATA   2.860677              1
+# D1S_AAACCTGGTAAGGGCT   3.045017              6
+# D1S_AAACCTGGTAGCGCTC   3.240824              7
+# 
+# TCells_D1N TCells_D1S TCells_D2N TCells_D2S 
+#       5533       6843       5144       7435 
+# 14278 stimulated cells. 
+# 10677 unstimulated cells.</code></pre>
+<div id="stimulated-t-cells" class="section level4">
+<h4>Stimulated T cells</h4>
+<p>We first prepare three separate data objects required to run SCEPTRE: the gene expression matrix, the perturbation matrix, and the covariate matrix.</p>
+<ol style="list-style-type: decimal">
+<li>Gene expression matrices Gene expression (gene-by-cell) raw count matrix</li>
+</ol>
+<pre class="r"><code>gene_matrix &lt;- TCells_data@assays$RNA@counts[, stimulated_cells]
+# gene-by-cell expression matrix
+gene_matrix[1:5, 1:3]
+dim(gene_matrix)
+# 5 x 3 sparse Matrix of class &quot;dgCMatrix&quot;
+#                 D1S_AAACCTGAGCGATTCT D1S_AAACCTGCAAGCCGTC D1S_AAACCTGCAGGGCATA
+# ENSG00000243485                    .                    .                    .
+# ENSG00000237613                    .                    .                    .
+# ENSG00000186092                    .                    .                    .
+# ENSG00000238009                    .                    .                    .
+# ENSG00000239945                    .                    .                    .
+# [1] 33694 14278</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Covariate matrix</li>
+</ol>
+<pre class="r"><code>covariate_matrix &lt;- metadata[stimulated_cells, c(&#39;nCount_RNA&#39;, &#39;nFeature_RNA&#39;, &#39;percent_mt&#39;, &#39;gRNA_umi_count&#39;)]
+covariate_matrix[1:5,]
+dim(covariate_matrix)
+#                      nCount_RNA nFeature_RNA percent_mt gRNA_umi_count
+# D1S_AAACCTGAGCGATTCT       8722         2642   3.370787              1
+# D1S_AAACCTGCAAGCCGTC       7296         2356   5.921053              1
+# D1S_AAACCTGCAGGGCATA       6467         2154   2.860677              1
+# D1S_AAACCTGGTAAGGGCT      12151         3121   3.045017              6
+# D1S_AAACCTGGTAGCGCTC      11170         2964   3.240824              7
+# [1] 14278     4</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Perturbation matrix (a binary matrix of perturbations, rows are gRNA groups and columns are cell barcodes)</li>
+</ol>
+<pre class="r"><code>combined_perturbation_matrix &lt;- t(metadata[stimulated_cells, 4:24])
+combined_perturbation_matrix[1:5,1:3]
+dim(combined_perturbation_matrix)
+range(combined_perturbation_matrix)
+#          D1S_AAACCTGAGCGATTCT D1S_AAACCTGCAAGCCGTC D1S_AAACCTGCAGGGCATA
+# ARID1A                      0                    0                    0
+# BTLA                        0                    1                    0
+# C10orf54                    0                    0                    0
+# CBLB                        0                    0                    0
+# CD3D                        0                    0                    0
+# [1]    21 14278
+# [1] 0 1</code></pre>
+<pre class="r"><code>datadir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/simulated_data&#39;
+save(list = c(&quot;gene_matrix&quot;, &quot;combined_perturbation_matrix&quot;, &quot;covariate_matrix&quot;),
+     file = file.path(datadir, &#39;data.matrices.RData&#39;))</code></pre>
+</div>
+<div id="unstimulated-t-cells" class="section level4">
+<h4>Unstimulated T cells</h4>
+<ol style="list-style-type: decimal">
+<li>Gene expression matrices Gene expression (gene-by-cell) raw count matrix</li>
+</ol>
+<pre class="r"><code>gene_matrix &lt;- TCells_data@assays$RNA@counts[, unstimulated_cells]
+# gene-by-cell expression matrix
+gene_matrix[1:5, 1:3]
+dim(gene_matrix)
+# 5 x 3 sparse Matrix of class &quot;dgCMatrix&quot;
+#                 D1N_AAACCTGAGCGATTCT D1N_AAACCTGCAAAGTGCG D1N_AAACCTGCAGCCTATA
+# ENSG00000243485                    .                    .                    .
+# ENSG00000237613                    .                    .                    .
+# ENSG00000186092                    .                    .                    .
+# ENSG00000238009                    .                    .                    .
+# ENSG00000239945                    .                    .                    .
+# [1] 33694 10677</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Covariate matrix</li>
+</ol>
+<pre class="r"><code>covariate_matrix &lt;- metadata[unstimulated_cells, c(&#39;nCount_RNA&#39;, &#39;nFeature_RNA&#39;, &#39;percent_mt&#39;, &#39;gRNA_umi_count&#39;)]
+covariate_matrix[1:5,]
+dim(covariate_matrix)
+#                      nCount_RNA nFeature_RNA percent_mt gRNA_umi_count
+# D1N_AAACCTGAGCGATTCT       5710         1993   2.416813              5
+# D1N_AAACCTGCAAAGTGCG       2146         1111   2.143523              1
+# D1N_AAACCTGCAGCCTATA       7284         2386   2.443712              2
+# D1N_AAACCTGCAGCCTTGG       4991         2015   1.021839              2
+# D1N_AAACCTGCAGTGAGTG       4847         1861   1.691768              4
+# [1] 10677     4</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Perturbation matrix (a binary matrix of perturbations, rows are gRNA groups and columns are cell barcodes)</li>
+</ol>
+<pre class="r"><code>combined_perturbation_matrix &lt;- t(metadata[unstimulated_cells, 4:24])
+combined_perturbation_matrix[1:5,1:3]
+dim(combined_perturbation_matrix)
+range(combined_perturbation_matrix)
+#          D1N_AAACCTGAGCGATTCT D1N_AAACCTGCAAAGTGCG D1N_AAACCTGCAGCCTATA
+# ARID1A                      0                    0                    0
+# BTLA                        0                    0                    0
+# C10orf54                    0                    0                    0
+# CBLB                        0                    0                    0
+# CD3D                        0                    0                    0
+# [1]    21 10677
+# [1] 0 1</code></pre>
+<pre class="r"><code>datadir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/unsimulated_data&#39;
+save(list = c(&quot;gene_matrix&quot;, &quot;combined_perturbation_matrix&quot;, &quot;covariate_matrix&quot;),
+     file = file.path(datadir, &#39;data.matrices.RData&#39;))</code></pre>
+</div>
+</div>
+<div id="specify-the-gene-grna-group-pairs-to-test-for-association" class="section level3">
+<h3>Specify the gene-gRNA group pairs to test for association</h3>
+<p>We include the genes used for GSFA in this analysis</p>
+<pre class="r"><code># Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA
+scaled_gene_matrix &lt;- TCells_data@assays$RNA@scale.data
+dim(scaled_gene_matrix)
+selected_gene_ids &lt;- rownames(scaled_gene_matrix)
+
+gRNA_groups &lt;- colnames(metadata[, 4:24])
+pairs &lt;- expand.grid(selected_gene_ids, gRNA_groups)
+gene_gRNA_group_pairs &lt;- data.frame(gene_id = pairs$Var1, gRNA_group = pairs$Var2, pair_type = &quot;candidate&quot;)
+gene_gRNA_group_pairs[gene_gRNA_group_pairs$gRNA_group == &quot;NonTarget&quot;, &quot;pair_type&quot;] &lt;- &quot;negative_control&quot;
+table(gene_gRNA_group_pairs$pair_type)
+table(gene_gRNA_group_pairs$gRNA_group)
+dim(gene_gRNA_group_pairs)
+# [1]  6000 24955
+# 
+#        candidate negative_control 
+#           120000             6000 
+# 
+#    ARID1A      BTLA  C10orf54      CBLB      CD3D       CD5    CDKN1B      DGKA 
+#      6000      6000      6000      6000      6000      6000      6000      6000 
+#      DGKZ    HAVCR2      LAG3      LCP2     MEF2D NonTarget     PDCD1     RASA2 
+#      6000      6000      6000      6000      6000      6000      6000      6000 
+#     SOCS1     STAT6     TCEB2   TMEM222   TNFRSF9 
+#      6000      6000      6000      6000      6000 
+# [1] 126000      3</code></pre>
+<pre class="r"><code>saveRDS(gene_gRNA_group_pairs, file.path(datadir, &quot;gene.gRNA.group.pairs.rds&quot;))</code></pre>
+</div>
+<div id="run-sceptre" class="section level3">
+<h3>Run SCEPTRE</h3>
+<div id="stimulated-t-cells-1" class="section level4">
+<h4>Stimulated T cells</h4>
+<pre class="r"><code>datadir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/simulated_data&#39;
+load(file.path(datadir, &quot;data.matrices.RData&quot;))
+gene_gRNA_group_pairs &lt;- readRDS(file.path(datadir, &quot;gene.gRNA.group.pairs.rds&quot;))
+
+cat(sprintf(&#39;Dimenstion of gene expression matrix: %d rows %d columns.\n&#39;, nrow(gene_matrix), ncol(gene_matrix)))
+cat(sprintf(&#39;Dimenstion of combined perturbation matrix: %d rows %d columns.\n&#39;, nrow(combined_perturbation_matrix), ncol(combined_perturbation_matrix)))
+cat(sprintf(&#39;Dimenstion of covariate matrix: %d rows %d columns.\n&#39;, nrow(covariate_matrix), ncol(covariate_matrix)))
+cat(sprintf(&#39;Dimenstion of gene gRNA-group pairs: %d rows %d columns.\n&#39;, nrow(gene_gRNA_group_pairs), ncol(gene_gRNA_group_pairs)))
+
+table(gene_gRNA_group_pairs$pair_type)
+# Dimenstion of gene expression matrix: 33694 rows 14278 columns.
+# Dimenstion of combined perturbation matrix: 21 rows 14278 columns.
+# Dimenstion of covariate matrix: 14278 rows 4 columns.
+# Dimenstion of gene gRNA-group pairs: 126000 rows 3 columns.
+# 
+#        candidate negative_control 
+#           120000             6000</code></pre>
+<pre class="r"><code>result &lt;- run_sceptre_high_moi(gene_matrix = gene_matrix,
+                               combined_perturbation_matrix = combined_perturbation_matrix,
+                               covariate_matrix = covariate_matrix,
+                               gene_gRNA_group_pairs = gene_gRNA_group_pairs,
+                               side = &quot;both&quot;,
+                               storage_dir = outdir, 
+                               full_output = FALSE)
+
+outdir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/simulated_data/sceptre_output&#39;
+saveRDS(result, file.path(outdir, &#39;sceptre.result.rds&#39;))</code></pre>
+</div>
+<div id="unstimulated-t-cells-1" class="section level4">
+<h4>Unstimulated T cells</h4>
+<pre class="r"><code>datadir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/unsimulated_data&#39;
+load(file.path(datadir, &quot;data.matrices.RData&quot;))
+gene_gRNA_group_pairs &lt;- readRDS(file.path(datadir, &quot;gene.gRNA.group.pairs.rds&quot;))
+
+cat(sprintf(&#39;Dimenstion of gene expression matrix: %d rows %d columns.\n&#39;, nrow(gene_matrix), ncol(gene_matrix)))
+cat(sprintf(&#39;Dimenstion of combined perturbation matrix: %d rows %d columns.\n&#39;, nrow(combined_perturbation_matrix), ncol(combined_perturbation_matrix)))
+cat(sprintf(&#39;Dimenstion of covariate matrix: %d rows %d columns.\n&#39;, nrow(covariate_matrix), ncol(covariate_matrix)))
+cat(sprintf(&#39;Dimenstion of gene gRNA-group pairs: %d rows %d columns.\n&#39;, nrow(gene_gRNA_group_pairs), ncol(gene_gRNA_group_pairs)))
+
+table(gene_gRNA_group_pairs$pair_type)
+# Dimenstion of gene expression matrix: 33694 rows 10677 columns.
+# Dimenstion of combined perturbation matrix: 21 rows 10677 columns.
+# Dimenstion of covariate matrix: 10677 rows 4 columns.
+# Dimenstion of gene gRNA-group pairs: 126000 rows 3 columns.
+# 
+#        candidate negative_control 
+#           120000             6000</code></pre>
+<pre class="r"><code>result &lt;- run_sceptre_high_moi(gene_matrix = gene_matrix,
+                               combined_perturbation_matrix = combined_perturbation_matrix,
+                               covariate_matrix = covariate_matrix,
+                               gene_gRNA_group_pairs = gene_gRNA_group_pairs,
+                               side = &quot;both&quot;,
+                               storage_dir = outdir, 
+                               full_output = FALSE)
+
+outdir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/unsimulated_data/sceptre_output&#39;
+saveRDS(result, file.path(outdir, &#39;sceptre.result.rds&#39;))</code></pre>
+</div>
+</div>
+<div id="analyze-the-results" class="section level3">
+<h3>Analyze the results</h3>
+<div id="stimulated-t-cells-2" class="section level4">
+<h4>Stimulated T cells</h4>
+<pre class="r"><code>outdir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/simulated_data/sceptre_output&#39;
+simulated_result &lt;- readRDS(file.path(outdir, &#39;sceptre.result.rds&#39;))
+head(simulated_result, 10)
+#            gene_id gRNA_id pair_type     p_value     z_value
+# 1  ENSG00000251562  ARID1A candidate 0.049743147  -4.0650638
+# 2  ENSG00000271503  ARID1A candidate 0.081646989  -4.7379535
+# 3  ENSG00000205542  ARID1A candidate 0.036029269  -2.0986917
+# 4  ENSG00000197061  ARID1A candidate 0.639853573   1.3499471
+# 5  ENSG00000166710  ARID1A candidate 0.611455771  -0.4742834
+# 6  ENSG00000034510  ARID1A candidate 0.693087406  -0.4227958
+# 7  ENSG00000123416  ARID1A candidate 0.691568438  -0.7272926
+# 8  ENSG00000100097  ARID1A candidate 0.008149016  -5.0418373
+# 9  ENSG00000227507  ARID1A candidate 0.076608825  -4.6493140
+# 10 ENSG00000115523  ARID1A candidate 0.037677595 -10.8577546</code></pre>
+<p>Negative control pairs</p>
+<pre class="r"><code>neg_control_p_vals &lt;- simulated_result %&gt;% filter(pair_type == &quot;negative_control&quot;) %&gt;% pull(p_value)
+qq_plot &lt;- make_qq_plot(neg_control_p_vals)
+plot(qq_plot)</code></pre>
+<p><img src="figure/sceptre_TCells_data.Rmd/neg-control-stimulated-1.png" width="840" style="display: block; margin: auto;" /></p>
+<p>Candidate pairs We extract the p-values corresponding to the candidate pairs and apply a Benjamini-Hochberg (BH) correction to adjust for multiple testing.</p>
+<pre class="r"><code>simulated_candidate_pair_results &lt;- simulated_result %&gt;% filter(pair_type == &quot;candidate&quot;)
+simulated_candidate_pair_results_p_adj &lt;- simulated_candidate_pair_results %&gt;%
+  mutate(p_val_adj = p.adjust(p_value, method = &quot;BH&quot;))
+head(simulated_candidate_pair_results_p_adj)
+#           gene_id gRNA_id pair_type    p_value    z_value p_val_adj
+# 1 ENSG00000251562  ARID1A candidate 0.04974315 -4.0650638 0.7177451
+# 2 ENSG00000271503  ARID1A candidate 0.08164699 -4.7379535 0.7733805
+# 3 ENSG00000205542  ARID1A candidate 0.03602927 -2.0986917 0.6886414
+# 4 ENSG00000197061  ARID1A candidate 0.63985357  1.3499471 0.9607658
+# 5 ENSG00000166710  ARID1A candidate 0.61145577 -0.4742834 0.9584866
+# 6 ENSG00000034510  ARID1A candidate 0.69308741 -0.4227958 0.9673933</code></pre>
+<p>We call pairs with an adjusted p-value of less or equal than 0.1 significant; the discovery set (i.e., the set of significant pairs) has a false discovery rate (FDR) of 10%.</p>
+<pre class="r"><code>simulated_discovery_set &lt;- simulated_candidate_pair_results_p_adj %&gt;% filter(p_val_adj &lt;= 0.1)
+head(simulated_discovery_set)
+#           gene_id gRNA_id pair_type      p_value   z_value    p_val_adj
+# 1 ENSG00000019582  ARID1A candidate 7.111315e-05  7.237385 0.0711131498
+# 2 ENSG00000277734  ARID1A candidate 2.392761e-05 -5.749545 0.0333873558
+# 3 ENSG00000171476  ARID1A candidate 6.543151e-06 -6.836853 0.0137750554
+# 4 ENSG00000142546  ARID1A candidate 8.094629e-05  4.973680 0.0758871486
+# 5 ENSG00000142669  ARID1A candidate 5.941077e-08 -5.755366 0.0002547392
+# 6 ENSG00000172543  ARID1A candidate 3.492456e-05 -6.783390 0.0441152381</code></pre>
+<pre class="r"><code>saveRDS(simulated_candidate_pair_results_p_adj, file.path(outdir, &#39;sceptre.candidate.pair.results.rds&#39;))
+saveRDS(simulated_discovery_set, file.path(outdir, &#39;sceptre.discovery.set.results.rds&#39;))</code></pre>
+</div>
+<div id="unstimulated-t-cells-2" class="section level4">
+<h4>Unstimulated T cells</h4>
+<pre class="r"><code>outdir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/unsimulated_data/sceptre_output&#39;
+unsimulated_result &lt;- readRDS(file.path(outdir, &#39;sceptre.result.rds&#39;))
+head(unsimulated_result, 10)
+#            gene_id gRNA_id pair_type     p_value      z_value
+# 1  ENSG00000251562  ARID1A candidate 0.307288436 -1.119783084
+# 2  ENSG00000271503  ARID1A candidate 0.255094569 -3.434577254
+# 3  ENSG00000205542  ARID1A candidate 0.124270007 -1.408917138
+# 4  ENSG00000197061  ARID1A candidate 0.508142785  1.959389328
+# 5  ENSG00000166710  ARID1A candidate 0.998544879  0.001743273
+# 6  ENSG00000034510  ARID1A candidate 0.536159905  0.787584531
+# 7  ENSG00000123416  ARID1A candidate 0.828083765 -0.868736493
+# 8  ENSG00000100097  ARID1A candidate 0.009152439 -6.235823985
+# 9  ENSG00000227507  ARID1A candidate 0.698088383  0.653613012
+# 10 ENSG00000115523  ARID1A candidate 0.656404329  2.593409372</code></pre>
+<p>Negative control pairs</p>
+<pre class="r"><code>neg_control_p_vals &lt;- unsimulated_result %&gt;% filter(pair_type == &quot;negative_control&quot;) %&gt;% pull(p_value)
+qq_plot &lt;- make_qq_plot(neg_control_p_vals)
+plot(qq_plot)</code></pre>
+<p><img src="figure/sceptre_TCells_data.Rmd/neg-control-unstimulated-1.png" width="840" style="display: block; margin: auto;" /></p>
+<p>Candidate pairs We extract the p-values corresponding to the candidate pairs and apply a Benjamini-Hochberg (BH) correction to adjust for multiple testing.</p>
+<pre class="r"><code>unsimulated_candidate_pair_results &lt;- unsimulated_result %&gt;% filter(pair_type == &quot;candidate&quot;)
+unsimulated_candidate_pair_results_p_adj &lt;- unsimulated_candidate_pair_results %&gt;%
+  mutate(p_val_adj = p.adjust(p_value, method = &quot;BH&quot;))
+head(unsimulated_candidate_pair_results_p_adj)
+#           gene_id gRNA_id pair_type   p_value      z_value p_val_adj
+# 1 ENSG00000251562  ARID1A candidate 0.3072884 -1.119783084 0.9364386
+# 2 ENSG00000271503  ARID1A candidate 0.2550946 -3.434577254 0.9230442
+# 3 ENSG00000205542  ARID1A candidate 0.1242700 -1.408917138 0.8776804
+# 4 ENSG00000197061  ARID1A candidate 0.5081428  1.959389328 0.9666872
+# 5 ENSG00000166710  ARID1A candidate 0.9985449  0.001743273 0.9998483
+# 6 ENSG00000034510  ARID1A candidate 0.5361599  0.787584531 0.9711391</code></pre>
+<p>We call pairs with an adjusted p-value of less or equal than 0.1 significant; the discovery set (i.e., the set of significant pairs) has a false discovery rate (FDR) of 10%.</p>
+<pre class="r"><code>unsimulated_discovery_set &lt;- unsimulated_candidate_pair_results_p_adj %&gt;% filter(p_val_adj &lt;= 0.1)
+head(unsimulated_discovery_set)
+#           gene_id  gRNA_id pair_type      p_value   z_value   p_val_adj
+# 1 ENSG00000163191   ARID1A candidate 9.474409e-06 -5.118703 0.031475343
+# 2 ENSG00000157303     BTLA candidate 3.239915e-05  4.278822 0.066774171
+# 3 ENSG00000146066 C10orf54 candidate 1.075991e-05  4.393335 0.033672848
+# 4 ENSG00000043462 C10orf54 candidate 3.060097e-05  4.280412 0.066774171
+# 5 ENSG00000117859 C10orf54 candidate 2.915000e-05  4.015791 0.065405999
+# 6 ENSG00000167286     CD3D candidate 4.442419e-07 -4.908626 0.002401329</code></pre>
+<pre class="r"><code>saveRDS(unsimulated_candidate_pair_results_p_adj, file.path(outdir, &#39;sceptre.candidate.pair.results.rds&#39;))
+saveRDS(unsimulated_discovery_set, file.path(outdir, &#39;sceptre.discovery.set.results.rds&#39;))</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()
+# R version 4.0.4 (2021-02-15)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: Scientific Linux 7.4 (Nitrogen)
+# 
+# Matrix products: default
+# BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+# 
+# locale:
+#  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+#  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+#  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+#  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+#  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+# [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+# 
+# attached base packages:
+# [1] stats     graphics  grDevices utils     datasets  methods   base     
+# 
+# other attached packages:
+#  [1] SeuratObject_4.0.4 Seurat_4.1.0       sceptre_0.1.0      Matrix_1.4-1      
+#  [5] cowplot_1.1.1      forcats_0.5.1      stringr_1.4.0      dplyr_1.0.8       
+#  [9] purrr_0.3.4        readr_2.1.2        tidyr_1.2.0        tibble_3.1.6      
+# [13] ggplot2_3.3.5      tidyverse_1.3.1    workflowr_1.7.0   
+# 
+# loaded via a namespace (and not attached):
+#   [1] readxl_1.4.0          backports_1.4.1       plyr_1.8.6           
+#   [4] igraph_1.2.11         lazyeval_0.2.2        splines_4.0.4        
+#   [7] listenv_0.8.0         scattermore_0.7       digest_0.6.29        
+#  [10] htmltools_0.5.2       fansi_1.0.3           magrittr_2.0.3       
+#  [13] tensor_1.5            cluster_2.1.2         ROCR_1.0-11          
+#  [16] tzdb_0.3.0            globals_0.14.0        modelr_0.1.8         
+#  [19] matrixStats_0.61.0    spatstat.sparse_2.1-0 colorspace_2.0-3     
+#  [22] rvest_1.0.2           ggrepel_0.9.1         haven_2.5.0          
+#  [25] xfun_0.30             callr_3.7.0           crayon_1.5.1         
+#  [28] jsonlite_1.8.0        spatstat.data_2.1-2   survival_3.3-1       
+#  [31] zoo_1.8-9             glue_1.6.2            polyclip_1.10-0      
+#  [34] gtable_0.3.0          leiden_0.3.9          future.apply_1.8.1   
+#  [37] abind_1.4-5           scales_1.2.0          DBI_1.1.2            
+#  [40] spatstat.random_2.1-0 miniUI_0.1.1.1        Rcpp_1.0.8.3         
+#  [43] viridisLite_0.4.0     xtable_1.8-4          reticulate_1.24      
+#  [46] spatstat.core_2.4-0   htmlwidgets_1.5.4     httr_1.4.2           
+#  [49] RColorBrewer_1.1-3    ellipsis_0.3.2        ica_1.0-2            
+#  [52] farver_2.1.0          pkgconfig_2.0.3       sass_0.4.1           
+#  [55] uwot_0.1.11           dbplyr_2.1.1          deldir_1.0-6         
+#  [58] utf8_1.2.2            tidyselect_1.1.2      rlang_1.0.2          
+#  [61] reshape2_1.4.4        later_1.3.0           munsell_0.5.0        
+#  [64] cellranger_1.1.0      tools_4.0.4           cli_3.2.0            
+#  [67] generics_0.1.2        broom_0.8.0           ggridges_0.5.3       
+#  [70] evaluate_0.15         fastmap_1.1.0         yaml_2.3.5           
+#  [73] goftest_1.2-3         processx_3.5.3        knitr_1.38           
+#  [76] fs_1.5.2              fitdistrplus_1.1-8    RANN_2.6.1           
+#  [79] pbapply_1.5-0         future_1.24.0         nlme_3.1-155         
+#  [82] whisker_0.4           mime_0.12             xml2_1.3.3           
+#  [85] compiler_4.0.4        rstudioapi_0.13       plotly_4.10.0        
+#  [88] png_0.1-7             spatstat.utils_2.3-0  reprex_2.0.1         
+#  [91] bslib_0.3.1           stringi_1.7.6         highr_0.9            
+#  [94] ps_1.6.0              lattice_0.20-45       vctrs_0.4.1          
+#  [97] pillar_1.7.0          lifecycle_1.0.1       spatstat.geom_2.3-2  
+# [100] lmtest_0.9-40         jquerylib_0.1.4       RcppAnnoy_0.0.19     
+# [103] data.table_1.14.2     irlba_2.3.5           httpuv_1.6.5         
+# [106] patchwork_1.1.1       R6_2.5.1              promises_1.2.0.1     
+# [109] KernSmooth_2.23-20    gridExtra_2.3         parallelly_1.31.0    
+# [112] codetools_0.2-18      MASS_7.3-56           assertthat_0.2.1     
+# [115] rprojroot_2.0.2       withr_2.5.0           sctransform_0.3.3    
+# [118] mgcv_1.8-39           parallel_4.0.4        hms_1.1.1            
+# [121] grid_4.0.4            rpart_4.1-15          rmarkdown_2.13       
+# [124] Rtsne_0.15            git2r_0.30.1          getPass_0.2-2        
+# [127] shiny_1.7.1           lubridate_1.8.0</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
