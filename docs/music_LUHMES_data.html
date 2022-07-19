@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Kaixuan Luo" />
+
+<meta name="date" content="2022-07-14" />
+
+<title>MUSIC analysis on LUHMES CROP-seq data</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">GSFA_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">MUSIC analysis on LUHMES CROP-seq data</h1>
+<h4 class="author">Kaixuan Luo</h4>
+<h4 class="date">2022-07-14</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-07-19
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it's best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220524)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220524code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220524)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree358270c2fbef1bf08ca5b29f442c98b431108a24targetblank358270ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/358270c2fbef1bf08ca5b29f442c98b431108a24" target="_blank">358270c</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree358270c2fbef1bf08ca5b29f442c98b431108a24targetblank358270ca" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/358270c2fbef1bf08ca5b29f442c98b431108a24" target="_blank">358270c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/spca_LUHMES_data.Rmd
+    Untracked:  code/music_LUHMES_Yifan.R
+    Untracked:  code/run_music_LUHMES.R
+    Untracked:  code/run_music_LUHMES_data.sbatch
+    Untracked:  code/run_sceptre_LUHMES_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
+    Untracked:  code/run_spca_LUHMES.R
+    Untracked:  code/run_spca_TCells.R
+    Untracked:  code/sceptre_LUHMES_data.R
+    Untracked:  code/sceptre_Tcells_stimulated_data.R
+    Untracked:  code/sceptre_Tcells_unstimulated_data.R
+
+Unstaged changes:
+    Modified:   analysis/sceptre_LUHMES_data.Rmd
+    Modified:   code/run_sceptre_cropseq_data.sbatch
+    Modified:   code/sceptre_analysis.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/music_LUHMES_data.Rmd</code>) and HTML (<code>docs/music_LUHMES_data.html</code>) files. If you've configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/358270c2fbef1bf08ca5b29f442c98b431108a24/analysis/music_LUHMES_data.Rmd" target="_blank">358270c</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-19
+</td>
+<td>
+run MUSIC on LUHMES data
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<p>slurm setting</p>
+<pre class="bash"><code>sinteractive --partition=broadwl --account=pi-xinhe --mem=30G --time=10:00:00 --cpus-per-task=10</code></pre>
+<p>MUSIC website: <a href="https://github.com/bm2-lab/MUSIC" class="uri">https://github.com/bm2-lab/MUSIC</a></p>
+<p>Scripts for running the analysis:</p>
+<ul>
+<li><a href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES.R">R script</a>.</li>
+<li><a href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES_data.sbatch">sbatch script</a>.</li>
+</ul>
+<pre class="bash"><code>cd /project2/xinhe/kevinluo/GSFA/music_analysis/log
+
+sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_music_LUHMES_data.sbatch</code></pre>
+<div id="about-the-data-sets" class="section level2">
+<h2>About the data sets</h2>
+<p>CROP-seq datasets: <code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code> The data are Seurat objects, with raw gene counts stored in <a href="mailto:obj@assays$RNA@counts">obj@assays$RNA@counts</a>, and cell meta data stored in <a href="mailto:obj@meta.data">obj@meta.data</a>. Normalized and scaled data used for GSFA are stored in <a href="mailto:obj@assays$RNA@scale.data">obj@assays$RNA@scale.data</a> , the rownames of which are the 6k genes used for GSFA.</p>
+<p>Load packages</p>
+<pre class="r"><code>library(data.table)
+library(Seurat)
+library(MUSIC)
+library(ggplot2)
+theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
+                             axis.title = element_text(size = 14),
+                             axis.text = element_text(size = 13),
+                             legend.title = element_text(size = 13),
+                             legend.text = element_text(size = 12),
+                             panel.grid.minor = element_blank())
+)
+library(ComplexHeatmap)</code></pre>
+<p>Set directories</p>
+<pre class="r"><code>data_dir &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/LUHMES/&quot;
+setwd(&quot;/project2/xinhe/kevinluo/GSFA/music_analysis/LUHMES&quot;)
+dir.create(&quot;./music_output&quot;, recursive = TRUE, showWarnings = FALSE)</code></pre>
+<div id="load-input-data" class="section level3">
+<h3>0. Load input data</h3>
+<pre class="r"><code>feature.names &lt;- data.frame(fread(paste0(data_dir, &quot;GSE142078_raw/GSM4219575_Run1_genes.tsv.gz&quot;),
+                                  header = FALSE), stringsAsFactors = FALSE)
+
+# combined_obj &lt;- readRDS(&quot;processed_data/seurat_obj.merged_scaled_detect_01.corrected_new.rds&quot;)
+combined_obj &lt;- readRDS(&quot;/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds&quot;)
+expression_profile &lt;- combined_obj@assays$RNA@counts
+rownames(expression_profile) &lt;- feature.names$V2[match(rownames(expression_profile),
+                                                       feature.names$V1)]
+targets &lt;- names(combined_obj@meta.data)[4:18]
+targets[11] &lt;- &quot;CTRL&quot;
+perturb_information &lt;- apply(combined_obj@meta.data[4:18], 1,
+                             function(x){ targets[which(x &gt; 0)] })</code></pre>
+</div>
+<div id="data-preprocessing" class="section level3">
+<h3>1. Data preprocessing</h3>
+<pre class="r"><code>crop_seq_list &lt;- Input_preprocess(expression_profile, perturb_information)
+
+crop_seq_qc &lt;- Cell_qc(crop_seq_list$expression_profile,
+                       crop_seq_list$perturb_information,
+                       species = &quot;Hs&quot;, plot = F)
+
+crop_seq_imputation &lt;- Data_imputation(crop_seq_qc$expression_profile,
+                                       crop_seq_qc$perturb_information,
+                                       cpu_num = 10)
+saveRDS(crop_seq_imputation, &quot;music_output/music_imputation.merged.rds&quot;)
+
+crop_seq_filtered &lt;- Cell_filtering(crop_seq_imputation$expression_profile,
+                                    crop_seq_imputation$perturb_information,
+                                    cpu_num = 10)
+saveRDS(crop_seq_filtered, &quot;music_output/music_filtered.merged.rds&quot;)</code></pre>
+</div>
+<div id="model-building" class="section level3">
+<h3>2. Model building</h3>
+<pre class="r"><code>crop_seq_vargene &lt;- Get_high_varGenes(crop_seq_filtered$expression_profile,
+                                      crop_seq_filtered$perturb_information, plot = T)
+saveRDS(crop_seq_vargene, &quot;music_output/music_vargene.merged.rds&quot;)
+
+## Get_topics() can take up to a few hours to finish, 
+## depending on the size of data
+system.time(
+  topic_1 &lt;- Get_topics(crop_seq_vargene$expression_profile,
+                        crop_seq_vargene$perturb_information,
+                        topic_number = 5))
+saveRDS(topic_1, &quot;music_output/music_merged_5_topics.rds&quot;)
+
+system.time(
+  topic_2 &lt;- Get_topics(crop_seq_vargene$expression_profile,
+                        crop_seq_vargene$perturb_information,
+                        topic_number = 10))
+saveRDS(topic_2, &quot;music_output/music_merged_10_topics.rds&quot;)
+
+system.time(
+  topic_3 &lt;- Get_topics(crop_seq_vargene$expression_profile,
+                        crop_seq_vargene$perturb_information,
+                        topic_number = 15))
+saveRDS(topic_3, &quot;music_output/music_merged_15_topics.rds&quot;)
+
+system.time(
+  topic_4 &lt;- Get_topics(crop_seq_vargene$expression_profile,
+                        crop_seq_vargene$perturb_information,
+                        topic_number = 20))
+saveRDS(topic_4, &quot;music_output/music_merged_20_topics.rds&quot;)</code></pre>
+</div>
+<div id="pick-optimal-number-of-topics" class="section level3">
+<h3>3. Pick optimal number of topics</h3>
+<pre class="r"><code>topic_model_list &lt;- list()
+topic_model_list$models &lt;- list()
+topic_model_list$perturb_information &lt;- topic_1$perturb_information
+topic_model_list$models[[1]] &lt;- topic_1$models[[1]]
+topic_model_list$models[[2]] &lt;- topic_2$models[[1]]
+topic_model_list$models[[3]] &lt;- topic_3$models[[1]]
+topic_model_list$models[[4]] &lt;- topic_4$models[[1]]
+
+saveRDS(topic_model_list, &quot;music_output/topic_model_list.rds&quot;)
+
+optimalModel &lt;- Select_topic_number(topic_model_list$models,
+                                    plot = T,
+                                    plot_path = &quot;music_output/select_topic_number_5_to_20.pdf&quot;)
+# The paper said &quot;the larger the score, the better the selected topic number&quot;.
+# But we probably are going to set the number to 20 just to be comparable to GSFA.
+</code></pre>
+</div>
+<div id="visualize-the-results-under-20-topics" class="section level3">
+<h3>4. Visualize the results under 20 topics</h3>
+<p>Gene ontology annotations for top topics</p>
+<pre class="r"><code>topic_res &lt;- readRDS(&quot;music_output/music_merged_20_topics.rds&quot;)
+
+topic_func &lt;- Topic_func_anno(topic_res$models[[1]], species = &quot;Hs&quot;)
+saveRDS(topic_func, &quot;music_output/topic_func.rds&quot;)
+</code></pre>
+<pre class="r"><code>topic_func &lt;- readRDS(&quot;music_output/topic_func.rds&quot;)
+# pdf(&quot;music_output/music_merged_20_topics_GO_annotations.pdf&quot;,
+#     width = 14, height = 12)
+ggplot(topic_func$topic_annotation_result) +
+  geom_point(aes(x = Cluster, y = Description,
+                 size = Count, color = -log10(qvalue))) +
+  scale_color_gradientn(colors = c(&quot;blue&quot;, &quot;red&quot;)) +
+  theme_bw() +
+  theme(axis.title = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+# dev.off()
+</code></pre>
+<p>Perturbation effect prioritizing</p>
+<pre class="r"><code># calculate topic distribution for each cell.
+distri_diff &lt;- Diff_topic_distri(topic_res$models[[1]],
+                                 topic_res$perturb_information,
+                                 plot = T)
+saveRDS(topic_func, &quot;music_output/topic_func.rds&quot;)
+
+t_D_diff_matrix &lt;- dcast(distri_diff %&gt;% dplyr::select(knockout, variable, t_D_diff),
+                         knockout ~ variable)
+rownames(t_D_diff_matrix) &lt;- t_D_diff_matrix$knockout
+t_D_diff_matrix$knockout &lt;- NULL
+</code></pre>
+<pre class="r"><code># pdf(&quot;music_output/music_merged_20_topics_TPD_heatmap.pdf&quot;, width = 12, height = 8)
+Heatmap(t_D_diff_matrix,
+        name = &quot;Topic probability difference (vs ctrl)&quot;,
+        cluster_rows = T, cluster_columns = T,
+        column_names_rot = 45,
+        heatmap_legend_param = list(title_gp = gpar(fontsize = 12, fontface = &quot;bold&quot;)))
+# dev.off()</code></pre>
+<pre class="r"><code># calculate the overall perturbation effect ranking list without &quot;offTarget_Info&quot;.
+rank_overall_result &lt;- Rank_overall(distri_diff)
+head(rank_overall_result)
+saveRDS(rank_overall_result, &quot;music_output/rank_overall_result.rds&quot;)
+
+# calculate the topic-specific ranking list.
+rank_topic_specific_result &lt;- Rank_specific(distri_diff)
+head(rank_topic_specific_result)
+saveRDS(rank_topic_specific_result, &quot;music_output/rank_topic_specific_result.rds&quot;)
+
+# calculate the perturbation correlation.
+perturb_cor &lt;- Correlation_perturbation(distri_diff,
+                                        cutoff = 0.5, gene = &quot;all&quot;, plot = T,
+                                        plot_path = &quot;music_output/correlation_network_20_topics.pdf&quot;)
+
+head(perturb_cor)
+saveRDS(perturb_cor, &quot;music_output/perturb_cor.rds&quot;)</code></pre>
+</div>
+<div id="adaptation-to-the-code-to-generate-calibrated-empirical-tpd-scores" class="section level3">
+<h3>5. Adaptation to the code to generate calibrated empirical TPD scores</h3>
+<pre class="r"><code>## Adapted over MUSIC&#39;s Diff_topic_distri() function
+Empirical_topic_prob_diff &lt;- function(model, perturb_information,
+                                      permNum = 10^4, seed = 1000){
+  require(reshape2)
+  require(dplyr)
+  require(ComplexHeatmap)
+  options(warn = -1)
+  prob_mat &lt;- model@gamma
+  row.names(prob_mat) &lt;- model@documents
+  topicNum &lt;- ncol(prob_mat)
+  topicName &lt;- paste0(&#39;Topic_&#39;, 1:topicNum)
+  colnames(prob_mat) &lt;- topicName
+  ko_name &lt;- unique(perturb_information)
+  prob_df &lt;- data.frame(prob_mat, 
+                        samples = rownames(prob_mat),
+                        knockout = perturb_information)
+  
+  prob_df &lt;- melt(prob_df, id = c(&#39;samples&#39;, &#39;knockout&#39;), variable.name = &quot;topic&quot;)
+  
+  summary_df &lt;- prob_df %&gt;%
+    group_by(knockout, topic) %&gt;%
+    summarise(number = sum(value)) %&gt;%
+    ungroup() %&gt;%
+    group_by(knockout) %&gt;%
+    mutate(cellNum = sum(number)) %&gt;%
+    ungroup() %&gt;%
+    mutate(ratio = number/cellNum)
+  
+  summary_df$ctrlNum &lt;- rep(summary_df$cellNum[summary_df$knockout == &quot;CTRL&quot;],
+                            length(ko_name))
+  summary_df$ctrl_ratio &lt;- rep(summary_df$ratio[summary_df$knockout == &quot;CTRL&quot;],
+                               length(ko_name))
+  summary_df &lt;- summary_df %&gt;% mutate(diff_index = ratio - ctrl_ratio)
+  
+  test_df &lt;- data.frame(matrix(nrow = length(ko_name) * topicNum, ncol = 5))
+  colnames(test_df) &lt;- c(&quot;knockout&quot;, &quot;topic&quot;, &quot;obs_t_stats&quot;, &quot;obs_pval&quot;, &quot;empirical_pval&quot;)
+  k &lt;- 1
+  for(i in topicName){
+    prob_df.topic &lt;- prob_df[prob_df$topic == i, ]
+    ctrl_topic &lt;- prob_df.topic$value[prob_df.topic$knockout == &quot;CTRL&quot;]
+    ctrl_topic_z &lt;- (ctrl_topic - mean(ctrl_topic)) / sqrt(var(ctrl_topic))
+    for(j in ko_name){
+      ko_topic &lt;- prob_df.topic$value[prob_df.topic$knockout == j]
+      ko_topic_z &lt;- (ko_topic - mean(ctrl_topic)) / sqrt(var(ctrl_topic))
+      test_df$knockout[k] &lt;- j
+      test_df$topic[k] &lt;- i
+      test &lt;- t.test(ko_topic_z, ctrl_topic_z)
+      test_df$obs_t_stats[k] &lt;- test$statistic
+      test_df$obs_pval[k] &lt;- test$p.value
+      k &lt;- k + 1
+    }
+  }
+  
+  ## Permutation on the perturbation conditions:
+  # permNum &lt;- 10^4
+  print(paste0(&quot;Performing permutation for &quot;, permNum, &quot; rounds.&quot;))
+  perm_t_stats &lt;- matrix(0, nrow = nrow(test_df), ncol = permNum)
+  set.seed(seed)
+  for (perm in 1:permNum){
+    perm_prob_df &lt;- data.frame(prob_mat, 
+                               samples = rownames(prob_mat),
+                               knockout = perturb_information[sample(length(perturb_information))])
+    perm_prob_df &lt;- melt(perm_prob_df, id = c(&#39;samples&#39;, &#39;knockout&#39;), variable.name = &quot;topic&quot;)
+    k &lt;- 1
+    for(i in topicName){
+      perm_prob_df.topic &lt;- perm_prob_df[perm_prob_df$topic == i, ]
+      ctrl_topic &lt;- perm_prob_df.topic$value[perm_prob_df.topic$knockout == &quot;CTRL&quot;]
+      ctrl_topic_z &lt;- (ctrl_topic - mean(ctrl_topic)) / sqrt(var(ctrl_topic))
+      for(j in ko_name){
+        ko_topic &lt;- perm_prob_df.topic$value[perm_prob_df.topic$knockout == j]
+        ko_topic_z &lt;- (ko_topic - mean(ctrl_topic)) / sqrt(var(ctrl_topic))
+        test &lt;- t.test(ko_topic_z, ctrl_topic_z)
+        perm_t_stats[k, perm] &lt;- test$statistic
+        k &lt;- k + 1
+      }
+    }
+    if (perm %% 1000 == 0){
+      print(paste0(perm, &quot; rounds finished.&quot;))
+    }
+  }
+  ## Compute two-sided empirical p value:
+  for (k in 1:nrow(test_df)){
+    test_df$empirical_pval[k] &lt;-
+      2 * min(mean(perm_t_stats[k, ] &lt;= test_df$obs_t_stats[k]),
+              mean(perm_t_stats[k, ] &gt;= test_df$obs_t_stats[k]))
+  }
+  test_df &lt;- test_df %&gt;%
+    mutate(empirical_pval = ifelse(empirical_pval == 0, 1/permNum, empirical_pval)) %&gt;%
+    mutate(empirical_pval = ifelse(empirical_pval &gt; 1, 1, empirical_pval))
+  
+  summary_df &lt;- inner_join(summary_df, test_df, by = c(&quot;knockout&quot;, &quot;topic&quot;))
+  summary_df &lt;- summary_df %&gt;%
+    mutate(polar_log10_pval = ifelse(obs_t_stats &gt; 0, -log10(empirical_pval), log10(empirical_pval)))
+  return(summary_df)
+}
+</code></pre>
+<pre class="r"><code>summary_df &lt;- Empirical_topic_prob_diff(topic_res$models[[1]],
+                                        topic_res$perturb_information)
+saveRDS(summary_df, &quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;)
+
+summary_df &lt;- readRDS(&quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;)
+
+log10_pval_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, polar_log10_pval),
+                        knockout ~ topic)
+rownames(log10_pval_mat) &lt;- log10_pval_mat$knockout
+log10_pval_mat$knockout &lt;- NULL</code></pre>
+<pre class="r"><code>pdf(&quot;music_output/music_merged_20_topics_empirical_tstats_heatmap.pdf&quot;,
+    width = 12, height = 8)
+ht &lt;- Heatmap(log10_pval_mat,
+              name = &quot;Polarized empirical t-test -log10(p-value)\n(KO vs ctrl cell topic probs)&quot;,
+              col = circlize::colorRamp2(breaks = c(-4, 0, 4), colors = c(&quot;blue&quot;, &quot;grey90&quot;, &quot;red&quot;)),
+              cluster_rows = T, cluster_columns = T,
+              column_names_rot = 45,
+              heatmap_legend_param = list(title_gp = gpar(fontsize = 12,
+                                                          fontface = &quot;bold&quot;)))
+draw(ht)
+dev.off()</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
