@@ -13,3 +13,9 @@ SCEPTRE analysis
 * [Test SCEPTRE on example data](test_sceptre.html)
 * [SCEPTRE analysis on LUHMES CROP-seq data](sceptre_LUHMES_data.html)
 * [SCEPTRE analysis on CD8+ T Cell (stimulated and unstimulated) CROP-seq data](sceptre_TCells_data.html)
+
+MUSIC analysis
+
+* [Test MUSIC on example data](music_example_data.html)
+* [MUSIC analysis on LUHMES CROP-seq data](music_LUHMES_data.html)
+* [MUSIC analysis on CD8+ T Cell (stimulated) CROP-seq data](music_TCells_data.html)
