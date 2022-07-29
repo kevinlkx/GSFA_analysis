@@ -16,29 +16,27 @@ knitr::opts_chunk$set(results = "hold", fig.align = "center", message=FALSE, war
 
 slurm setting
 ```{bash eval=FALSE}
-sinteractive --partition=broadwl --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=10
-sinteractive --partition=xinhe --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=10
+sinteractive --partition=broadwl --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=5
 ```
 
 Scripts for running the analysis:
 
-* [R script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES.R).
-* [sbatch script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES_data.sbatch).
+Stimulated data:
+
+* [R script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_Tcells_stimulated_data.R).
+* [sbatch script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_Tcells_stimulated_data.sbatch).
+
+Unstimulated data:
+
+* [R script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_Tcells_unstimulated_data.R).
+* [sbatch script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_Tcells_unstimulated_data.sbatch).
 
 ```{bash, eval=FALSE}
 cd /project2/xinhe/kevinluo/GSFA/music_analysis/log
 
-sbatch --cpus-per-task=6 --mem=50G ~/projects/GSFA_analysis/code/run_music_Tcells_stimulated_data.sbatch
-sbatch --cpus-per-task=6 --mem=40G ~/projects/GSFA_analysis/code/run_music_Tcells_stimulated_data.sbatch
-
-sbatch --partition=xinhe --account=pi-xinhe --cpus-per-task=6 --mem=40G ~/projects/GSFA_analysis/code/run_music_Tcells_stimulated_data.sbatch
-
-sbatch --partition=mstephens --account=pi-mstephens --cpus-per-task=6 --mem=100G ~/projects/GSFA_analysis/code/run_music_Tcells_stimulated_data.sbatch
-
-sbatch --partition=bigmem2 --cpus-per-task=6 --mem=100G ~/projects/GSFA_analysis/code/run_music_Tcells_stimulated_data.sbatch
+sbatch --mem=50G --cpus-per-task=5 ~/projects/GSFA_analysis/code/run_music_Tcells_stimulated_data.sbatch
 
 sbatch --mem=50G --cpus-per-task=5 ~/projects/GSFA_analysis/code/run_music_Tcells_unstimulated_data.sbatch
-
 ```
 
 MUSIC website: https://github.com/bm2-lab/MUSIC
