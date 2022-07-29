@@ -442,7 +442,7 @@ draw(ht)
 KO_names <- rownames(fdr_mat)
 dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
-                   color_lgd_title = "MUSIC empirical T statistics",
+                   color_lgd_title = "MUSIC T statistics",
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
@@ -593,7 +593,7 @@ draw(ht)
 KO_names <- rownames(fdr_mat)
 dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
-                   color_lgd_title = "MUSIC empirical T statistics",
+                   color_lgd_title = "MUSIC T statistics",
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
