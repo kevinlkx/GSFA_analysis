@@ -481,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreef5bca8a31531e4fbb291a07c9ed5ace21351dbcatargetblankf5bca8aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/f5bca8a31531e4fbb291a07c9ed5ace21351dbca" target="_blank">f5bca8a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree66afbb08b92317b1c845086ff906e45f00ec77a9targetblank66afbb0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/66afbb08b92317b1c845086ff906e45f00ec77a9" target="_blank">66afbb0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreef5bca8a31531e4fbb291a07c9ed5ace21351dbcatargetblankf5bca8aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree66afbb08b92317b1c845086ff906e45f00ec77a9targetblank66afbb0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/f5bca8a31531e4fbb291a07c9ed5ace21351dbca" target="_blank">f5bca8a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/66afbb08b92317b1c845086ff906e45f00ec77a9" target="_blank">66afbb0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -503,14 +503,11 @@ Ignored files:
 Untracked files:
     Untracked:  analysis/interpret_gsfa_LUHMES.Rmd
     Untracked:  analysis/spca_LUHMES_data.Rmd
+    Untracked:  analysis/twostep_clustering_LUHMES_data.Rmd
     Untracked:  code/music_LUHMES_Yifan.R
     Untracked:  code/plotting_functions.R
     Untracked:  code/run_music_LUHMES.R
     Untracked:  code/run_music_LUHMES_data.sbatch
-    Untracked:  code/run_music_Tcells_stimulated_data.R
-    Untracked:  code/run_music_Tcells_stimulated_data.sbatch
-    Untracked:  code/run_music_Tcells_unstimulated_data.R
-    Untracked:  code/run_music_Tcells_unstimulated_data.sbatch
     Untracked:  code/run_sceptre_LUHMES_data.sbatch
     Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
     Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
@@ -519,9 +516,9 @@ Untracked files:
     Untracked:  code/sceptre_LUHMES_data.R
     Untracked:  code/sceptre_Tcells_stimulated_data.R
     Untracked:  code/sceptre_Tcells_unstimulated_data.R
+    Untracked:  code/seurat_sim_fpr_tpr.R
 
 Unstaged changes:
-    Modified:   analysis/music_TCells_data.Rmd
     Modified:   analysis/sceptre_LUHMES_data.Rmd
     Modified:   code/run_sceptre_cropseq_data.sbatch
     Modified:   code/sceptre_analysis.R
@@ -563,6 +560,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/66afbb08b92317b1c845086ff906e45f00ec77a9/analysis/music_LUHMES_data.Rmd" target="_blank">66afbb0</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+<td>
+update dotplot figure legend
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/2763f3360213a6853baf049c46c0e69df3022fb8/docs/music_LUHMES_data.html" target="_blank">2763f33</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1052,18 +1083,92 @@ ht &lt;- Heatmap(log10_pval_mat,
                                                           fontface = &quot;bold&quot;)))
 draw(ht)</code></pre>
 <p><img src="figure/music_LUHMES_data.Rmd/empirical_tstats_heatmap_20topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-empirical_tstats_heatmap_20topics-1">
+Past versions of empirical_tstats_heatmap_20topics-1.png
+</button>
+</p>
+<div id="fig-empirical_tstats_heatmap_20topics-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2763f3360213a6853baf049c46c0e69df3022fb8/docs/figure/music_LUHMES_data.Rmd/empirical_tstats_heatmap_20topics-1.png" target="_blank">2763f33</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 <pre class="r"><code># pdf(&quot;music_output/music_merged_20_topics_empirical_tstats_fdr_dotplot.pdf&quot;,
 #     width = 12, height = 8)
 KO_names &lt;- rownames(fdr_mat)
 dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    reorder_markers = c(KO_names[KO_names!=&quot;CTRL&quot;], &quot;CTRL&quot;),
-                   color_lgd_title = &quot;MUSIC empirical T statistics&quot;,
+                   color_lgd_title = &quot;MUSIC T statistics&quot;,
                    size_lgd_title = &quot;FDR&quot;,
                    max_score = 20,
                    min_score = -20,
                    by_score = 10)</code></pre>
 <p><img src="figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-effect_fdr_dotplot_20topics-1">
+Past versions of effect_fdr_dotplot_20topics-1.png
+</button>
+</p>
+<div id="fig-effect_fdr_dotplot_20topics-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2763f3360213a6853baf049c46c0e69df3022fb8/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" target="_blank">2763f33</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 </div>
 <div id="summarize-the-results-using-the-optimal-number-of-topics-selected-by-the-score" class="section level3">
@@ -1237,18 +1342,92 @@ ht &lt;- Heatmap(log10_pval_mat,
                                                           fontface = &quot;bold&quot;)))
 draw(ht)</code></pre>
 <p><img src="figure/music_LUHMES_data.Rmd/empirical_tstats_heatmap_4topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-empirical_tstats_heatmap_4topics-1">
+Past versions of empirical_tstats_heatmap_4topics-1.png
+</button>
+</p>
+<div id="fig-empirical_tstats_heatmap_4topics-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2763f3360213a6853baf049c46c0e69df3022fb8/docs/figure/music_LUHMES_data.Rmd/empirical_tstats_heatmap_4topics-1.png" target="_blank">2763f33</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 <pre class="r"><code># pdf(&quot;music_output/music_merged_4_topics_empirical_tstats_fdr_dotplot.pdf&quot;,
 #     width = 12, height = 8)
 KO_names &lt;- rownames(fdr_mat)
 dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    reorder_markers = c(KO_names[KO_names!=&quot;CTRL&quot;], &quot;CTRL&quot;),
-                   color_lgd_title = &quot;MUSIC empirical T statistics&quot;,
+                   color_lgd_title = &quot;MUSIC T statistics&quot;,
                    size_lgd_title = &quot;FDR&quot;,
                    max_score = 20,
                    min_score = -20,
                    by_score = 10)</code></pre>
 <p><img src="figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-effect_fdr_dotplot_4topics-1">
+Past versions of effect_fdr_dotplot_4topics-1.png
+</button>
+</p>
+<div id="fig-effect_fdr_dotplot_4topics-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2763f3360213a6853baf049c46c0e69df3022fb8/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" target="_blank">2763f33</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 <br>
 <p>
@@ -1285,6 +1464,7 @@ other attached packages:
 [13] topicmodels_0.2-12     Biostrings_2.58.0      XVector_0.30.0        
 [16] IRanges_2.24.1         S4Vectors_0.28.1       BiocGenerics_0.36.1   
 [19] SeuratObject_4.0.4     Seurat_4.1.0           data.table_1.14.2     
+[22] workflowr_1.7.0       
 
 loaded via a namespace (and not attached):
   [1] utf8_1.2.2            R.utils_2.11.0        reticulate_1.24      
@@ -1305,43 +1485,44 @@ loaded via a namespace (and not attached):
  [46] fgsea_1.21.0          assertthat_0.2.1      promises_1.2.0.1     
  [49] scales_1.2.0          ggraph_2.0.5          enrichplot_1.10.2    
  [52] gtable_0.3.0          Cairo_1.5-15          globals_0.14.0       
- [55] goftest_1.2-3         tidygraph_1.2.0       workflowr_1.7.0      
+ [55] processx_3.5.3        goftest_1.2-3         tidygraph_1.2.0      
  [58] rlang_1.0.2           GlobalOptions_0.1.2   splines_4.0.4        
  [61] lazyeval_0.2.2        spatstat.geom_2.3-2   BiocManager_1.30.16  
  [64] yaml_2.3.5            abind_1.4-5           httpuv_1.6.5         
  [67] qvalue_2.22.0         tools_4.0.4           ellipsis_0.3.2       
  [70] spatstat.core_2.4-0   jquerylib_0.1.4       RColorBrewer_1.1-3   
  [73] ggridges_0.5.3        Rcpp_1.0.9            plyr_1.8.6           
- [76] zlibbioc_1.36.0       purrr_0.3.4           rpart_4.1-15         
- [79] deldir_1.0-6          GetoptLong_1.0.5      pbapply_1.5-0        
- [82] viridis_0.6.2         cowplot_1.1.1         zoo_1.8-9            
- [85] ggrepel_0.9.1         cluster_2.1.2         fs_1.5.2             
- [88] magrittr_2.0.3        scattermore_0.7       DO.db_2.9            
- [91] circlize_0.4.14       lmtest_0.9-40         RANN_2.6.1           
- [94] whisker_0.4           fitdistrplus_1.1-8    matrixStats_0.61.0   
- [97] patchwork_1.1.1       mime_0.12             evaluate_0.15        
-[100] xtable_1.8-4          shape_1.4.6           gridExtra_2.3        
-[103] compiler_4.0.4        tibble_3.1.6          KernSmooth_2.23-20   
-[106] crayon_1.5.1          shadowtext_0.1.1      R.oo_1.24.0          
-[109] htmltools_0.5.2       ggfun_0.0.5           mgcv_1.8-39          
-[112] later_1.3.0           tidyr_1.2.0           DBI_1.1.2            
-[115] tweenr_1.0.2          MASS_7.3-56           Matrix_1.4-1         
-[118] cli_3.2.0             R.methodsS3_1.8.1     pkgconfig_2.0.3      
-[121] rvcheck_0.2.1         plotly_4.10.0         spatstat.sparse_2.1-0
-[124] foreach_1.5.2         xml2_1.3.3            bslib_0.3.1          
-[127] yulab.utils_0.0.4     stringr_1.4.0         digest_0.6.29        
-[130] sctransform_0.3.3     RcppAnnoy_0.0.19      spatstat.data_2.1-2  
-[133] tm_0.7-8              rmarkdown_2.13        leiden_0.3.9         
-[136] fastmatch_1.1-3       uwot_0.1.11           gtools_3.9.2         
-[139] shiny_1.7.1           modeltools_0.2-23     rjson_0.2.21         
-[142] lifecycle_1.0.1       nlme_3.1-155          jsonlite_1.8.0       
-[145] viridisLite_0.4.0     fansi_1.0.3           pillar_1.7.0         
-[148] fastmap_1.1.0         httr_1.4.2            survival_3.3-1       
-[151] GO.db_3.12.1          glue_1.6.2            iterators_1.0.14     
-[154] png_0.1-7             bit_4.0.4             ggforce_0.3.3        
-[157] stringi_1.7.6         sass_0.4.1            blob_1.2.3           
-[160] caTools_1.18.2        memoise_2.0.1         irlba_2.3.5          
-[163] future.apply_1.8.1   </code></pre>
+ [76] zlibbioc_1.36.0       purrr_0.3.4           ps_1.6.0             
+ [79] rpart_4.1-15          deldir_1.0-6          GetoptLong_1.0.5     
+ [82] pbapply_1.5-0         viridis_0.6.2         cowplot_1.1.1        
+ [85] zoo_1.8-9             ggrepel_0.9.1         cluster_2.1.2        
+ [88] fs_1.5.2              magrittr_2.0.3        scattermore_0.7      
+ [91] DO.db_2.9             circlize_0.4.14       lmtest_0.9-40        
+ [94] RANN_2.6.1            whisker_0.4           fitdistrplus_1.1-8   
+ [97] matrixStats_0.61.0    patchwork_1.1.1       mime_0.12            
+[100] evaluate_0.15         xtable_1.8-4          shape_1.4.6          
+[103] gridExtra_2.3         compiler_4.0.4        tibble_3.1.6         
+[106] KernSmooth_2.23-20    crayon_1.5.1          shadowtext_0.1.1     
+[109] R.oo_1.24.0           htmltools_0.5.2       ggfun_0.0.5          
+[112] mgcv_1.8-39           later_1.3.0           tidyr_1.2.0          
+[115] DBI_1.1.2             tweenr_1.0.2          MASS_7.3-56          
+[118] Matrix_1.4-1          cli_3.2.0             R.methodsS3_1.8.1    
+[121] pkgconfig_2.0.3       getPass_0.2-2         rvcheck_0.2.1        
+[124] plotly_4.10.0         spatstat.sparse_2.1-0 foreach_1.5.2        
+[127] xml2_1.3.3            bslib_0.3.1           yulab.utils_0.0.4    
+[130] stringr_1.4.0         callr_3.7.0           digest_0.6.29        
+[133] sctransform_0.3.3     RcppAnnoy_0.0.19      spatstat.data_2.1-2  
+[136] tm_0.7-8              rmarkdown_2.13        leiden_0.3.9         
+[139] fastmatch_1.1-3       uwot_0.1.11           gtools_3.9.2         
+[142] shiny_1.7.1           modeltools_0.2-23     rjson_0.2.21         
+[145] lifecycle_1.0.1       nlme_3.1-155          jsonlite_1.8.0       
+[148] viridisLite_0.4.0     fansi_1.0.3           pillar_1.7.0         
+[151] fastmap_1.1.0         httr_1.4.2            survival_3.3-1       
+[154] GO.db_3.12.1          glue_1.6.2            iterators_1.0.14     
+[157] png_0.1-7             bit_4.0.4             ggforce_0.3.3        
+[160] stringi_1.7.6         sass_0.4.1            blob_1.2.3           
+[163] caTools_1.18.2        memoise_2.0.1         irlba_2.3.5          
+[166] future.apply_1.8.1   </code></pre>
 </div>
 </div>
 </div>
