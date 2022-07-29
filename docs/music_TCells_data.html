@@ -390,7 +390,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-07-25
+<strong>Last updated:</strong> 2022-07-29
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -481,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree31782657448b9c56d74e4b35e38c8db92107b074targetblank3178265a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/31782657448b9c56d74e4b35e38c8db92107b074" target="_blank">3178265</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2bf6abd04b7167ae19349a93db34af416d4ab0d4targetblank2bf6abda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2bf6abd04b7167ae19349a93db34af416d4ab0d4" target="_blank">2bf6abd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree31782657448b9c56d74e4b35e38c8db92107b074targetblank3178265a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2bf6abd04b7167ae19349a93db34af416d4ab0d4targetblank2bf6abda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/31782657448b9c56d74e4b35e38c8db92107b074" target="_blank">3178265</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2bf6abd04b7167ae19349a93db34af416d4ab0d4" target="_blank">2bf6abd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -521,7 +521,6 @@ Untracked files:
     Untracked:  code/sceptre_Tcells_unstimulated_data.R
 
 Unstaged changes:
-    Modified:   analysis/music_LUHMES_data.Rmd
     Modified:   analysis/sceptre_LUHMES_data.Rmd
     Modified:   code/run_sceptre_cropseq_data.sbatch
     Modified:   code/sceptre_analysis.R
@@ -568,6 +567,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2bf6abd04b7167ae19349a93db34af416d4ab0d4/analysis/music_TCells_data.Rmd" target="_blank">2bf6abd</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+<td>
+added dotplots with MUSIC empirical TPD FDR
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/d3e54fdc290fe93efe38c2b3c5c317fa60e285f7/docs/music_TCells_data.html" target="_blank">d3e54fd</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/31782657448b9c56d74e4b35e38c8db92107b074/analysis/music_TCells_data.Rmd" target="_blank">3178265</a>
 </td>
 <td>
@@ -588,7 +621,8 @@ update music results for T cells
 </div>
 </div>
 <p>slurm setting</p>
-<pre class="bash"><code>sinteractive --partition=broadwl --account=pi-xinhe --mem=30G --time=10:00:00 --cpus-per-task=10</code></pre>
+<pre class="bash"><code>sinteractive --partition=broadwl --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=10
+sinteractive --partition=xinhe --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=10</code></pre>
 <p>Scripts for running the analysis:</p>
 <ul>
 <li><a href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES.R">R script</a>.</li>
@@ -719,7 +753,9 @@ theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
                              legend.title = element_text(size = 13),
                              legend.text = element_text(size = 12),
                              panel.grid.minor = element_blank())
-)</code></pre>
+)
+
+source(&quot;code/plotting_functions.R&quot;)</code></pre>
 <p>Set directories</p>
 <pre class="r"><code>data_dir &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/&quot;
 dir.create(&quot;/project2/xinhe/kevinluo/GSFA/music_analysis/Stimulated_T_Cells&quot;, recursive = TRUE, showWarnings = FALSE)</code></pre>
@@ -769,8 +805,8 @@ TCells_D1N TCells_D1S TCells_D2N TCells_D2S
 <h2>Run simulated data</h2>
 <pre class="r"><code>dir.create(&quot;/project2/xinhe/kevinluo/GSFA/music_analysis/Stimulated_T_Cells/stimulated&quot;, recursive = TRUE, showWarnings = FALSE)
 res_dir &lt;- &quot;/project2/xinhe/kevinluo/GSFA/music_analysis/Stimulated_T_Cells/stimulated&quot;
-# setwd(res_dir)
 dir.create(file.path(res_dir,&quot;/music_output&quot;), recursive = TRUE, showWarnings = FALSE)</code></pre>
+<pre class="r"><code>setwd(res_dir)</code></pre>
 <div id="load-input-data" class="section level3">
 <h3>0. Load input data</h3>
 <pre class="r"><code>feature.names &lt;- data.frame(fread(paste0(data_dir, &quot;GSE119450_RAW/D1N/genes.tsv&quot;),
@@ -989,16 +1025,29 @@ head(perturb_cor, 10)
 <p>Adaptation to the code to generate calibrated empirical TPD scores</p>
 <pre class="r"><code>summary_df &lt;- Empirical_topic_prob_diff(topic_res$models[[1]],
                                         topic_res$perturb_information)
-saveRDS(summary_df, &quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;)
+saveRDS(summary_df, &quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;)</code></pre>
+<pre class="r"><code>summary_df &lt;- readRDS(file.path(res_dir, &quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;))
 
-summary_df &lt;- readRDS(&quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;)
+summary_df &lt;- summary_df %&gt;%
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
+
+summary_df &lt;- summary_df %&gt;%
+  mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 20:1)))
 
 log10_pval_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) &lt;- log10_pval_mat$knockout
-log10_pval_mat$knockout &lt;- NULL</code></pre>
-<pre class="r"><code>pdf(&quot;music_output/music_merged_20_topics_empirical_tstats_heatmap.pdf&quot;,
-    width = 12, height = 8)
+log10_pval_mat$knockout &lt;- NULL
+
+fdr_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
+rownames(fdr_mat) &lt;- fdr_mat$knockout
+fdr_mat$knockout &lt;- NULL
+
+effect_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
+rownames(effect_mat) &lt;- effect_mat$knockout
+effect_mat$knockout &lt;- NULL</code></pre>
+<pre class="r"><code># pdf(&quot;music_output/music_merged_20_topics_empirical_tstats_heatmap.pdf&quot;,
+#     width = 12, height = 8)
 ht &lt;- Heatmap(log10_pval_mat,
               name = &quot;Polarized empirical t-test -log10(p-value)\n(KO vs ctrl cell topic probs)&quot;,
               col = circlize::colorRamp2(breaks = c(-4, 0, 4), colors = c(&quot;blue&quot;, &quot;grey90&quot;, &quot;red&quot;)),
@@ -1006,8 +1055,21 @@ ht &lt;- Heatmap(log10_pval_mat,
               column_names_rot = 45,
               heatmap_legend_param = list(title_gp = gpar(fontsize = 12,
                                                           fontface = &quot;bold&quot;)))
-draw(ht)
-dev.off()</code></pre>
+draw(ht)</code></pre>
+<p><img src="figure/music_TCells_data.Rmd/empirical_tstats_heatmap_20topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># dev.off()</code></pre>
+<pre class="r"><code># pdf(&quot;music_output/music_merged_20_topics_empirical_tstats_fdr_dotplot.pdf&quot;,
+#     width = 12, height = 8)
+KO_names &lt;- rownames(fdr_mat)
+dotplot_effectsize(t(effect_mat), t(fdr_mat),
+                   reorder_markers = c(KO_names[KO_names!=&quot;CTRL&quot;], &quot;CTRL&quot;),
+                   color_lgd_title = &quot;MUSIC empirical T statistics&quot;,
+                   size_lgd_title = &quot;FDR&quot;,
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10)</code></pre>
+<p><img src="figure/music_TCells_data.Rmd/effect_fdr_dotplot_20topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># dev.off()</code></pre>
 </div>
 <div id="summarize-the-results-using-the-optimal-number-of-topics-selected-by-the-score" class="section level3">
 <h3>Summarize the results using the optimal number of topics selected by the score</h3>
@@ -1067,26 +1129,26 @@ rank_overall_result &lt;- Rank_overall(distri_diff)
 print(rank_overall_result)
 # saveRDS(rank_overall_result, &quot;music_output/rank_overall_4_topics_result.rds&quot;)</code></pre>
 <pre><code>   perturbation ranking     Score off_target
-1          CD3D       1 80.530442       none
-2          CBLB       2 60.278771       none
-3        HAVCR2       3 56.028442       none
-4         MEF2D       4 54.145647       none
-5          LAG3       5 53.726359       none
-6          LCP2       6 50.693683       none
-7         RASA2       7 40.488641       none
-8       TMEM222       8 40.044612       none
-9         PDCD1       9 33.145090       none
-10         BTLA      10 32.157802       none
-11        SOCS1      11 31.885073       none
-12      TNFRSF9      12 30.278514       none
-13         DGKZ      13 28.454190       none
-14          CD5      14 28.286301       none
-15        TCEB2      15 23.324012       none
-16       ARID1A      16 22.979068       none
-17       CDKN1B      17 17.827157       none
-18        STAT6      18 15.337197       none
-19         DGKA      19 13.227355       none
-20     C10orf54      20  3.697651       none</code></pre>
+1          CD3D       1 80.479730       none
+2          CBLB       2 60.497307       none
+3        HAVCR2       3 56.031576       none
+4         MEF2D       4 54.385870       none
+5          LAG3       5 53.626918       none
+6          LCP2       6 50.550911       none
+7         RASA2       7 40.714017       none
+8       TMEM222       8 40.266773       none
+9         PDCD1       9 33.086684       none
+10        SOCS1      10 31.989369       none
+11         BTLA      11 31.950377       none
+12      TNFRSF9      12 30.519064       none
+13         DGKZ      13 28.659389       none
+14          CD5      14 28.418794       none
+15        TCEB2      15 23.491816       none
+16       ARID1A      16 22.865849       none
+17       CDKN1B      17 17.677077       none
+18        STAT6      18 15.492215       none
+19         DGKA      19 13.237648       none
+20     C10orf54      20  3.782439       none</code></pre>
 <p>Topic-specific ranking list.</p>
 <pre class="r"><code>rank_topic_specific_result &lt;- Rank_specific(distri_diff)
 print(rank_topic_specific_result)
@@ -1107,257 +1169,96 @@ print(rank_topic_specific_result)
 13 Topic2       HAVCR2       8
 14 Topic2         CBLB       9
 15 Topic2        MEF2D      10
-16 Topic3         DGKZ       1
-17 Topic3       ARID1A       2
-18 Topic3          CD5       3
-19 Topic3         DGKA       4
-20 Topic3         CBLB       5
-21 Topic3         BTLA       6
-22 Topic3       CDKN1B       7
-23 Topic3     C10orf54       8
-24 Topic3        STAT6       9
-25 Topic3        MEF2D      10
-26 Topic3       HAVCR2      11
-27 Topic3         LCP2      12
-28 Topic3        RASA2      13
-29 Topic3      TNFRSF9      14
-30 Topic3        TCEB2      15
-31 Topic3      TMEM222      16
-32 Topic3         CD3D      17
-33 Topic3        SOCS1      18
-34 Topic3        PDCD1      19
-35 Topic3         LAG3      20
-36 Topic4      TMEM222       1
-37 Topic4       HAVCR2       2
-38 Topic4        PDCD1       3
-39 Topic4        SOCS1       4
-40 Topic4         CBLB       5
-41 Topic4        RASA2       6
-42 Topic4        MEF2D       7
-43 Topic4        TCEB2       8
-44 Topic4         BTLA       9
-45 Topic4      TNFRSF9      10
-46 Topic4         CD3D      11
-47 Topic4       CDKN1B      12
-48 Topic4         LAG3      13
-49 Topic4       ARID1A      14
-50 Topic4         DGKZ      15
-51 Topic4         LCP2      16
-52 Topic4        STAT6      17
-53 Topic4     C10orf54      18
-54 Topic4         DGKA      19
-55 Topic4          CD5      20</code></pre>
+16 Topic2      TMEM222      11
+17 Topic2        TCEB2      12
+18 Topic2        PDCD1      13
+19 Topic2         DGKZ      14
+20 Topic2     C10orf54      15
+21 Topic2      TNFRSF9      16
+22 Topic3         DGKZ       1
+23 Topic3       ARID1A       2
+24 Topic3          CD5       3
+25 Topic3         DGKA       4
+26 Topic3         CBLB       5
+27 Topic3         BTLA       6
+28 Topic3       CDKN1B       7
+29 Topic3     C10orf54       8
+30 Topic3        STAT6       9
+31 Topic3        MEF2D      10
+32 Topic3       HAVCR2      11
+33 Topic3         LCP2      12
+34 Topic3        RASA2      13
+35 Topic3      TNFRSF9      14
+36 Topic3        TCEB2      15
+37 Topic3      TMEM222      16
+38 Topic3         CD3D      17
+39 Topic3        SOCS1      18
+40 Topic3        PDCD1      19
+41 Topic3         LAG3      20
+42 Topic4      TMEM222       1
+43 Topic4       HAVCR2       2
+44 Topic4        PDCD1       3
+45 Topic4        SOCS1       4
+46 Topic4         CBLB       5
+47 Topic4        RASA2       6
+48 Topic4        MEF2D       7
+49 Topic4        TCEB2       8
+50 Topic4         BTLA       9
+51 Topic4      TNFRSF9      10
+52 Topic4         CD3D      11
+53 Topic4       CDKN1B      12
+54 Topic4         LAG3      13
+55 Topic4       ARID1A      14
+56 Topic4         DGKZ      15
+57 Topic4         LCP2      16
+58 Topic4        STAT6      17
+59 Topic4     C10orf54      18
+60 Topic4         DGKA      19
+61 Topic4          CD5      20</code></pre>
 <p>Perturbation correlation.</p>
 <pre class="r"><code>perturb_cor &lt;- Correlation_perturbation(distri_diff,
                                         cutoff = 0.5, gene = &quot;all&quot;, plot = T,
                                         plot_path = file.path(res_dir, &quot;music_output/correlation_network_4_topics.pdf&quot;))
 
-perturb_cor
+head(perturb_cor, 10)
 # saveRDS(perturb_cor, &quot;music_output/perturb_cor_4_topics.rds&quot;)</code></pre>
-<pre><code>    Perturbation_1 Perturbation_2  Correlation
-2             BTLA         ARID1A  0.770849643
-3         C10orf54         ARID1A  0.883360721
-23        C10orf54           BTLA  0.654117917
-24            CBLB           BTLA -0.619663110
-44            CBLB       C10orf54  0.186660426
-4             CBLB         ARID1A -0.062207416
-65            CD3D           CBLB -0.930714703
-25            CD3D           BTLA  0.725471984
-5             CD3D         ARID1A  0.123857641
-45            CD3D       C10orf54  0.029905226
-66             CD5           CBLB  0.765833958
-46             CD5       C10orf54  0.747410460
-86             CD5           CD3D -0.641566868
-6              CD5         ARID1A  0.589072966
-26             CD5           BTLA  0.016020978
-27          CDKN1B           BTLA  0.938821665
-7           CDKN1B         ARID1A  0.839741541
-67          CDKN1B           CBLB -0.590557155
-47          CDKN1B       C10orf54  0.586094163
-87          CDKN1B           CD3D  0.580287053
-107         CDKN1B            CD5  0.055945397
-48            DGKA       C10orf54  0.957034741
-108           DGKA            CD5  0.887673067
-8             DGKA         ARID1A  0.876696813
-128           DGKA         CDKN1B  0.485578816
-28            DGKA           BTLA  0.474478947
-68            DGKA           CBLB  0.387455509
-88            DGKA           CD3D -0.233389495
-9             DGKZ         ARID1A  0.987071596
-49            DGKZ       C10orf54  0.946986017
-149           DGKZ           DGKA  0.929781607
-129           DGKZ         CDKN1B  0.772588598
-29            DGKZ           BTLA  0.747134111
-109           DGKZ            CD5  0.663698048
-89            DGKZ           CD3D  0.088026311
-69            DGKZ           CBLB  0.027316382
-70          HAVCR2           CBLB  0.990021391
-90          HAVCR2           CD3D -0.957809201
-30          HAVCR2           BTLA -0.720937407
-110         HAVCR2            CD5  0.677654122
-130         HAVCR2         CDKN1B -0.673113371
-150         HAVCR2           DGKA  0.263772690
-10          HAVCR2         ARID1A -0.177506862
-170         HAVCR2           DGKZ -0.098662939
-50          HAVCR2       C10orf54  0.048623011
-91            LAG3           CD3D  0.938819641
-191           LAG3         HAVCR2 -0.806342014
-71            LAG3           CBLB -0.747807067
-31            LAG3           BTLA  0.733092158
-131           LAG3         CDKN1B  0.496896416
-111           LAG3            CD5 -0.443713229
-51            LAG3       C10orf54  0.229695307
-171           LAG3           DGKZ  0.185087995
-11            LAG3         ARID1A  0.165815302
-151           LAG3           DGKA -0.059185978
-92            LCP2           CD3D  0.975523631
-72            LCP2           CBLB -0.959422068
-192           LCP2         HAVCR2 -0.955445376
-212           LCP2           LAG3  0.867431872
-112           LCP2            CD5 -0.794330788
-32            LCP2           BTLA  0.572938086
-132           LCP2         CDKN1B  0.449925781
-152           LCP2           DGKA -0.437421064
-52            LCP2       C10orf54 -0.190118778
-172           LCP2           DGKZ -0.116703599
-12            LCP2         ARID1A -0.065423745
-73           MEF2D           CBLB  0.997326213
-193          MEF2D         HAVCR2  0.988077754
-233          MEF2D           LCP2 -0.936702009
-93           MEF2D           CD3D -0.910627304
-113          MEF2D            CD5  0.739446370
-213          MEF2D           LAG3 -0.713836956
-33           MEF2D           BTLA -0.635359128
-133          MEF2D         CDKN1B -0.629091878
-153          MEF2D           DGKA  0.356199809
-53           MEF2D       C10orf54  0.168431948
-13           MEF2D         ARID1A -0.107354188
-173          MEF2D           DGKZ -0.010097601
-194          PDCD1         HAVCR2  0.963461820
-254          PDCD1          MEF2D  0.949435811
-74           PDCD1           CBLB  0.933960429
-94           PDCD1           CD3D -0.881400035
-234          PDCD1           LCP2 -0.843453064
-134          PDCD1         CDKN1B -0.839941055
-34           PDCD1           BTLA -0.831113797
-214          PDCD1           LAG3 -0.720317568
-114          PDCD1            CD5  0.490718582
-14           PDCD1         ARID1A -0.413384213
-174          PDCD1           DGKZ -0.322929800
-54           PDCD1       C10orf54 -0.132179667
-154          PDCD1           DGKA  0.046525040
-195          RASA2         HAVCR2  0.988880361
-95           RASA2           CD3D -0.976965416
-275          RASA2          PDCD1  0.961869613
-75           RASA2           CBLB  0.959146232
-255          RASA2          MEF2D  0.954523229
-235          RASA2           LCP2 -0.944517767
-215          RASA2           LAG3 -0.870160372
-35           RASA2           BTLA -0.798248822
-135          RASA2         CDKN1B -0.717493931
-115          RASA2            CD5  0.589084098
-15           RASA2         ARID1A -0.262360187
-175          RASA2           DGKZ -0.201265353
-155          RASA2           DGKA  0.151331761
-55           RASA2       C10orf54 -0.082123678
-296          SOCS1          RASA2  0.971439594
-96           SOCS1           CD3D -0.955583551
-196          SOCS1         HAVCR2  0.925672063
-276          SOCS1          PDCD1  0.923312701
-216          SOCS1           LAG3 -0.920284598
-36           SOCS1           BTLA -0.896082572
-236          SOCS1           LCP2 -0.874216428
-76           SOCS1           CBLB  0.864640844
-256          SOCS1          MEF2D  0.858260507
-136          SOCS1         CDKN1B -0.775420061
-16           SOCS1         ARID1A -0.409756923
-116          SOCS1            CD5  0.406071648
-176          SOCS1           DGKZ -0.376910722
-56           SOCS1       C10orf54 -0.300427805
-156          SOCS1           DGKA -0.053357379
-57           STAT6       C10orf54  0.900284803
-177          STAT6           DGKZ  0.765757873
-157          STAT6           DGKA  0.746080246
-37           STAT6           BTLA  0.701162299
-17           STAT6         ARID1A  0.672280832
-217          STAT6           LAG3  0.564458832
-317          STAT6          SOCS1 -0.503150333
-137          STAT6         CDKN1B  0.496529744
-117          STAT6            CD5  0.488093071
-97           STAT6           CD3D  0.311925937
-297          STAT6          RASA2 -0.283923962
-277          STAT6          PDCD1 -0.217878619
-197          STAT6         HAVCR2 -0.138813238
-237          STAT6           LCP2  0.103840122
-257          STAT6          MEF2D  0.010137272
-77           STAT6           CBLB -0.001619731
-278          TCEB2          PDCD1  0.989855653
-298          TCEB2          RASA2  0.949002927
-318          TCEB2          SOCS1  0.943593788
-198          TCEB2         HAVCR2  0.931027913
-38           TCEB2           BTLA -0.901485031
-258          TCEB2          MEF2D  0.899102156
-138          TCEB2         CDKN1B -0.896126204
-78           TCEB2           CBLB  0.882329136
-98           TCEB2           CD3D -0.865805463
-238          TCEB2           LCP2 -0.797276638
-218          TCEB2           LAG3 -0.740584914
-18           TCEB2         ARID1A -0.523089386
-178          TCEB2           DGKZ -0.445685442
-118          TCEB2            CD5  0.373395039
-338          TCEB2          STAT6 -0.345326844
-58           TCEB2       C10orf54 -0.271139649
-158          TCEB2           DGKA -0.088636219
-359        TMEM222          TCEB2  0.999110793
-279        TMEM222          PDCD1  0.994960787
-299        TMEM222          RASA2  0.954363944
-199        TMEM222         HAVCR2  0.942250691
-319        TMEM222          SOCS1  0.939029781
-259        TMEM222          MEF2D  0.915712626
-79         TMEM222           CBLB  0.899168251
-39         TMEM222           BTLA -0.882460573
-139        TMEM222         CDKN1B -0.881868354
-99         TMEM222           CD3D -0.871462521
-239        TMEM222           LCP2 -0.811860865
-219        TMEM222           LAG3 -0.735009239
-19         TMEM222         ARID1A -0.492404883
-179        TMEM222           DGKZ -0.410793624
-119        TMEM222            CD5  0.408350079
-339        TMEM222          STAT6 -0.307678809
-59         TMEM222       C10orf54 -0.230657219
-159        TMEM222           DGKA -0.049283847
-260        TNFRSF9          MEF2D  0.993067003
-200        TNFRSF9         HAVCR2  0.984943537
-80         TNFRSF9           CBLB  0.983453410
-280        TNFRSF9          PDCD1  0.977582871
-300        TNFRSF9          RASA2  0.957961021
-380        TNFRSF9        TMEM222  0.952029442
-360        TNFRSF9          TCEB2  0.938549393
-240        TNFRSF9           LCP2 -0.901387246
-100        TNFRSF9           CD3D -0.893943269
-320        TNFRSF9          SOCS1  0.875423921
-140        TNFRSF9         CDKN1B -0.713524215
-40         TNFRSF9           BTLA -0.700758354
-220        TNFRSF9           LAG3 -0.696563043
-120        TNFRSF9            CD5  0.659445586
-160        TNFRSF9           DGKA  0.254969472
-20         TNFRSF9         ARID1A -0.218970006
-180        TNFRSF9           DGKZ -0.117964327
-60         TNFRSF9       C10orf54  0.077304217
-340        TNFRSF9          STAT6 -0.042683263</code></pre>
+<pre><code>   Perturbation_1 Perturbation_2  Correlation
+2            BTLA         ARID1A  0.768508989
+3        C10orf54         ARID1A  0.876073418
+23       C10orf54           BTLA  0.629414928
+24           CBLB           BTLA -0.613803324
+44           CBLB       C10orf54  0.225585570
+4            CBLB         ARID1A -0.052114102
+65           CD3D           CBLB -0.928371464
+25           CD3D           BTLA  0.724381200
+5            CD3D         ARID1A  0.118473903
+45           CD3D       C10orf54 -0.001624742</code></pre>
 <p>Adaptation to the code to generate calibrated empirical TPD scores</p>
 <pre class="r"><code>summary_df &lt;- Empirical_topic_prob_diff(optimalModel,
                                         topic_model_list$perturb_information)
-saveRDS(summary_df, &quot;music_output/music_merged_4_topics_ttest_summary.rds&quot;)
+saveRDS(summary_df, &quot;music_output/music_merged_4_topics_ttest_summary.rds&quot;)</code></pre>
+<pre class="r"><code>summary_df &lt;- readRDS(file.path(res_dir, &quot;music_output/music_merged_4_topics_ttest_summary.rds&quot;))
 
-summary_df &lt;- readRDS(&quot;music_output/music_merged_4_topics_ttest_summary.rds&quot;)
+summary_df &lt;- summary_df %&gt;%
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
+
+summary_df &lt;- summary_df %&gt;%
+  mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 4:1)))
 
 log10_pval_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) &lt;- log10_pval_mat$knockout
-log10_pval_mat$knockout &lt;- NULL</code></pre>
-<pre class="r"><code>pdf(&quot;music_output/music_merged_4_topics_empirical_tstats_heatmap.pdf&quot;,
-    width = 12, height = 8)
+log10_pval_mat$knockout &lt;- NULL
+
+fdr_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
+rownames(fdr_mat) &lt;- fdr_mat$knockout
+fdr_mat$knockout &lt;- NULL
+
+effect_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
+rownames(effect_mat) &lt;- effect_mat$knockout
+effect_mat$knockout &lt;- NULL</code></pre>
+<pre class="r"><code># pdf(&quot;music_output/music_merged_4_topics_empirical_tstats_heatmap.pdf&quot;,
+#     width = 12, height = 8)
 ht &lt;- Heatmap(log10_pval_mat,
               name = &quot;Polarized empirical t-test -log10(p-value)\n(KO vs ctrl cell topic probs)&quot;,
               col = circlize::colorRamp2(breaks = c(-4, 0, 4), colors = c(&quot;blue&quot;, &quot;grey90&quot;, &quot;red&quot;)),
@@ -1365,8 +1266,21 @@ ht &lt;- Heatmap(log10_pval_mat,
               column_names_rot = 45,
               heatmap_legend_param = list(title_gp = gpar(fontsize = 12,
                                                           fontface = &quot;bold&quot;)))
-draw(ht)
-dev.off()</code></pre>
+draw(ht)</code></pre>
+<p><img src="figure/music_TCells_data.Rmd/empirical_tstats_heatmap_4topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># dev.off()</code></pre>
+<pre class="r"><code># pdf(&quot;music_output/music_merged_4_topics_empirical_tstats_fdr_dotplot.pdf&quot;,
+#     width = 12, height = 8)
+KO_names &lt;- rownames(fdr_mat)
+dotplot_effectsize(t(effect_mat), t(fdr_mat),
+                   reorder_markers = c(KO_names[KO_names!=&quot;CTRL&quot;], &quot;CTRL&quot;),
+                   color_lgd_title = &quot;MUSIC empirical T statistics&quot;,
+                   size_lgd_title = &quot;FDR&quot;,
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10)</code></pre>
+<p><img src="figure/music_TCells_data.Rmd/effect_fdr_dotplot_4topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># dev.off()</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1396,12 +1310,12 @@ attached base packages:
 
 other attached packages:
  [1] igraph_1.2.11          reshape2_1.4.4         gplots_3.1.1          
- [4] entropy_1.3.1          dplyr_1.0.8            ggplot2_3.3.5         
- [7] ComplexHeatmap_2.6.2   MUSIC_1.0              SAVER_1.1.2           
-[10] clusterProfiler_3.18.1 hash_2.2.6.2           topicmodels_0.2-12    
-[13] Biostrings_2.58.0      XVector_0.30.0         IRanges_2.24.1        
-[16] S4Vectors_0.28.1       BiocGenerics_0.36.1    SeuratObject_4.0.4    
-[19] Seurat_4.1.0           data.table_1.14.2      workflowr_1.7.0       
+ [4] entropy_1.3.1          dplyr_1.0.8            lattice_0.20-45       
+ [7] ggplot2_3.3.5          ComplexHeatmap_2.6.2   MUSIC_1.0             
+[10] SAVER_1.1.2            clusterProfiler_3.18.1 hash_2.2.6.2          
+[13] topicmodels_0.2-12     Biostrings_2.58.0      XVector_0.30.0        
+[16] IRanges_2.24.1         S4Vectors_0.28.1       BiocGenerics_0.36.1   
+[19] SeuratObject_4.0.4     Seurat_4.1.0           data.table_1.14.2     
 
 loaded via a namespace (and not attached):
   [1] utf8_1.2.2            reticulate_1.24       tidyselect_1.1.2     
@@ -1410,26 +1324,26 @@ loaded via a namespace (and not attached):
  [10] munsell_0.5.0         codetools_0.2-18      ica_1.0-2            
  [13] future_1.24.0         miniUI_0.1.1.1        withr_2.5.0          
  [16] spatstat.random_2.1-0 colorspace_2.0-3      GOSemSim_2.16.1      
- [19] Biobase_2.50.0        NLP_0.2-1             knitr_1.38           
- [22] rstudioapi_0.13       ROCR_1.0-11           tensor_1.5           
- [25] DOSE_3.16.0           listenv_0.8.0         git2r_0.30.1         
- [28] slam_0.1-50           polyclip_1.10-0       bit64_4.0.5          
- [31] farver_2.1.0          rprojroot_2.0.2       downloader_0.4       
- [34] parallelly_1.31.0     vctrs_0.4.1           generics_0.1.2       
- [37] xfun_0.30             R6_2.5.1              clue_0.3-60          
- [40] graphlayouts_0.8.0    bitops_1.0-7          spatstat.utils_2.3-0 
- [43] cachem_1.0.6          fgsea_1.21.0          assertthat_0.2.1     
- [46] promises_1.2.0.1      scales_1.2.0          ggraph_2.0.5         
- [49] enrichplot_1.10.2     gtable_0.3.0          Cairo_1.5-15         
- [52] globals_0.14.0        processx_3.5.3        goftest_1.2-3        
- [55] tidygraph_1.2.0       rlang_1.0.2           GlobalOptions_0.1.2  
- [58] splines_4.0.4         lazyeval_0.2.2        spatstat.geom_2.3-2  
- [61] BiocManager_1.30.16   yaml_2.3.5            abind_1.4-5          
- [64] httpuv_1.6.5          qvalue_2.22.0         tools_4.0.4          
- [67] ellipsis_0.3.2        spatstat.core_2.4-0   jquerylib_0.1.4      
- [70] RColorBrewer_1.1-3    ggridges_0.5.3        Rcpp_1.0.9           
- [73] plyr_1.8.6            zlibbioc_1.36.0       purrr_0.3.4          
- [76] ps_1.6.0              rpart_4.1-15          deldir_1.0-6         
+ [19] Biobase_2.50.0        highr_0.9             NLP_0.2-1            
+ [22] knitr_1.38            rstudioapi_0.13       ROCR_1.0-11          
+ [25] tensor_1.5            DOSE_3.16.0           listenv_0.8.0        
+ [28] git2r_0.30.1          slam_0.1-50           polyclip_1.10-0      
+ [31] bit64_4.0.5           farver_2.1.0          rprojroot_2.0.2      
+ [34] downloader_0.4        parallelly_1.31.0     vctrs_0.4.1          
+ [37] generics_0.1.2        xfun_0.30             R6_2.5.1             
+ [40] clue_0.3-60           graphlayouts_0.8.0    bitops_1.0-7         
+ [43] spatstat.utils_2.3-0  cachem_1.0.6          fgsea_1.21.0         
+ [46] assertthat_0.2.1      promises_1.2.0.1      scales_1.2.0         
+ [49] ggraph_2.0.5          enrichplot_1.10.2     gtable_0.3.0         
+ [52] Cairo_1.5-15          globals_0.14.0        goftest_1.2-3        
+ [55] tidygraph_1.2.0       workflowr_1.7.0       rlang_1.0.2          
+ [58] GlobalOptions_0.1.2   splines_4.0.4         lazyeval_0.2.2       
+ [61] spatstat.geom_2.3-2   BiocManager_1.30.16   yaml_2.3.5           
+ [64] abind_1.4-5           httpuv_1.6.5          qvalue_2.22.0        
+ [67] tools_4.0.4           ellipsis_0.3.2        spatstat.core_2.4-0  
+ [70] jquerylib_0.1.4       RColorBrewer_1.1-3    ggridges_0.5.3       
+ [73] Rcpp_1.0.9            plyr_1.8.6            zlibbioc_1.36.0      
+ [76] purrr_0.3.4           rpart_4.1-15          deldir_1.0-6         
  [79] GetoptLong_1.0.5      pbapply_1.5-0         viridis_0.6.2        
  [82] cowplot_1.1.1         zoo_1.8-9             ggrepel_0.9.1        
  [85] cluster_2.1.2         fs_1.5.2              magrittr_2.0.3       
@@ -1443,22 +1357,21 @@ loaded via a namespace (and not attached):
 [109] mgcv_1.8-39           later_1.3.0           tidyr_1.2.0          
 [112] DBI_1.1.2             tweenr_1.0.2          MASS_7.3-56          
 [115] Matrix_1.4-1          cli_3.2.0             pkgconfig_2.0.3      
-[118] getPass_0.2-2         rvcheck_0.2.1         plotly_4.10.0        
-[121] spatstat.sparse_2.1-0 foreach_1.5.2         xml2_1.3.3           
-[124] bslib_0.3.1           yulab.utils_0.0.4     stringr_1.4.0        
-[127] callr_3.7.0           digest_0.6.29         sctransform_0.3.3    
-[130] RcppAnnoy_0.0.19      spatstat.data_2.1-2   tm_0.7-8             
-[133] rmarkdown_2.13        leiden_0.3.9          fastmatch_1.1-3      
-[136] uwot_0.1.11           gtools_3.9.2          shiny_1.7.1          
-[139] modeltools_0.2-23     rjson_0.2.21          lifecycle_1.0.1      
-[142] nlme_3.1-155          jsonlite_1.8.0        viridisLite_0.4.0    
-[145] fansi_1.0.3           pillar_1.7.0          lattice_0.20-45      
-[148] fastmap_1.1.0         httr_1.4.2            survival_3.3-1       
-[151] GO.db_3.12.1          glue_1.6.2            iterators_1.0.14     
-[154] png_0.1-7             bit_4.0.4             ggforce_0.3.3        
-[157] stringi_1.7.6         sass_0.4.1            blob_1.2.3           
-[160] caTools_1.18.2        memoise_2.0.1         irlba_2.3.5          
-[163] future.apply_1.8.1   </code></pre>
+[118] rvcheck_0.2.1         plotly_4.10.0         spatstat.sparse_2.1-0
+[121] foreach_1.5.2         xml2_1.3.3            bslib_0.3.1          
+[124] yulab.utils_0.0.4     stringr_1.4.0         digest_0.6.29        
+[127] sctransform_0.3.3     RcppAnnoy_0.0.19      spatstat.data_2.1-2  
+[130] tm_0.7-8              rmarkdown_2.13        leiden_0.3.9         
+[133] fastmatch_1.1-3       uwot_0.1.11           gtools_3.9.2         
+[136] shiny_1.7.1           modeltools_0.2-23     rjson_0.2.21         
+[139] lifecycle_1.0.1       nlme_3.1-155          jsonlite_1.8.0       
+[142] viridisLite_0.4.0     fansi_1.0.3           pillar_1.7.0         
+[145] fastmap_1.1.0         httr_1.4.2            survival_3.3-1       
+[148] GO.db_3.12.1          glue_1.6.2            iterators_1.0.14     
+[151] png_0.1-7             bit_4.0.4             ggforce_0.3.3        
+[154] stringi_1.7.6         sass_0.4.1            blob_1.2.3           
+[157] caTools_1.18.2        memoise_2.0.1         irlba_2.3.5          
+[160] future.apply_1.8.1   </code></pre>
 </div>
 </div>
 </div>
