@@ -16,7 +16,8 @@ knitr::opts_chunk$set(results = "hold", fig.align = "center", message=FALSE, war
 
 slurm setting
 ```{bash eval=FALSE}
-sinteractive --partition=broadwl --account=pi-xinhe --mem=30G --time=10:00:00 --cpus-per-task=10
+sinteractive --partition=broadwl --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=10
+sinteractive --partition=xinhe --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=10
 ```
 
 Scripts for running the analysis:
@@ -162,6 +163,8 @@ theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
                              legend.text = element_text(size = 12),
                              panel.grid.minor = element_blank())
 )
+
+source("code/plotting_functions.R")
 ```
 
 Set directories
@@ -192,8 +195,11 @@ cat(length(unstimulated_cells), "unstimulated cells. \n")
 ```{r}
 dir.create("/project2/xinhe/kevinluo/GSFA/music_analysis/Stimulated_T_Cells/stimulated", recursive = TRUE, showWarnings = FALSE)
 res_dir <- "/project2/xinhe/kevinluo/GSFA/music_analysis/Stimulated_T_Cells/stimulated"
-# setwd(res_dir)
 dir.create(file.path(res_dir,"/music_output"), recursive = TRUE, showWarnings = FALSE)
+```
+
+```{r, eval=FALSE}
+setwd(res_dir)
 ```
 
 ### 0. Load input data
@@ -392,18 +398,35 @@ Adaptation to the code to generate calibrated empirical TPD scores
 summary_df <- Empirical_topic_prob_diff(topic_res$models[[1]],
                                         topic_res$perturb_information)
 saveRDS(summary_df, "music_output/music_merged_20_topics_ttest_summary.rds")
+```
 
-summary_df <- readRDS("music_output/music_merged_20_topics_ttest_summary.rds")
+
+```{r load_summary_df_20topics}
+summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_20_topics_ttest_summary.rds"))
+
+summary_df <- summary_df %>%
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
+
+summary_df <- summary_df %>%
+  mutate(topic = factor(topic, levels = paste0("Topic_", 20:1)))
 
 log10_pval_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) <- log10_pval_mat$knockout
 log10_pval_mat$knockout <- NULL
+
+fdr_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
+rownames(fdr_mat) <- fdr_mat$knockout
+fdr_mat$knockout <- NULL
+
+effect_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
+rownames(effect_mat) <- effect_mat$knockout
+effect_mat$knockout <- NULL
 ```
 
-```{r Empirical_topic_prob_diff_20topics-2, eval=FALSE, fig.width=12, fig.height=8}
-pdf("music_output/music_merged_20_topics_empirical_tstats_heatmap.pdf",
-    width = 12, height = 8)
+```{r empirical_tstats_heatmap_20topics, eval=TRUE, fig.width=12, fig.height=8}
+# pdf("music_output/music_merged_20_topics_empirical_tstats_heatmap.pdf",
+#     width = 12, height = 8)
 ht <- Heatmap(log10_pval_mat,
               name = "Polarized empirical t-test -log10(p-value)\n(KO vs ctrl cell topic probs)",
               col = circlize::colorRamp2(breaks = c(-4, 0, 4), colors = c("blue", "grey90", "red")),
@@ -412,7 +435,21 @@ ht <- Heatmap(log10_pval_mat,
               heatmap_legend_param = list(title_gp = gpar(fontsize = 12,
                                                           fontface = "bold")))
 draw(ht)
-dev.off()
+# dev.off()
+```
+
+```{r effect_fdr_dotplot_20topics, eval=TRUE, fig.width=12, fig.height=8}
+# pdf("music_output/music_merged_20_topics_empirical_tstats_fdr_dotplot.pdf",
+#     width = 12, height = 8)
+KO_names <- rownames(fdr_mat)
+dotplot_effectsize(t(effect_mat), t(fdr_mat),
+                   reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
+                   color_lgd_title = "MUSIC empirical T statistics",
+                   size_lgd_title = "FDR",
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10)
+# dev.off()
 ```
 
 ### Summarize the results using the optimal number of topics selected by the score
@@ -503,7 +540,7 @@ perturb_cor <- Correlation_perturbation(distri_diff,
                                         cutoff = 0.5, gene = "all", plot = T,
                                         plot_path = file.path(res_dir, "music_output/correlation_network_4_topics.pdf"))
 
-perturb_cor
+head(perturb_cor, 10)
 # saveRDS(perturb_cor, "music_output/perturb_cor_4_topics.rds")
 ```
 
@@ -513,18 +550,34 @@ Adaptation to the code to generate calibrated empirical TPD scores
 summary_df <- Empirical_topic_prob_diff(optimalModel,
                                         topic_model_list$perturb_information)
 saveRDS(summary_df, "music_output/music_merged_4_topics_ttest_summary.rds")
+```
 
-summary_df <- readRDS("music_output/music_merged_4_topics_ttest_summary.rds")
+```{r load_summary_df_4topics}
+summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_4_topics_ttest_summary.rds"))
+
+summary_df <- summary_df %>%
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
+
+summary_df <- summary_df %>%
+  mutate(topic = factor(topic, levels = paste0("Topic_", 4:1)))
 
 log10_pval_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) <- log10_pval_mat$knockout
 log10_pval_mat$knockout <- NULL
+
+fdr_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
+rownames(fdr_mat) <- fdr_mat$knockout
+fdr_mat$knockout <- NULL
+
+effect_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
+rownames(effect_mat) <- effect_mat$knockout
+effect_mat$knockout <- NULL
 ```
 
-```{r Empirical_topic_prob_diff_4topics-2, eval=FALSE, fig.width=12, fig.height=8}
-pdf("music_output/music_merged_4_topics_empirical_tstats_heatmap.pdf",
-    width = 12, height = 8)
+```{r empirical_tstats_heatmap_4topics, eval=TRUE, fig.width=12, fig.height=8}
+# pdf("music_output/music_merged_4_topics_empirical_tstats_heatmap.pdf",
+#     width = 12, height = 8)
 ht <- Heatmap(log10_pval_mat,
               name = "Polarized empirical t-test -log10(p-value)\n(KO vs ctrl cell topic probs)",
               col = circlize::colorRamp2(breaks = c(-4, 0, 4), colors = c("blue", "grey90", "red")),
@@ -533,5 +586,19 @@ ht <- Heatmap(log10_pval_mat,
               heatmap_legend_param = list(title_gp = gpar(fontsize = 12,
                                                           fontface = "bold")))
 draw(ht)
-dev.off()
+# dev.off()
+```
+
+```{r effect_fdr_dotplot_4topics, eval=TRUE, fig.width=12, fig.height=8}
+# pdf("music_output/music_merged_4_topics_empirical_tstats_fdr_dotplot.pdf",
+#     width = 12, height = 8)
+KO_names <- rownames(fdr_mat)
+dotplot_effectsize(t(effect_mat), t(fdr_mat),
+                   reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
+                   color_lgd_title = "MUSIC empirical T statistics",
+                   size_lgd_title = "FDR",
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10)
+# dev.off()
 ```
