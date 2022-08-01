@@ -49,13 +49,13 @@ library(ComplexHeatmap)
 library(kableExtra)
 library(WebGestaltR)
 
-source("/project2/xinhe/yifan/Factor_analysis/analysis_website_for_Kevin/scripts/plotting_functions.R")
-data_folder <- "/project2/xinhe/yifan/Factor_analysis/LUHMES/"
+source("code/plotting_functions.R")
 ```
 
 The first thing we need is the output of GSFA `fit_gsfa_multivar()` run. The lighter version containing just the posterior mean estimates and LFSR of perturbation-gene effects is enough.
 
 ```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/LUHMES/"
 fit <- readRDS(paste0(data_folder,
                       "gsfa_output_detect_01/use_negctrl/All.gibbs_obj_k20.svd_negctrl.seed_14314.light.rds"))
 gibbs_PM <- fit$posterior_means
@@ -85,7 +85,7 @@ interest_df <- readRDS(paste0(data_folder, "processed_data/selected_neuronal_mar
 
 ### Perturbation effects on factors
 
-Fisrt of all, we look at the estimated effects of gene perturbations on factors inferred by GSFA. 
+First of all, we look at the estimated effects of gene perturbations on factors inferred by GSFA. 
 
 We found that targeting of 7 genes, ADNP, ARID1B, ASH1L, CHD2, DYRK1A, PTEN, and SETD5, has significant effects (PIP > 0.95) on at least 1 of the 20 inferred factors.
 
@@ -98,13 +98,6 @@ dotplot_beta_PIP(t(gibbs_PM$Gamma_pm), t(gibbs_PM$beta_pm),
   coord_flip()
 ```
 
-```{r fig.width=8, fig.height=5.5, eval=F}
-## Similar visualization using GSFA built-in functions:
-GSFA::dotplot_beta_PIP(fit,
-                       target_names = KO_names,
-                       reorder_targets = c(KO_names[KO_names!="Nontargeting"], "Nontargeting"))
-```
-
 Here is a closer look at the estimated effects of selected perturbations on selected factors (Figure 5A):
 
 ```{r Fig_5A, fig.width=4, fig.height=4}
@@ -114,13 +107,6 @@ complexplot_perturbation_factor(gibbs_PM$Gamma_pm[-nrow(gibbs_PM$Gamma_pm), ],
                                 marker_names = KO_names,
                                 reorder_markers = targets,
                                 reorder_factors = c(6, 9, 15))
-```
-
-```{r fig.width=4, fig.height=4, eval=F}
-## Similar visualization using GSFA built-in functions:
-GSFA::dotplot_beta_PIP(fit,
-                       target_names = KO_names,
-                       reorder_targets = targets, reorder_factors = c(6, 9, 15))
 ```
 
 ### Factor-perturbation association p values
