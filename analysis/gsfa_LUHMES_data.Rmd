@@ -1,5 +1,5 @@
 ---
-title: "Compare GSFA with MUSIC Results on LUHMES CROP-seq Data"
+title: "GSFA Results on LUHMES CROP-seq Data"
 author: "Kaixuan Luo"
 output:
   html_document:
