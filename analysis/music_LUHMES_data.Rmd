@@ -275,17 +275,6 @@ system.time(
                         topic_number = 6))
 saveRDS(topic_6, "music_output/music_merged_6_topics.rds")
 
-system.time(
-  topic_7 <- Get_topics(crop_seq_vargene$expression_profile,
-                        crop_seq_vargene$perturb_information,
-                        topic_number = 7))
-saveRDS(topic_7, "music_output/music_merged_7_topics.rds")
-
-system.time(
-  topic_8 <- Get_topics(crop_seq_vargene$expression_profile,
-                        crop_seq_vargene$perturb_information,
-                        topic_number = 3))
-saveRDS(topic_8, "music_output/music_merged_3_topics.rds")
 ```
 
 ### 3. Pick the number of topics
@@ -400,14 +389,14 @@ summary_df <- Empirical_topic_prob_diff(topic_res$models[[1]],
 saveRDS(summary_df, "music_output/music_merged_20_topics_ttest_summary.rds")
 ```
 
-```{r load_summary_df_20topics}
+```{r load_summary_df_20topics, message = FALSE, warning=FALSE}
 summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_20_topics_ttest_summary.rds"))
 
 summary_df <- summary_df %>%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
+  mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
 
 summary_df <- summary_df %>%
-  mutate(topic = factor(topic, levels = paste0("Topic_", 20:1)))
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
 
 log10_pval_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
@@ -437,7 +426,7 @@ draw(ht)
 # dev.off()
 ```
 
-```{r effect_fdr_dotplot_20topics, eval=TRUE, fig.width=12, fig.height=8}
+```{r effect_fdr_dotplot_20topics, eval=TRUE, fig.width=9, fig.height=5.5}
 # pdf("music_output/music_merged_20_topics_empirical_tstats_fdr_dotplot.pdf",
 #     width = 12, height = 8)
 KO_names <- rownames(fdr_mat)
@@ -447,7 +436,7 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10)
+                   by_score = 10) + coord_flip()
 # dev.off()
 ```
 
@@ -458,7 +447,6 @@ Pick optimal number of topics
 topic_1 <- readRDS("music_output/music_merged_4_topics.rds")
 topic_2 <- readRDS("music_output/music_merged_5_topics.rds")
 topic_3 <- readRDS("music_output/music_merged_6_topics.rds")
-topic_4 <- readRDS("music_output/music_merged_7_topics.rds")
 
 topic_model_list <- list()
 topic_model_list$models <- list()
@@ -466,11 +454,10 @@ topic_model_list$perturb_information <- topic_1$perturb_information
 topic_model_list$models[[1]] <- topic_1$models[[1]]
 topic_model_list$models[[2]] <- topic_2$models[[1]]
 topic_model_list$models[[3]] <- topic_3$models[[1]]
-topic_model_list$models[[4]] <- topic_4$models[[1]]
 
 optimalModel <- Select_topic_number(topic_model_list$models,
                                     plot = T,
-                                    plot_path = "music_output/select_topic_number_4to7.pdf")
+                                    plot_path = "music_output/select_topic_number_4to6.pdf")
 
 optimalModel
 saveRDS(optimalModel, "music_output/optimalModel_4_topics.rds")
@@ -557,14 +544,14 @@ saveRDS(summary_df, "music_output/music_merged_4_topics_ttest_summary.rds")
 ```
 
 
-```{r load_summary_df_4topics}
+```{r load_summary_df_4topics, warning=FALSE, message=FALSE}
 summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_4_topics_ttest_summary.rds"))
 
 summary_df <- summary_df %>%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
+  mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
 
 summary_df <- summary_df %>%
-  mutate(topic = factor(topic, levels = paste0("Topic_", 4:1)))
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
 
 log10_pval_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
@@ -594,7 +581,7 @@ draw(ht)
 # dev.off()
 ```
 
-```{r effect_fdr_dotplot_4topics, eval=TRUE, fig.width=12, fig.height=8}
+```{r effect_fdr_dotplot_4topics, eval=TRUE, fig.width=4, fig.height=5.5}
 # pdf("music_output/music_merged_4_topics_empirical_tstats_fdr_dotplot.pdf",
 #     width = 12, height = 8)
 KO_names <- rownames(fdr_mat)
@@ -604,8 +591,38 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10)
+                   by_score = 10) + coord_flip()
 # dev.off()
 ```
 
+<!-- ```{r test, eval=FALSE, include=FALSE} -->
+<!-- optimalModel <- readRDS("music_output/optimalModel_4_topics.rds") -->
+
+<!-- distri_diff <- readRDS(file.path(res_dir, "music_output/distri_diff_4_topics.rds")) -->
+
+<!-- topic_func <- readRDS("music_output/topic_func_4_topics.rds") -->
+
+<!-- model <- optimalModel -->
+<!-- my_beta <- exp(model@beta) -->
+<!-- topic_num <- nrow(my_beta) -->
+<!-- my_geneName <- model@terms -->
+<!-- colnames(my_beta) <- my_geneName -->
+<!-- rownames(my_beta) <- paste0('Topic_',1:nrow(my_beta)) -->
+
+<!-- my_beta[3, ] -->
+
+<!-- head(sort(my_beta[3, ], decreasing = T)) -->
+
+<!-- head(my_beta[3, ][order(my_beta[3, ], decreasing=T)]) -->
+
+<!-- length(perturb_information) -->
+<!-- table(perturb_information) -->
+
+<!-- target_cells_idx <- which(perturb_information == "ADNP") -->
+<!-- ctrl_cells_idx <- which(perturb_information == "CTRL") -->
+
+<!-- head(expression_profile[, target_cells_idx]) -->
+
+<!-- head(expression_profile[, ctrl_cells_idx]) -->
+<!-- ``` -->
 
