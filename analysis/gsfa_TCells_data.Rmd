@@ -1,5 +1,5 @@
 ---
-title: "Compare GSFA with MUSIC Results on CD8+ T Cell CROP-seq Data"
+title: "GSFA Results on CD8+ T Cell CROP-seq Data"
 author: "Kaixuan Luo"
 output:
   html_document:
@@ -51,13 +51,14 @@ library(ComplexHeatmap)
 library(kableExtra)
 library(WebGestaltR)
 
-source("/project2/xinhe/yifan/Factor_analysis/analysis_website_for_Kevin/scripts/plotting_functions.R")
-data_folder <- "/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/"
+source("code/plotting_functions.R")
+
 ```
 
 The first thing we need is the output of GSFA `fit_gsfa_multivar_2groups()` run. The lighter version containing just the posterior mean estimates and LFSR of perturbation-gene effects is enough.
 
 ```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/"
 fit <- readRDS(paste0(data_folder,
                       "gsfa_output_detect_01/all_uncorrected_by_group.use_negctrl/All.gibbs_obj_k20.svd_negctrl.restart.light.rds"))
 gibbs_PM <- fit$posterior_means
