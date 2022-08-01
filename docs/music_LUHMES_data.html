@@ -390,7 +390,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-07-29
+<strong>Last updated:</strong> 2022-08-01
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -481,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree66afbb08b92317b1c845086ff906e45f00ec77a9targetblank66afbb0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/66afbb08b92317b1c845086ff906e45f00ec77a9" target="_blank">66afbb0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree706ef41a00adbad74f1f1dd0635765675b373945targetblank706ef41a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/706ef41a00adbad74f1f1dd0635765675b373945" target="_blank">706ef41</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree66afbb08b92317b1c845086ff906e45f00ec77a9targetblank66afbb0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree706ef41a00adbad74f1f1dd0635765675b373945targetblank706ef41a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/66afbb08b92317b1c845086ff906e45f00ec77a9" target="_blank">66afbb0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/706ef41a00adbad74f1f1dd0635765675b373945" target="_blank">706ef41</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -519,6 +519,7 @@ Untracked files:
     Untracked:  code/seurat_sim_fpr_tpr.R
 
 Unstaged changes:
+    Modified:   analysis/music_TCells_data.Rmd
     Modified:   analysis/sceptre_LUHMES_data.Rmd
     Modified:   code/run_sceptre_cropseq_data.sbatch
     Modified:   code/sceptre_analysis.R
@@ -560,6 +561,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/706ef41a00adbad74f1f1dd0635765675b373945/analysis/music_LUHMES_data.Rmd" target="_blank">706ef41</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-01
+</td>
+<td>
+test 4-6 topics
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/e54a27e7a6bf206193282bb66e73ea9f861e46f7/docs/music_LUHMES_data.html" target="_blank">e54a27e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -918,19 +953,7 @@ system.time(
   topic_6 &lt;- Get_topics(crop_seq_vargene$expression_profile,
                         crop_seq_vargene$perturb_information,
                         topic_number = 6))
-saveRDS(topic_6, &quot;music_output/music_merged_6_topics.rds&quot;)
-
-system.time(
-  topic_7 &lt;- Get_topics(crop_seq_vargene$expression_profile,
-                        crop_seq_vargene$perturb_information,
-                        topic_number = 7))
-saveRDS(topic_7, &quot;music_output/music_merged_7_topics.rds&quot;)
-
-system.time(
-  topic_8 &lt;- Get_topics(crop_seq_vargene$expression_profile,
-                        crop_seq_vargene$perturb_information,
-                        topic_number = 3))
-saveRDS(topic_8, &quot;music_output/music_merged_3_topics.rds&quot;)</code></pre>
+saveRDS(topic_6, &quot;music_output/music_merged_6_topics.rds&quot;)</code></pre>
 </div>
 <div id="pick-the-number-of-topics" class="section level3">
 <h3>3. Pick the number of topics</h3>
@@ -1055,10 +1078,10 @@ saveRDS(summary_df, &quot;music_output/music_merged_20_topics_ttest_summary.rds&
 <pre class="r"><code>summary_df &lt;- readRDS(file.path(res_dir, &quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;))
 
 summary_df &lt;- summary_df %&gt;%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
+  mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 1:length(unique(summary_df$topic)))))
 
 summary_df &lt;- summary_df %&gt;%
-  mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 20:1)))
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
 
 log10_pval_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
@@ -1130,8 +1153,8 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = &quot;FDR&quot;,
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10)</code></pre>
-<p><img src="figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+                   by_score = 10) + coord_flip()</code></pre>
+<p><img src="figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" width="864" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-effect_fdr_dotplot_20topics-1">
 Past versions of effect_fdr_dotplot_20topics-1.png
@@ -1156,6 +1179,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/e54a27e7a6bf206193282bb66e73ea9f861e46f7/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" target="_blank">e54a27e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/2763f3360213a6853baf049c46c0e69df3022fb8/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" target="_blank">2763f33</a>
 </td>
 <td>
@@ -1177,7 +1211,6 @@ kevinlkx
 <pre class="r"><code>topic_1 &lt;- readRDS(&quot;music_output/music_merged_4_topics.rds&quot;)
 topic_2 &lt;- readRDS(&quot;music_output/music_merged_5_topics.rds&quot;)
 topic_3 &lt;- readRDS(&quot;music_output/music_merged_6_topics.rds&quot;)
-topic_4 &lt;- readRDS(&quot;music_output/music_merged_7_topics.rds&quot;)
 
 topic_model_list &lt;- list()
 topic_model_list$models &lt;- list()
@@ -1185,11 +1218,10 @@ topic_model_list$perturb_information &lt;- topic_1$perturb_information
 topic_model_list$models[[1]] &lt;- topic_1$models[[1]]
 topic_model_list$models[[2]] &lt;- topic_2$models[[1]]
 topic_model_list$models[[3]] &lt;- topic_3$models[[1]]
-topic_model_list$models[[4]] &lt;- topic_4$models[[1]]
 
 optimalModel &lt;- Select_topic_number(topic_model_list$models,
                                     plot = T,
-                                    plot_path = &quot;music_output/select_topic_number_4to7.pdf&quot;)
+                                    plot_path = &quot;music_output/select_topic_number_4to6.pdf&quot;)
 
 optimalModel
 saveRDS(optimalModel, &quot;music_output/optimalModel_4_topics.rds&quot;)</code></pre>
@@ -1314,10 +1346,10 @@ saveRDS(summary_df, &quot;music_output/music_merged_4_topics_ttest_summary.rds&q
 <pre class="r"><code>summary_df &lt;- readRDS(file.path(res_dir, &quot;music_output/music_merged_4_topics_ttest_summary.rds&quot;))
 
 summary_df &lt;- summary_df %&gt;%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
+  mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 1:length(unique(summary_df$topic)))))
 
 summary_df &lt;- summary_df %&gt;%
-  mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 4:1)))
+  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
 
 log10_pval_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
@@ -1389,8 +1421,8 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = &quot;FDR&quot;,
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10)</code></pre>
-<p><img src="figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" width="1152" style="display: block; margin: auto;" /></p>
+                   by_score = 10) + coord_flip()</code></pre>
+<p><img src="figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-effect_fdr_dotplot_4topics-1">
 Past versions of effect_fdr_dotplot_4topics-1.png
@@ -1415,6 +1447,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/e54a27e7a6bf206193282bb66e73ea9f861e46f7/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" target="_blank">e54a27e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-07-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/2763f3360213a6853baf049c46c0e69df3022fb8/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" target="_blank">2763f33</a>
 </td>
 <td>
@@ -1429,6 +1472,26 @@ kevinlkx
 </div>
 </div>
 <pre class="r"><code># dev.off()</code></pre>
+<!-- ```{r test, eval=FALSE, include=FALSE} -->
+<!-- optimalModel <- readRDS("music_output/optimalModel_4_topics.rds") -->
+<!-- distri_diff <- readRDS(file.path(res_dir, "music_output/distri_diff_4_topics.rds")) -->
+<!-- topic_func <- readRDS("music_output/topic_func_4_topics.rds") -->
+<!-- model <- optimalModel -->
+<!-- my_beta <- exp(model@beta) -->
+<!-- topic_num <- nrow(my_beta) -->
+<!-- my_geneName <- model@terms -->
+<!-- colnames(my_beta) <- my_geneName -->
+<!-- rownames(my_beta) <- paste0('Topic_',1:nrow(my_beta)) -->
+<!-- my_beta[3, ] -->
+<!-- head(sort(my_beta[3, ], decreasing = T)) -->
+<!-- head(my_beta[3, ][order(my_beta[3, ], decreasing=T)]) -->
+<!-- length(perturb_information) -->
+<!-- table(perturb_information) -->
+<!-- target_cells_idx <- which(perturb_information == "ADNP") -->
+<!-- ctrl_cells_idx <- which(perturb_information == "CTRL") -->
+<!-- head(expression_profile[, target_cells_idx]) -->
+<!-- head(expression_profile[, ctrl_cells_idx]) -->
+<!-- ``` -->
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
