@@ -8,6 +8,11 @@ editor_options:
   chunk_output_type: console
 ---
 
+GSFA analysis
+
+* [GSFA analysis on LUHMES CROP-seq data](gsfa_LUHMES_data.html)
+* [GSFA analysis on CD8+ T Cell (stimulated and unstimulated) CROP-seq data](gsfa_TCells_data.html)
+
 SCEPTRE analysis
 
 * [Test SCEPTRE on example data](test_sceptre.html)
