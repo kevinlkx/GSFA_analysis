@@ -15,6 +15,7 @@
 
 <title>MUSIC analysis on LUHMES CROP-seq data</title>
 
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -45,6 +46,8 @@ div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -372,7 +375,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -381,7 +386,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -390,17 +397,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-01
+<strong>Last updated:</strong> 2022-08-11
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -409,91 +426,138 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it's best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220524)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220524)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220524code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220524code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220524)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220524)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree706ef41a00adbad74f1f1dd0635765675b373945targetblank706ef41a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/706ef41a00adbad74f1f1dd0635765675b373945" target="_blank">706ef41</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreea0b124fd43211724f31cdf851b9e4dddaa309d6btargetblanka0b124fa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/a0b124fd43211724f31cdf851b9e4dddaa309d6b" target="_blank">a0b124f</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree706ef41a00adbad74f1f1dd0635765675b373945targetblank706ef41a" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreea0b124fd43211724f31cdf851b9e4dddaa309d6btargetblanka0b124fa"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/706ef41a00adbad74f1f1dd0635765675b373945" target="_blank">706ef41</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/a0b124fd43211724f31cdf851b9e4dddaa309d6b" target="_blank">a0b124f</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
@@ -503,7 +567,9 @@ Ignored files:
 Untracked files:
     Untracked:  analysis/interpret_gsfa_LUHMES.Rmd
     Untracked:  analysis/spca_LUHMES_data.Rmd
+    Untracked:  analysis/test_seurat.Rmd
     Untracked:  analysis/twostep_clustering_LUHMES_data.Rmd
+    Untracked:  analysis/twostep_clustering_TCells_data.Rmd
     Untracked:  code/music_LUHMES_Yifan.R
     Untracked:  code/plotting_functions.R
     Untracked:  code/run_music_LUHMES.R
@@ -513,6 +579,8 @@ Untracked files:
     Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
     Untracked:  code/run_spca_LUHMES.R
     Untracked:  code/run_spca_TCells.R
+    Untracked:  code/run_twostep_clustering_LUHMES_data.R
+    Untracked:  code/run_twostep_clustering_Tcells_stimulated_data.R
     Untracked:  code/sceptre_LUHMES_data.R
     Untracked:  code/sceptre_Tcells_stimulated_data.R
     Untracked:  code/sceptre_Tcells_unstimulated_data.R
@@ -526,7 +594,9 @@ Unstaged changes:
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -537,7 +607,12 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in th
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/music_LUHMES_data.Rmd</code>) and HTML (<code>docs/music_LUHMES_data.html</code>) files. If you've configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/music_LUHMES_data.Rmd</code>) and
+HTML (<code>docs/music_LUHMES_data.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -561,6 +636,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/a0b124fd43211724f31cdf851b9e4dddaa309d6b/analysis/music_LUHMES_data.Rmd" target="_blank">a0b124f</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+<td>
+added dot plots with Bonferroni adjusted p-value
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/43b3a70ba2edf2b5eb15a7782638e00253bfeba0/docs/music_LUHMES_data.html" target="_blank">43b3a70</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -723,18 +832,31 @@ run MUSIC on LUHMES data
 </div>
 <p>slurm setting</p>
 <pre class="bash"><code>sinteractive --partition=broadwl --account=pi-xinhe --mem=30G --time=10:00:00 --cpus-per-task=10</code></pre>
-<p>MUSIC website: <a href="https://github.com/bm2-lab/MUSIC" class="uri">https://github.com/bm2-lab/MUSIC</a></p>
+<p>MUSIC website: <a href="https://github.com/bm2-lab/MUSIC"
+class="uri">https://github.com/bm2-lab/MUSIC</a></p>
 <p>Scripts for running the analysis:</p>
 <ul>
-<li><a href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES.R">R script</a>.</li>
-<li><a href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES_data.sbatch">sbatch script</a>.</li>
+<li><a
+href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES.R">R
+script</a>.</li>
+<li><a
+href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_music_LUHMES_data.sbatch">sbatch
+script</a>.</li>
 </ul>
 <pre class="bash"><code>cd /project2/xinhe/kevinluo/GSFA/music_analysis/log
 
 sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_music_LUHMES_data.sbatch</code></pre>
 <div id="about-the-data-sets" class="section level2">
 <h2>About the data sets</h2>
-<p>CROP-seq datasets: <code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code> The data are Seurat objects, with raw gene counts stored in <a href="mailto:obj@assays$RNA@counts">obj@assays$RNA@counts</a>, and cell meta data stored in <a href="mailto:obj@meta.data">obj@meta.data</a>. Normalized and scaled data used for GSFA are stored in <a href="mailto:obj@assays$RNA@scale.data">obj@assays$RNA@scale.data</a> , the rownames of which are the 6k genes used for GSFA.</p>
+<p>CROP-seq datasets:
+<code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code> The data
+are Seurat objects, with raw gene counts stored in <a
+href="mailto:obj@assays" class="email">obj@assays</a><span
+class="math inline">\(RNA@counts, and cell meta data stored in
+obj@meta.data. Normalized and scaled data used for GSFA are stored in
+obj@assays\)</span><a href="mailto:RNA@scale.data"
+class="email">RNA@scale.data</a> , the rownames of which are the 6k
+genes used for GSFA.</p>
 <p>Load packages</p>
 <pre class="r"><code>suppressPackageStartupMessages(library(data.table))
 suppressPackageStartupMessages(library(Seurat))
@@ -981,7 +1103,8 @@ optimalModel &lt;- Select_topic_number(topic_model_list$models,
 </div>
 <div id="summarize-the-results" class="section level2">
 <h2>Summarize the results</h2>
-<div id="summarize-the-results-under-20-topics-to-be-comparable-to-gsfa" class="section level3">
+<div id="summarize-the-results-under-20-topics-to-be-comparable-to-gsfa"
+class="section level3">
 <h3>Summarize the results under 20 topics to be comparable to GSFA</h3>
 <p>Gene ontology annotations for top topics</p>
 <pre class="r"><code>topic_res &lt;- readRDS(&quot;music_output/music_merged_20_topics.rds&quot;)
@@ -1071,7 +1194,8 @@ head(perturb_cor, 10)
 5            CHD8           ADNP -0.26907399
 31           CHD8          ASH1L  0.25264119
 44           CHD8           CHD2  0.13836576</code></pre>
-<p>Adaptation to the code to generate calibrated empirical TPD scores</p>
+<p>Adaptation to the code to generate calibrated empirical TPD
+scores</p>
 <pre class="r"><code>summary_df &lt;- Empirical_topic_prob_diff(topic_res$models[[1]],
                                         topic_res$perturb_information)
 saveRDS(summary_df, &quot;music_output/music_merged_20_topics_ttest_summary.rds&quot;)</code></pre>
@@ -1080,21 +1204,26 @@ saveRDS(summary_df, &quot;music_output/music_merged_20_topics_ttest_summary.rds&
 summary_df &lt;- summary_df %&gt;%
   mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 1:length(unique(summary_df$topic)))))
 
-summary_df &lt;- summary_df %&gt;%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
+
+summary_df$fdr &lt;- p.adjust(summary_df$empirical_pval, method = &quot;BH&quot;)
+summary_df$bonferroni_adj &lt;- p.adjust(summary_df$empirical_pval, method = &quot;bonferroni&quot;)
 
 log10_pval_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) &lt;- log10_pval_mat$knockout
 log10_pval_mat$knockout &lt;- NULL
 
-fdr_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
+effect_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
+rownames(effect_mat) &lt;- effect_mat$knockout
+effect_mat$knockout &lt;- NULL
+
+fdr_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, fdr), knockout ~ topic)
 rownames(fdr_mat) &lt;- fdr_mat$knockout
 fdr_mat$knockout &lt;- NULL
 
-effect_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
-rownames(effect_mat) &lt;- effect_mat$knockout
-effect_mat$knockout &lt;- NULL</code></pre>
+bonferroni_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, bonferroni_adj), knockout ~ topic)
+rownames(bonferroni_mat) &lt;- bonferroni_mat$knockout
+bonferroni_mat$knockout &lt;- NULL</code></pre>
 <pre class="r"><code># pdf(&quot;music_output/music_merged_20_topics_empirical_tstats_heatmap.pdf&quot;,
 #     width = 12, height = 8)
 ht &lt;- Heatmap(log10_pval_mat,
@@ -1179,6 +1308,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/43b3a70ba2edf2b5eb15a7782638e00253bfeba0/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" target="_blank">43b3a70</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/e54a27e7a6bf206193282bb66e73ea9f861e46f7/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_20topics-1.png" target="_blank">e54a27e</a>
 </td>
 <td>
@@ -1204,9 +1344,21 @@ kevinlkx
 </div>
 </div>
 <pre class="r"><code># dev.off()</code></pre>
+<pre class="r"><code>KO_names &lt;- rownames(bonferroni_mat)
+dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
+                   reorder_markers = c(KO_names[KO_names!=&quot;CTRL&quot;], &quot;CTRL&quot;),
+                   color_lgd_title = &quot;MUSIC T statistics&quot;,
+                   size_lgd_title = &quot;Bonferroni\nadjusted p-value&quot;,
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10) + coord_flip()</code></pre>
+<p><img src="figure/music_LUHMES_data.Rmd/effect_bonferroni_dotplot_20topics-1.png" width="864" style="display: block; margin: auto;" /></p>
 </div>
-<div id="summarize-the-results-using-the-optimal-number-of-topics-selected-by-the-score" class="section level3">
-<h3>Summarize the results using the optimal number of topics selected by the score</h3>
+<div
+id="summarize-the-results-using-the-optimal-number-of-topics-selected-by-the-score"
+class="section level3">
+<h3>Summarize the results using the optimal number of topics selected by
+the score</h3>
 <p>Pick optimal number of topics</p>
 <pre class="r"><code>topic_1 &lt;- readRDS(&quot;music_output/music_merged_4_topics.rds&quot;)
 topic_2 &lt;- readRDS(&quot;music_output/music_merged_5_topics.rds&quot;)
@@ -1339,7 +1491,8 @@ head(perturb_cor, 10)
 5            CHD8           ADNP -0.51737973
 31           CHD8          ASH1L  0.08031335
 44           CHD8           CHD2  0.04192687</code></pre>
-<p>Adaptation to the code to generate calibrated empirical TPD scores</p>
+<p>Adaptation to the code to generate calibrated empirical TPD
+scores</p>
 <pre class="r"><code>summary_df &lt;- Empirical_topic_prob_diff(optimalModel,
                                         topic_model_list$perturb_information)
 saveRDS(summary_df, &quot;music_output/music_merged_4_topics_ttest_summary.rds&quot;)</code></pre>
@@ -1348,21 +1501,25 @@ saveRDS(summary_df, &quot;music_output/music_merged_4_topics_ttest_summary.rds&q
 summary_df &lt;- summary_df %&gt;%
   mutate(topic = factor(topic, levels = paste0(&quot;Topic_&quot;, 1:length(unique(summary_df$topic)))))
 
-summary_df &lt;- summary_df %&gt;%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = &quot;BH&quot;))
+summary_df$fdr &lt;- p.adjust(summary_df$empirical_pval, method = &quot;BH&quot;)
+summary_df$bonferroni_adj &lt;- p.adjust(summary_df$empirical_pval, method = &quot;bonferroni&quot;)
 
 log10_pval_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) &lt;- log10_pval_mat$knockout
 log10_pval_mat$knockout &lt;- NULL
 
-fdr_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
+effect_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
+rownames(effect_mat) &lt;- effect_mat$knockout
+effect_mat$knockout &lt;- NULL
+
+fdr_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, fdr), knockout ~ topic)
 rownames(fdr_mat) &lt;- fdr_mat$knockout
 fdr_mat$knockout &lt;- NULL
 
-effect_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
-rownames(effect_mat) &lt;- effect_mat$knockout
-effect_mat$knockout &lt;- NULL</code></pre>
+bonferroni_mat &lt;- dcast(summary_df %&gt;% dplyr::select(knockout, topic, bonferroni_adj), knockout ~ topic)
+rownames(bonferroni_mat) &lt;- bonferroni_mat$knockout
+bonferroni_mat$knockout &lt;- NULL</code></pre>
 <pre class="r"><code># pdf(&quot;music_output/music_merged_4_topics_empirical_tstats_heatmap.pdf&quot;,
 #     width = 12, height = 8)
 ht &lt;- Heatmap(log10_pval_mat,
@@ -1447,6 +1604,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/43b3a70ba2edf2b5eb15a7782638e00253bfeba0/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" target="_blank">43b3a70</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/e54a27e7a6bf206193282bb66e73ea9f861e46f7/docs/figure/music_LUHMES_data.Rmd/effect_fdr_dotplot_4topics-1.png" target="_blank">e54a27e</a>
 </td>
 <td>
@@ -1472,6 +1640,15 @@ kevinlkx
 </div>
 </div>
 <pre class="r"><code># dev.off()</code></pre>
+<pre class="r"><code>KO_names &lt;- rownames(bonferroni_mat)
+dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
+                   reorder_markers = c(KO_names[KO_names!=&quot;CTRL&quot;], &quot;CTRL&quot;),
+                   color_lgd_title = &quot;MUSIC T statistics&quot;,
+                   size_lgd_title = &quot;Bonferroni\nadjusted p-value&quot;,
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10) + coord_flip()</code></pre>
+<p><img src="figure/music_LUHMES_data.Rmd/effect_bonferroni_dotplot_4topics-1.png" width="384" style="display: block; margin: auto;" /></p>
 <!-- ```{r test, eval=FALSE, include=FALSE} -->
 <!-- optimalModel <- readRDS("music_output/optimalModel_4_topics.rds") -->
 <!-- distri_diff <- readRDS(file.path(res_dir, "music_output/distri_diff_4_topics.rds")) -->
@@ -1495,12 +1672,13 @@ kevinlkx
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.4 (2021-02-15)
+<pre><code>R version 4.1.0 (2021-05-18)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Scientific Linux 7.4 (Nitrogen)
 
@@ -1549,10 +1727,10 @@ loaded via a namespace (and not attached):
  [49] scales_1.2.0          ggraph_2.0.5          enrichplot_1.10.2    
  [52] gtable_0.3.0          Cairo_1.5-15          globals_0.14.0       
  [55] processx_3.5.3        goftest_1.2-3         tidygraph_1.2.0      
- [58] rlang_1.0.2           GlobalOptions_0.1.2   splines_4.0.4        
+ [58] rlang_1.0.4           GlobalOptions_0.1.2   splines_4.1.0        
  [61] lazyeval_0.2.2        spatstat.geom_2.3-2   BiocManager_1.30.16  
  [64] yaml_2.3.5            abind_1.4-5           httpuv_1.6.5         
- [67] qvalue_2.22.0         tools_4.0.4           ellipsis_0.3.2       
+ [67] qvalue_2.22.0         tools_4.1.0           ellipsis_0.3.2       
  [70] spatstat.core_2.4-0   jquerylib_0.1.4       RColorBrewer_1.1-3   
  [73] ggridges_0.5.3        Rcpp_1.0.9            plyr_1.8.6           
  [76] zlibbioc_1.36.0       purrr_0.3.4           ps_1.6.0             
@@ -1564,12 +1742,12 @@ loaded via a namespace (and not attached):
  [94] RANN_2.6.1            whisker_0.4           fitdistrplus_1.1-8   
  [97] matrixStats_0.61.0    patchwork_1.1.1       mime_0.12            
 [100] evaluate_0.15         xtable_1.8-4          shape_1.4.6          
-[103] gridExtra_2.3         compiler_4.0.4        tibble_3.1.6         
+[103] gridExtra_2.3         compiler_4.1.0        tibble_3.1.6         
 [106] KernSmooth_2.23-20    crayon_1.5.1          shadowtext_0.1.1     
 [109] R.oo_1.24.0           htmltools_0.5.2       ggfun_0.0.5          
 [112] mgcv_1.8-39           later_1.3.0           tidyr_1.2.0          
 [115] DBI_1.1.2             tweenr_1.0.2          MASS_7.3-56          
-[118] Matrix_1.4-1          cli_3.2.0             R.methodsS3_1.8.1    
+[118] Matrix_1.4-1          cli_3.3.0             R.methodsS3_1.8.1    
 [121] pkgconfig_2.0.3       getPass_0.2-2         rvcheck_0.2.1        
 [124] plotly_4.10.0         spatstat.sparse_2.1-0 foreach_1.5.2        
 [127] xml2_1.3.3            bslib_0.3.1           yulab.utils_0.0.4    
@@ -1602,6 +1780,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
