@@ -143,9 +143,9 @@ Empirical_topic_prob_diff <- function(model, perturb_information,
 
 ## About the data sets
 
-CROP-seq datasets: `/project2/xinhe/yifan/Factor_analysis/shared_data/`
-The data are Seurat objects, with raw gene counts stored in obj@assays$RNA@counts, and cell meta data stored in obj@meta.data.
-Normalized and scaled data used for GSFA are stored in obj@assays$RNA@scale.data , the rownames of which are the 6k genes used for GSFA.
+CROP-seq datasets: `/project2/xinhe/yifan/Factor_analysis/shared_data/`.
+The data are Seurat objects, with raw gene counts stored in `obj@assays$RNA@counts`, and cell meta data stored in `obj@meta.data`.
+Normalized and scaled data used for GSFA are stored in `obj@assays$RNA@scale.data`, the rownames of which are the 6k genes used for GSFA.
 
 Load packages
 ```{r load-packages, message=FALSE, warning=FALSE}
