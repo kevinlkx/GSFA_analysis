@@ -395,21 +395,26 @@ summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_20_topics_tt
 summary_df <- summary_df %>%
   mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
 
-summary_df <- summary_df %>%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
+
+summary_df$fdr <- p.adjust(summary_df$empirical_pval, method = "BH")
+summary_df$bonferroni_adj <- p.adjust(summary_df$empirical_pval, method = "bonferroni")
 
 log10_pval_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) <- log10_pval_mat$knockout
 log10_pval_mat$knockout <- NULL
 
-fdr_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
-rownames(fdr_mat) <- fdr_mat$knockout
-fdr_mat$knockout <- NULL
-
 effect_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
 rownames(effect_mat) <- effect_mat$knockout
 effect_mat$knockout <- NULL
+
+fdr_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, fdr), knockout ~ topic)
+rownames(fdr_mat) <- fdr_mat$knockout
+fdr_mat$knockout <- NULL
+
+bonferroni_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, bonferroni_adj), knockout ~ topic)
+rownames(bonferroni_mat) <- bonferroni_mat$knockout
+bonferroni_mat$knockout <- NULL
 ```
 
 ```{r empirical_tstats_heatmap_20topics, eval=TRUE, fig.width=12, fig.height=8}
@@ -438,6 +443,18 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    min_score = -20,
                    by_score = 10) + coord_flip()
 # dev.off()
+```
+
+
+```{r effect_bonferroni_dotplot_20topics, eval=TRUE, fig.width=9, fig.height=5.5}
+KO_names <- rownames(bonferroni_mat)
+dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
+                   reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
+                   color_lgd_title = "MUSIC T statistics",
+                   size_lgd_title = "Bonferroni\nadjusted p-value",
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10) + coord_flip()
 ```
 
 ### Summarize the results using the optimal number of topics selected by the score
@@ -550,21 +567,25 @@ summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_4_topics_tte
 summary_df <- summary_df %>%
   mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
 
-summary_df <- summary_df %>%
-  mutate(empirical_p_val_adj = p.adjust(empirical_pval, method = "BH"))
+summary_df$fdr <- p.adjust(summary_df$empirical_pval, method = "BH")
+summary_df$bonferroni_adj <- p.adjust(summary_df$empirical_pval, method = "bonferroni")
 
 log10_pval_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, polar_log10_pval),
                         knockout ~ topic)
 rownames(log10_pval_mat) <- log10_pval_mat$knockout
 log10_pval_mat$knockout <- NULL
 
-fdr_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, empirical_p_val_adj), knockout ~ topic)
-rownames(fdr_mat) <- fdr_mat$knockout
-fdr_mat$knockout <- NULL
-
 effect_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, obs_t_stats), knockout ~ topic)
 rownames(effect_mat) <- effect_mat$knockout
 effect_mat$knockout <- NULL
+
+fdr_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, fdr), knockout ~ topic)
+rownames(fdr_mat) <- fdr_mat$knockout
+fdr_mat$knockout <- NULL
+
+bonferroni_mat <- dcast(summary_df %>% dplyr::select(knockout, topic, bonferroni_adj), knockout ~ topic)
+rownames(bonferroni_mat) <- bonferroni_mat$knockout
+bonferroni_mat$knockout <- NULL
 ```
 
 ```{r empirical_tstats_heatmap_4topics, eval=TRUE, fig.width=12, fig.height=8}
@@ -593,6 +614,18 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    min_score = -20,
                    by_score = 10) + coord_flip()
 # dev.off()
+```
+
+
+```{r effect_bonferroni_dotplot_4topics, eval=TRUE, fig.width=4, fig.height=5.5}
+KO_names <- rownames(bonferroni_mat)
+dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
+                   reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
+                   color_lgd_title = "MUSIC T statistics",
+                   size_lgd_title = "Bonferroni\nadjusted p-value",
+                   max_score = 20,
+                   min_score = -20,
+                   by_score = 10) + coord_flip()
 ```
 
 <!-- ```{r test, eval=FALSE, include=FALSE} -->
