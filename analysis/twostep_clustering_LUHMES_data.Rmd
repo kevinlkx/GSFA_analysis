@@ -28,9 +28,9 @@ cp /project2/xinhe/yifan/Factor_analysis/LUHMES/GSE142078_raw/GSM4219575_Run1_ge
 
 CROP-seq datasets: `/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds`
 
-The data are Seurat objects, with raw gene counts stored in obj@assays$RNA@counts, 
-and cell meta data stored in obj@meta.data.
-Normalized and scaled data used for GSFA are stored in obj@assays$RNA@scale.data, 
+The data are Seurat objects, with raw gene counts stored in `obj@assays$RNA@counts`, 
+and cell meta data stored in `obj@meta.data`.
+Normalized and scaled data used for GSFA are stored in `obj@assays$RNA@scale.data`, 
 the rownames of which are the 6k genes used for GSFA.
 
 Load packages
