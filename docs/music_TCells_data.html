@@ -529,15 +529,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree1429b75581150cd71914fa0981e1c156563e0096targetblank1429b75a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeb7ce8561d8b78d992a5ae4bcb5bf17cb1f38cbd1targetblankb7ce856a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/1429b75581150cd71914fa0981e1c156563e0096" target="_blank">1429b75</a>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/b7ce8561d8b78d992a5ae4bcb5bf17cb1f38cbd1" target="_blank">b7ce856</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree1429b75581150cd71914fa0981e1c156563e0096targetblank1429b75a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeb7ce8561d8b78d992a5ae4bcb5bf17cb1f38cbd1targetblankb7ce856a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -547,7 +547,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/1429b75581150cd71914fa0981e1c156563e0096" target="_blank">1429b75</a>.
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/b7ce8561d8b78d992a5ae4bcb5bf17cb1f38cbd1" target="_blank">b7ce856</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -569,8 +569,6 @@ Untracked files:
     Untracked:  analysis/interpret_gsfa_LUHMES.Rmd
     Untracked:  analysis/spca_LUHMES_data.Rmd
     Untracked:  analysis/test_seurat.Rmd
-    Untracked:  analysis/twostep_clustering_LUHMES_data.Rmd
-    Untracked:  analysis/twostep_clustering_TCells_data.Rmd
     Untracked:  code/music_LUHMES_Yifan.R
     Untracked:  code/plotting_functions.R
     Untracked:  code/run_music_LUHMES.R
@@ -636,6 +634,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/b7ce8561d8b78d992a5ae4bcb5bf17cb1f38cbd1/analysis/music_TCells_data.Rmd" target="_blank">b7ce856</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+<td>
+fix intro formatting
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/b1684a97ed07a1eb422a09c038fa797bb9c60200/docs/music_TCells_data.html" target="_blank">b1684a9</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -923,14 +955,12 @@ Empirical_topic_prob_diff &lt;- function(model, perturb_information,
 <div id="about-the-data-sets" class="section level2">
 <h2>About the data sets</h2>
 <p>CROP-seq datasets:
-<code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code> The data
-are Seurat objects, with raw gene counts stored in <a
-href="mailto:obj@assays" class="email">obj@assays</a><span
-class="math inline">\(RNA@counts, and cell meta data stored in
-obj@meta.data. Normalized and scaled data used for GSFA are stored in
-obj@assays\)</span><a href="mailto:RNA@scale.data"
-class="email">RNA@scale.data</a> , the rownames of which are the 6k
-genes used for GSFA.</p>
+<code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code>. The
+data are Seurat objects, with raw gene counts stored in
+<code>obj@assays$RNA@counts</code>, and cell meta data stored in
+<code>obj@meta.data</code>. Normalized and scaled data used for GSFA are
+stored in <code>obj@assays$RNA@scale.data</code>, the rownames of which
+are the 6k genes used for GSFA.</p>
 <p>Load packages</p>
 <pre class="r"><code>suppressPackageStartupMessages(library(data.table))
 suppressPackageStartupMessages(library(Seurat))
@@ -1328,6 +1358,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/b1684a97ed07a1eb422a09c038fa797bb9c60200/docs/figure/music_TCells_data.Rmd/effect_fdr_dotplot_20topics-1.png" target="_blank">b1684a9</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/069e245fc4bb3b2c8531aac41886229fe7d6291b/docs/figure/music_TCells_data.Rmd/effect_fdr_dotplot_20topics-1.png" target="_blank">069e245</a>
 </td>
 <td>
@@ -1362,6 +1403,43 @@ dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    min_score = -20,
                    by_score = 10) + coord_flip()</code></pre>
 <p><img src="figure/music_TCells_data.Rmd/effect_bonferroni_dotplot_20topics-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-effect_bonferroni_dotplot_20topics-1">
+Past versions of effect_bonferroni_dotplot_20topics-1.png
+</button>
+</p>
+<div id="fig-effect_bonferroni_dotplot_20topics-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/b1684a97ed07a1eb422a09c038fa797bb9c60200/docs/figure/music_TCells_data.Rmd/effect_bonferroni_dotplot_20topics-1.png" target="_blank">b1684a9</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div
 id="summarize-the-results-using-the-optimal-number-of-topics-selected-by-the-score"
@@ -1641,6 +1719,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/b1684a97ed07a1eb422a09c038fa797bb9c60200/docs/figure/music_TCells_data.Rmd/effect_fdr_dotplot_4topics-1.png" target="_blank">b1684a9</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/069e245fc4bb3b2c8531aac41886229fe7d6291b/docs/figure/music_TCells_data.Rmd/effect_fdr_dotplot_4topics-1.png" target="_blank">069e245</a>
 </td>
 <td>
@@ -1675,6 +1764,43 @@ dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    min_score = -20,
                    by_score = 10) + coord_flip()</code></pre>
 <p><img src="figure/music_TCells_data.Rmd/effect_bonferroni_dotplot_4topics-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-effect_bonferroni_dotplot_4topics-1">
+Past versions of effect_bonferroni_dotplot_4topics-1.png
+</button>
+</p>
+<div id="fig-effect_bonferroni_dotplot_4topics-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/b1684a97ed07a1eb422a09c038fa797bb9c60200/docs/figure/music_TCells_data.Rmd/effect_bonferroni_dotplot_4topics-1.png" target="_blank">b1684a9</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
