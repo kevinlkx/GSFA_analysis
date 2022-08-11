@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Kaixuan Luo" />
+
+<meta name="date" content="2022-07-14" />
+
+<title>Two step clustering analysis on LUHMES CROP-seq data</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">GSFA_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Two step clustering analysis on LUHMES
+CROP-seq data</h1>
+<h4 class="author">Kaixuan Luo</h4>
+<h4 class="date">2022-07-14</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-08-11
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220524)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220524code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220524)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree39baeefd68bc7bf4ef0a840b5b5f17cdf0c3e325targetblank39baeefa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/39baeefd68bc7bf4ef0a840b5b5f17cdf0c3e325" target="_blank">39baeef</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree39baeefd68bc7bf4ef0a840b5b5f17cdf0c3e325targetblank39baeefa"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/39baeefd68bc7bf4ef0a840b5b5f17cdf0c3e325" target="_blank">39baeef</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/interpret_gsfa_LUHMES.Rmd
+    Untracked:  analysis/spca_LUHMES_data.Rmd
+    Untracked:  analysis/test_seurat.Rmd
+    Untracked:  analysis/twostep_clustering_TCells_data.Rmd
+    Untracked:  code/music_LUHMES_Yifan.R
+    Untracked:  code/plotting_functions.R
+    Untracked:  code/run_music_LUHMES.R
+    Untracked:  code/run_music_LUHMES_data.sbatch
+    Untracked:  code/run_sceptre_LUHMES_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
+    Untracked:  code/run_spca_LUHMES.R
+    Untracked:  code/run_spca_TCells.R
+    Untracked:  code/run_twostep_clustering_LUHMES_data.R
+    Untracked:  code/run_twostep_clustering_Tcells_stimulated_data.R
+    Untracked:  code/sceptre_LUHMES_data.R
+    Untracked:  code/sceptre_Tcells_stimulated_data.R
+    Untracked:  code/sceptre_Tcells_unstimulated_data.R
+    Untracked:  code/seurat_sim_fpr_tpr.R
+
+Unstaged changes:
+    Modified:   analysis/sceptre_LUHMES_data.Rmd
+    Modified:   code/run_sceptre_cropseq_data.sbatch
+    Modified:   code/sceptre_analysis.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/twostep_clustering_LUHMES_data.Rmd</code>) and HTML
+(<code>docs/twostep_clustering_LUHMES_data.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/39baeefd68bc7bf4ef0a840b5b5f17cdf0c3e325/analysis/twostep_clustering_LUHMES_data.Rmd" target="_blank">39baeef</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+<td>
+update barplots for DEGs
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="bash"><code>mkdir -p /project2/xinhe/kevinluo/GSFA/data
+
+cp /project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds \
+  /project2/xinhe/kevinluo/GSFA/data
+
+cp /project2/xinhe/yifan/Factor_analysis/LUHMES/GSE142078_raw/GSM4219575_Run1_genes.tsv.gz \
+  /project2/xinhe/kevinluo/GSFA/data/LUHMES_GSM4219575_Run1_genes.tsv.gz</code></pre>
+<div id="load-the-data-sets" class="section level2">
+<h2>Load the data sets</h2>
+<p>CROP-seq datasets:
+<code>/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds</code></p>
+<p>The data are Seurat objects, with raw gene counts stored in <a
+href="mailto:obj@assays" class="email">obj@assays</a><span
+class="math inline">\(RNA@counts, and cell meta data stored in
+obj@meta.data. Normalized and scaled data used for GSFA are stored in
+obj@assays\)</span><a href="mailto:RNA@scale.data"
+class="email">RNA@scale.data</a>, the rownames of which are the 6k genes
+used for GSFA.</p>
+<p>Load packages</p>
+<pre class="r"><code>suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(Seurat))
+suppressPackageStartupMessages(library(MUSIC))
+suppressPackageStartupMessages(library(ComplexHeatmap))
+suppressPackageStartupMessages(library(ggplot2))
+require(reshape2)
+require(dplyr)
+require(ComplexHeatmap)
+theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
+                             axis.title = element_text(size = 14),
+                             axis.text = element_text(size = 13),
+                             legend.title = element_text(size = 13),
+                             legend.text = element_text(size = 12),
+                             panel.grid.minor = element_blank())
+)
+
+source(&quot;code/plotting_functions.R&quot;)</code></pre>
+<p>Set directories</p>
+<pre class="r"><code>data_dir &lt;- &quot;/project2/xinhe/kevinluo/GSFA/data/&quot;
+res_dir &lt;- &quot;/project2/xinhe/kevinluo/GSFA/twostep_clustering/LUHMES&quot;
+dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)</code></pre>
+<p>Load input data</p>
+<pre class="r"><code>combined_obj &lt;- readRDS(file.path(data_dir,&quot;LUHMES_cropseq_data_seurat.rds&quot;))</code></pre>
+</div>
+<div id="pre-processing" class="section level2">
+<h2>pre-processing</h2>
+<p>The steps below encompass the standard pre-processing workflow for
+scRNA-seq data in Seurat.</p>
+<p>These represent the selection and filtration of cells based on QC
+metrics, data normalization and scaling, and the detection of highly
+variable features.</p>
+<p>QC and selecting cells for further analysis.</p>
+<pre class="r"><code># The number of unique genes detected in each cell.
+range(combined_obj$nFeature_RNA)
+
+# The total number of molecules detected within a cell
+range(combined_obj$nCount_RNA)
+
+# The percentage of reads that map to the mitochondrial genome
+range(combined_obj$percent_mt)</code></pre>
+<pre><code>[1]  375 4861
+[1]  1572 19991
+[1] 0.128082 9.804772</code></pre>
+<pre class="r"><code># Visualize QC metrics as a violin plot
+VlnPlot(combined_obj, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent_mt&quot;), ncol = 3)</code></pre>
+<p>We filter cells that have more than 500 genes identified.</p>
+<pre class="r"><code>combined_obj &lt;- subset(combined_obj, subset = nFeature_RNA &gt; 500)</code></pre>
+<div id="normalizing-the-data" class="section level3">
+<h3>Normalizing the data</h3>
+<pre class="r"><code>combined_obj &lt;- NormalizeData(combined_obj, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
+</div>
+<div id="identification-of-highly-variable-features-feature-selection"
+class="section level3">
+<h3>Identification of highly variable features (feature selection)</h3>
+<p>Select a subset of features that exhibit high cell-to-cell variation
+in the dataset, by modeling the mean-variance relationship inherent in
+single-cell data.</p>
+<p>Select the 1,000 most variable genes across cells.</p>
+<pre class="r"><code>combined_obj &lt;- FindVariableFeatures(combined_obj, selection.method = &quot;vst&quot;, nfeatures = 1000)</code></pre>
+<!-- Select the 6k genes used for GSFA in this analysis -->
+<!-- ```{r select-genes} -->
+<!-- # Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA -->
+<!-- scaled_gene_matrix_in_gsfa <- combined_obj@assays$RNA@scale.data -->
+<!-- dim(scaled_gene_matrix_in_gsfa) -->
+<!-- selected_gene_id <- rownames(scaled_gene_matrix_in_gsfa) -->
+<!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
+<!-- ``` -->
+</div>
+<div
+id="regress-out-total-umi-counts-per-cell-and-percent-of-mitochondrial-genes-detected-per-cell-and-scaled-to-obtain-gene-level-z-scores."
+class="section level3">
+<h3>Regress out total UMI counts per cell and percent of mitochondrial
+genes detected per cell and scaled to obtain gene level z-scores.</h3>
+<p>The results of this are stored in combined_obj[[“RNA”]]<span
+class="citation">@scale.data</span></p>
+<pre class="r"><code>combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;))
+# combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;), features = selected_gene_id)
+dim(combined_obj[[&quot;RNA&quot;]]@counts)
+dim(combined_obj[[&quot;RNA&quot;]]@data)
+dim(combined_obj[[&quot;RNA&quot;]]@scale.data)
+
+saveRDS(combined_obj, file = file.path(res_dir, &quot;LUHMES_seurat_processed_data.rds&quot;))</code></pre>
+</div>
+</div>
+<div id="perform-dimensional-reduction" class="section level2">
+<h2>Perform dimensional reduction</h2>
+<p>Perform PCA on the scaled data.</p>
+<pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_processed_data.rds&quot;))
+combined_obj &lt;- RunPCA(combined_obj, features = VariableFeatures(object = combined_obj))
+ElbowPlot(combined_obj, ndims = 50)</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/pca-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cluster-the-cells" class="section level2">
+<h2>Cluster the cells</h2>
+<pre class="r"><code>combined_obj &lt;- FindNeighbors(combined_obj, dims = 1:30)
+combined_obj &lt;- FindClusters(combined_obj)
+
+saveRDS(combined_obj, file = file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))</code></pre>
+</div>
+<div id="run-non-linear-dimensional-reduction-umaptsne"
+class="section level2">
+<h2>Run non-linear dimensional reduction (UMAP/tSNE)</h2>
+<pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))
+
+cluster_labels &lt;- Idents(combined_obj)
+cluster_labels &lt;- as.factor(as.numeric(as.character(cluster_labels))+1)
+new_cluster_labels &lt;- paste0(&quot;k&quot;, levels(cluster_labels))
+names(new_cluster_labels) &lt;- levels(combined_obj)
+combined_obj &lt;- RenameIdents(combined_obj, new_cluster_labels)
+
+combined_obj &lt;- RunUMAP(combined_obj, dims = 1:30)
+DimPlot(combined_obj, reduction = &quot;umap&quot;, label = TRUE)</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/umap-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="finding-differentially-expressed-features-cluster-biomarkers"
+class="section level2">
+<h2>Finding differentially expressed features (cluster biomarkers)</h2>
+<pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))
+
+cat(&quot;Run DE test using MAST...\n&quot;)
+cat(length(levels(combined_obj)), &quot;clusters.\n&quot;)
+registerDoParallel(cores=n_cores)
+ptm &lt;- proc.time()
+de.markers &lt;- foreach(i=levels(combined_obj), .packages=&quot;Seurat&quot;) %dopar% {
+  FindMarkers(combined_obj, ident.1 = i, test.use = &quot;MAST&quot;)
+}
+proc.time() - ptm
+stopImplicitCluster()
+saveRDS(de.markers, file = file.path(res_dir, &quot;LUHMES_seurat_MAST_DEGs.rds&quot;))</code></pre>
+</div>
+<div id="associate-perturbation-with-clustering-results"
+class="section level2">
+<h2>Associate perturbation with clustering results</h2>
+<pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))
+perturb_matrix &lt;- combined_obj@meta.data[, 4:18]
+
+cluster_labels &lt;- Idents(combined_obj)
+cluster_labels &lt;- as.factor(as.numeric(as.character(cluster_labels))+1)
+new_cluster_labels &lt;- paste0(&quot;k&quot;, levels(cluster_labels))
+names(new_cluster_labels) &lt;- levels(combined_obj)
+combined_obj &lt;- RenameIdents(combined_obj, new_cluster_labels)
+
+cluster_matrix &lt;- matrix(0, nrow = nrow(perturb_matrix), ncol = length(levels(cluster_labels)))
+cluster_matrix[cbind(1:nrow(perturb_matrix), cluster_labels)] &lt;- 1
+rownames(cluster_matrix) &lt;- rownames(perturb_matrix)
+colnames(cluster_matrix) &lt;- new_cluster_labels</code></pre>
+<p>Chi-squared contingency table tests</p>
+<pre class="r"><code>summary_df &lt;- expand.grid(colnames(perturb_matrix), colnames(cluster_matrix))
+colnames(summary_df) &lt;- c(&quot;perturb&quot;, &quot;cluster&quot;)
+
+summary_df &lt;- cbind(summary_df, statistic = NA, stdres = NA, pval = NA)
+
+for(i in 1:nrow(summary_df)){
+  dt &lt;- table(data.frame(perturb = perturb_matrix[,summary_df$perturb[i]], 
+                         cluster = cluster_matrix[,summary_df$cluster[i]]))
+  chisq &lt;- chisq.test(dt)
+  summary_df[i, ]$statistic &lt;- chisq$statistic
+  summary_df[i, ]$stdres &lt;- chisq$stdres[2,2]
+  summary_df[i, ]$pval &lt;- chisq$p.value
+}
+
+summary_df$fdr &lt;- p.adjust(summary_df$pval, method = &quot;BH&quot;)
+summary_df$bonferroni_adj &lt;- p.adjust(summary_df$pval, method = &quot;bonferroni&quot;)
+
+stdres_mat &lt;- reshape2::dcast(summary_df %&gt;% dplyr::select(perturb, cluster, stdres), perturb ~ cluster, value.var = &quot;stdres&quot;)
+rownames(stdres_mat) &lt;- stdres_mat$perturb
+stdres_mat$perturb &lt;- NULL
+
+fdr_mat &lt;- reshape2::dcast(summary_df %&gt;% dplyr::select(perturb, cluster, fdr), perturb ~ cluster, value.var = &quot;fdr&quot;)
+rownames(fdr_mat) &lt;- fdr_mat$perturb
+fdr_mat$perturb &lt;- NULL
+
+bonferroni_mat &lt;- reshape2::dcast(summary_df %&gt;% dplyr::select(perturb, cluster, bonferroni_adj), 
+                                  perturb ~ cluster, value.var = &quot;bonferroni_adj&quot;)
+rownames(bonferroni_mat) &lt;- bonferroni_mat$perturb
+bonferroni_mat$perturb &lt;- NULL</code></pre>
+<p>Dot plot for the perturbation ~ cluster associations (standardized
+residues and FDRs)</p>
+<pre class="r"><code>KO_names &lt;- rownames(fdr_mat)
+dotplot_effectsize(t(stdres_mat), t(fdr_mat),
+                   reorder_markers = c(KO_names[KO_names!=&quot;Nontargeting&quot;], &quot;Nontargeting&quot;),
+                   color_lgd_title = &quot;Chi-squared test\nstandardized residuals&quot;,
+                   size_lgd_title = &quot;FDR&quot;,
+                   max_score = 4,
+                   min_score = -4,
+                   by_score = 2) + coord_flip()</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/stdres-fdr-dotplot-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>Dot plot for the perturbation ~ cluster associations (standardized
+residues and Bonferroni adjusted p-values)</p>
+<pre class="r"><code>KO_names &lt;- rownames(bonferroni_mat)
+dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
+                   reorder_markers = c(KO_names[KO_names!=&quot;Nontargeting&quot;], &quot;Nontargeting&quot;),
+                   color_lgd_title = &quot;Chi-squared test\nstandardized residuals&quot;,
+                   size_lgd_title = &quot;Bonferroni\nadjusted p-value&quot;,
+                   max_score = 4,
+                   min_score = -4,
+                   by_score = 2) + coord_flip()</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/stdres-bonferroni-dotplot-1.png" width="864" style="display: block; margin: auto;" /></p>
+</div>
+<div
+id="load-de-genes-for-each-cluster-and-assign-de-genes-to-associated-perturbations"
+class="section level2">
+<h2>Load DE genes for each cluster and assign DE genes to associated
+perturbations</h2>
+<pre class="r"><code>feature.names &lt;- data.frame(fread(file.path(data_dir, &quot;LUHMES_GSM4219575_Run1_genes.tsv.gz&quot;),
+                                  header = FALSE), stringsAsFactors = FALSE)
+
+de.markers &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_MAST_DEGs.rds&quot;))
+names(de.markers) &lt;- paste0(&quot;k&quot;, levels(cluster_labels))
+
+de.genes.clusters &lt;- vector(&quot;list&quot;, length = length(de.markers))
+names(de.genes.clusters) &lt;- names(de.markers)
+for( i in 1:length(de.genes.clusters)){
+  de_sumstats &lt;- de.markers[[i]]
+  de_genes &lt;- unique(rownames(de_sumstats[de_sumstats$p_val_adj &lt; 0.05,]))
+  de_genes &lt;- feature.names$V2[match(de_genes, feature.names$V1)]
+  de.genes.clusters[[i]] &lt;- de_genes
+}</code></pre>
+<p>Count DE genes for each perturbation (FDR &lt; 0.05)</p>
+<pre class="r"><code>perturb_names &lt;- rownames(fdr_mat)
+perturb_names &lt;- c(&quot;Nontargeting&quot;, perturb_names[perturb_names!=&quot;Nontargeting&quot;])
+
+de.genes.perturbs &lt;- vector(&quot;list&quot;, length = length(perturb_names))
+names(de.genes.perturbs) &lt;- perturb_names
+
+for(i in 1:length(de.genes.perturbs)){
+  perturb_name &lt;- names(de.genes.perturbs)[i]
+  associated_cluster_labels &lt;- colnames(fdr_mat)[which(fdr_mat[perturb_name, ] &lt; 0.05)]
+  if(length(associated_cluster_labels) &gt; 0){
+    de.genes.perturbs[[i]] &lt;- unique(unlist(de.genes.clusters[associated_cluster_labels]))
+  }
+}
+
+num.de.genes.perturbs &lt;- sapply(de.genes.perturbs, length)
+
+dge_plot_df &lt;- data.frame(Perturbation = names(num.de.genes.perturbs), Num_DEGs = num.de.genes.perturbs)
+dge_plot_df$Perturbation &lt;- factor(dge_plot_df$Perturbation, levels = names(num.de.genes.perturbs))
+
+ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+  geom_text(aes(label = Num_DEGs), position=position_dodge(width=0.9), vjust=-0.25) +
+  scale_y_log10() +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  labs(x = &quot;Target gene&quot;,
+       y = &quot;Number of DEGs&quot;,
+       title = &quot;Number of DEGs detected by Two-step clustering with MAST DE analysis&quot;) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        legend.position = &quot;bottom&quot;,
+        legend.text = element_text(size = 13))</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/count-de-genes-fdr-1.png" width="1248" style="display: block; margin: auto;" /></p>
+<p>Count DE genes for each perturbation (Bonferroni adjusted p-value
+&lt; 0.05)</p>
+<pre class="r"><code>perturb_names &lt;- rownames(bonferroni_mat)
+perturb_names &lt;- c(&quot;Nontargeting&quot;, perturb_names[perturb_names!=&quot;Nontargeting&quot;])
+
+de.genes.perturbs &lt;- vector(&quot;list&quot;, length = length(perturb_names))
+names(de.genes.perturbs) &lt;- perturb_names
+
+for(i in 1:length(de.genes.perturbs)){
+  perturb_name &lt;- names(de.genes.perturbs)[i]
+  associated_cluster_labels &lt;- colnames(bonferroni_mat)[which(bonferroni_mat[perturb_name, ] &lt; 0.05)]
+  if(length(associated_cluster_labels) &gt; 0){
+    de.genes.perturbs[[i]] &lt;- unique(unlist(de.genes.clusters[associated_cluster_labels]))
+  }
+}
+
+num.de.genes.perturbs &lt;- sapply(de.genes.perturbs, length)
+
+dge_plot_df &lt;- data.frame(Perturbation = names(num.de.genes.perturbs), Num_DEGs = num.de.genes.perturbs)
+dge_plot_df$Perturbation &lt;- factor(dge_plot_df$Perturbation, levels = names(num.de.genes.perturbs))
+
+ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+  geom_text(aes(label = Num_DEGs), position=position_dodge(width=0.9), vjust=-0.25) +
+  scale_y_log10() +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  labs(x = &quot;Target gene&quot;,
+       y = &quot;Number of DEGs&quot;,
+       title = &quot;Number of DEGs detected by Two-step clustering with MAST DE analysis&quot;) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        legend.position = &quot;bottom&quot;,
+        legend.text = element_text(size = 13))</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/count-de-genes-bonferroni-1.png" width="1248" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.0 (2021-05-18)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+ [1] grid      stats4    parallel  stats     graphics  grDevices utils    
+ [8] datasets  methods   base     
+
+other attached packages:
+ [1] lattice_0.20-45        dplyr_1.0.8            reshape2_1.4.4        
+ [4] ggplot2_3.3.5          ComplexHeatmap_2.6.2   MUSIC_1.0             
+ [7] SAVER_1.1.2            clusterProfiler_3.18.1 hash_2.2.6.2          
+[10] topicmodels_0.2-12     Biostrings_2.58.0      XVector_0.30.0        
+[13] IRanges_2.24.1         S4Vectors_0.28.1       BiocGenerics_0.36.1   
+[16] SeuratObject_4.0.4     Seurat_4.1.0           data.table_1.14.2     
+[19] workflowr_1.7.0       
+
+loaded via a namespace (and not attached):
+  [1] utf8_1.2.2            R.utils_2.11.0        reticulate_1.24      
+  [4] tidyselect_1.1.2      RSQLite_2.2.11        AnnotationDbi_1.52.0 
+  [7] htmlwidgets_1.5.4     BiocParallel_1.24.1   Rtsne_0.15           
+ [10] scatterpie_0.1.7      munsell_0.5.0         codetools_0.2-18     
+ [13] ica_1.0-2             future_1.24.0         miniUI_0.1.1.1       
+ [16] withr_2.5.0           spatstat.random_2.1-0 colorspace_2.0-3     
+ [19] GOSemSim_2.16.1       Biobase_2.50.0        highr_0.9            
+ [22] NLP_0.2-1             knitr_1.38            rstudioapi_0.13      
+ [25] ROCR_1.0-11           tensor_1.5            DOSE_3.16.0          
+ [28] listenv_0.8.0         labeling_0.4.2        git2r_0.30.1         
+ [31] slam_0.1-50           polyclip_1.10-0       bit64_4.0.5          
+ [34] farver_2.1.0          rprojroot_2.0.2       downloader_0.4       
+ [37] parallelly_1.31.0     vctrs_0.4.1           generics_0.1.2       
+ [40] xfun_0.30             R6_2.5.1              clue_0.3-60          
+ [43] graphlayouts_0.8.0    spatstat.utils_2.3-0  cachem_1.0.6         
+ [46] fgsea_1.21.0          assertthat_0.2.1      promises_1.2.0.1     
+ [49] scales_1.2.0          ggraph_2.0.5          enrichplot_1.10.2    
+ [52] gtable_0.3.0          Cairo_1.5-15          globals_0.14.0       
+ [55] processx_3.5.3        goftest_1.2-3         tidygraph_1.2.0      
+ [58] rlang_1.0.4           GlobalOptions_0.1.2   splines_4.1.0        
+ [61] lazyeval_0.2.2        spatstat.geom_2.3-2   BiocManager_1.30.16  
+ [64] yaml_2.3.5            abind_1.4-5           httpuv_1.6.5         
+ [67] qvalue_2.22.0         tools_4.1.0           ellipsis_0.3.2       
+ [70] spatstat.core_2.4-0   jquerylib_0.1.4       RColorBrewer_1.1-3   
+ [73] ggridges_0.5.3        Rcpp_1.0.9            plyr_1.8.6           
+ [76] zlibbioc_1.36.0       purrr_0.3.4           ps_1.6.0             
+ [79] rpart_4.1-15          deldir_1.0-6          GetoptLong_1.0.5     
+ [82] pbapply_1.5-0         viridis_0.6.2         cowplot_1.1.1        
+ [85] zoo_1.8-9             ggrepel_0.9.1         cluster_2.1.2        
+ [88] fs_1.5.2              magrittr_2.0.3        RSpectra_0.16-0      
+ [91] scattermore_0.7       DO.db_2.9             circlize_0.4.14      
+ [94] lmtest_0.9-40         RANN_2.6.1            whisker_0.4          
+ [97] fitdistrplus_1.1-8    matrixStats_0.61.0    patchwork_1.1.1      
+[100] mime_0.12             evaluate_0.15         xtable_1.8-4         
+[103] shape_1.4.6           gridExtra_2.3         compiler_4.1.0       
+[106] tibble_3.1.6          KernSmooth_2.23-20    crayon_1.5.1         
+[109] shadowtext_0.1.1      R.oo_1.24.0           htmltools_0.5.2      
+[112] ggfun_0.0.5           mgcv_1.8-39           later_1.3.0          
+[115] tidyr_1.2.0           DBI_1.1.2             tweenr_1.0.2         
+[118] MASS_7.3-56           Matrix_1.4-1          cli_3.3.0            
+[121] R.methodsS3_1.8.1     igraph_1.2.11         pkgconfig_2.0.3      
+[124] getPass_0.2-2         rvcheck_0.2.1         plotly_4.10.0        
+[127] spatstat.sparse_2.1-0 foreach_1.5.2         xml2_1.3.3           
+[130] bslib_0.3.1           yulab.utils_0.0.4     stringr_1.4.0        
+[133] callr_3.7.0           digest_0.6.29         sctransform_0.3.3    
+[136] RcppAnnoy_0.0.19      spatstat.data_2.1-2   tm_0.7-8             
+[139] rmarkdown_2.13        leiden_0.3.9          fastmatch_1.1-3      
+[142] uwot_0.1.11           shiny_1.7.1           modeltools_0.2-23    
+[145] rjson_0.2.21          lifecycle_1.0.1       nlme_3.1-155         
+[148] jsonlite_1.8.0        viridisLite_0.4.0     fansi_1.0.3          
+[151] pillar_1.7.0          fastmap_1.1.0         httr_1.4.2           
+[154] survival_3.3-1        GO.db_3.12.1          glue_1.6.2           
+[157] iterators_1.0.14      png_0.1-7             bit_4.0.4            
+[160] ggforce_0.3.3         stringi_1.7.6         sass_0.4.1           
+[163] blob_1.2.3            memoise_2.0.1         irlba_2.3.5          
+[166] future.apply_1.8.1   </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
