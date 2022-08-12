@@ -1,7 +1,7 @@
 ---
 title: "Two step clustering analysis on CD8+ T Cell (stimulated) CROP-seq data"
 author: "Kaixuan Luo"
-date: "2022-07-14"
+date: "2022-08-10"
 output:
   workflowr::wflow_html:
     code_folding: hide
@@ -85,12 +85,10 @@ combined_obj
 table(combined_obj@meta.data$orig.ident)
 ```
 
-## pre-processing
+## Pre-processing
 The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat.
 
 These represent the selection and filtration of cells based on QC metrics, data normalization and scaling, and the detection of highly variable features.
-
-QC and selecting cells for further analysis.
 
 ```{r qc-1}
 # The number of unique genes detected in each cell.
@@ -108,22 +106,22 @@ range(combined_obj$percent_mt)
 VlnPlot(combined_obj, features = c("nFeature_RNA", "nCount_RNA", "percent_mt"), ncol = 3)
 ```
 
-We filter cells that have more than 500 genes identified.
+We filter cells that have more than 500 genes identified, as in the Shifrut et al. paper.
 ```{r qc-filter-cells, eval=FALSE}
 combined_obj <- subset(combined_obj, subset = nFeature_RNA > 500)
 ```
 
-### Normalizing the data
+Normalizing the data
 
 ```{r normalize-data, eval=FALSE}
 combined_obj <- NormalizeData(combined_obj, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
 
-### Identification of highly variable features (feature selection)
+Identification of highly variable features (feature selection)
 
 Select a subset of features that exhibit high cell-to-cell variation in the dataset, by modeling the mean-variance relationship inherent in single-cell data.
 
-Select the 1,000 most variable genes across cells. 
+Select the 1,000 most variable genes across cells, as in the Shifrut et al. paper. 
 ```{r select-variable-genes, eval=FALSE}
 combined_obj <- FindVariableFeatures(combined_obj, selection.method = "vst", nfeatures = 1000)
 ```
@@ -137,9 +135,7 @@ combined_obj <- FindVariableFeatures(combined_obj, selection.method = "vst", nfe
 <!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
 <!-- ``` -->
 
-### Regress out total UMI counts per cell and percent of mitochondrial genes detected per cell and scaled to obtain gene level z-scores. 
-
-The results of this are stored in combined_obj[["RNA"]]@scale.data
+Regress out total UMI counts per cell and percent of mitochondrial genes detected per cell and scaled to obtain gene level z-scores, as in the Shifrut et al. paper. 
 
 ```{r regress-out-totalcounts-mt-percent, eval=FALSE}
 combined_obj <- ScaleData(combined_obj, vars.to.regress = c("nCount_RNA", "percent_mt"))
@@ -162,6 +158,9 @@ ElbowPlot(combined_obj, ndims = 50)
 
 ## Cluster the cells
 
+Embed cells in K-nearest neighbor (KNN) graph using `FindNeighbors()` using the first 30 PCs. 
+Then apply the Louvain algorithm to find clusters using `FindClusters() function` with default resolution (0.8).
+
 ```{r clustering, eval=FALSE}
 combined_obj <- FindNeighbors(combined_obj, dims = 1:30)
 combined_obj <- FindClusters(combined_obj)
@@ -169,7 +168,7 @@ combined_obj <- FindClusters(combined_obj)
 saveRDS(combined_obj, file = file.path(res_dir, "TCells_stimulated_seurat_clustered.rds"))
 ```
 
-## Run non-linear dimensional reduction (UMAP/tSNE)
+Visualize the clusters using UMAP
 ```{r umap, message=FALSE}
 combined_obj <- readRDS(file.path(res_dir, "TCells_stimulated_seurat_clustered.rds"))
 
@@ -183,7 +182,7 @@ combined_obj <- RunUMAP(combined_obj, dims = 1:30)
 DimPlot(combined_obj, reduction = "umap", label = TRUE)
 ```
 
-## Finding differentially expressed features (cluster biomarkers)
+## Finding differentially expressed genes using MAST
 
 ```{r de-markers, eval=FALSE}
 combined_obj <- readRDS(file.path(res_dir, "TCells_stimulated_seurat_clustered.rds"))
@@ -200,7 +199,7 @@ stopImplicitCluster()
 saveRDS(de.markers, file = file.path(res_dir, "TCells_stimulated_seurat_MAST_DEGs.rds"))
 ```
 
-## Associate perturbation with clustering results
+## Associate perturbations with clusters
 
 ```{r associate-perturbs-clusters}
 combined_obj <- readRDS(file.path(res_dir, "TCells_stimulated_seurat_clustered.rds"))
@@ -218,7 +217,7 @@ rownames(cluster_matrix) <- rownames(perturb_matrix)
 colnames(cluster_matrix) <- new_cluster_labels
 ```
 
-Chi-squared contingency table tests 
+Use Chi-squared tests for the association of perturbations and clusters (2 x 2 tables)
 ```{r chisq-test}
 summary_df <- expand.grid(colnames(perturb_matrix), colnames(cluster_matrix))
 colnames(summary_df) <- c("perturb", "cluster")
@@ -251,7 +250,7 @@ rownames(bonferroni_mat) <- bonferroni_mat$perturb
 bonferroni_mat$perturb <- NULL
 ```
 
-Dot plot for the perturbation ~ cluster associations (standardized residues and FDRs)
+Plot perturbation ~ cluster associations (show FDR)
 ```{r stdres-fdr-dotplot, eval=TRUE, fig.width=9, fig.height=5.5}
 KO_names <- rownames(fdr_mat)
 dotplot_effectsize(t(stdres_mat), t(fdr_mat),
@@ -263,7 +262,7 @@ dotplot_effectsize(t(stdres_mat), t(fdr_mat),
                    by_score = 2) + coord_flip()
 ```
 
-Dot plot for the perturbation ~ cluster associations (standardized residues and Bonferroni adjusted p-values)
+Plot perturbation ~ cluster associations (show Bonferroni adjusted p-values)
 ```{r stdres-bonferroni-dotplot, eval=TRUE, fig.width=9, fig.height=5.5}
 KO_names <- rownames(bonferroni_mat)
 dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
@@ -275,7 +274,12 @@ dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
                    by_score = 2) + coord_flip()
 ```
 
-## Load DE genes for each cluster and assign DE genes to associated perturbations
+
+## Find DE genes for each cluster and assign DE genes to associated perturbations
+
+First, find DE genes for each cluster using MAST (Bonferroni adjusted p-values < 0.05),
+Then, for each perturbation, find the associated clusters, and pull the DE genes for those clusters.
+
 ```{r get-de-genes}
 feature.names <- data.frame(fread(file.path(data_dir, "Stimulated_T_Cells_GSE119450_RAW_D1N_genes.tsv.gz"),
                                   header = FALSE), stringsAsFactors = FALSE)
@@ -294,7 +298,7 @@ for( i in 1:length(de.genes.clusters)){
 ```
 
 
-Count DE genes for each perturbation (FDR < 0.05)
+Number of DE genes for each perturbation (Chi-squared test FDR < 0.05)
 ```{r count-de-genes-fdr}
 perturb_names <- rownames(fdr_mat)
 perturb_names <- c("NonTarget", perturb_names[perturb_names!="NonTarget"])
@@ -328,7 +332,7 @@ ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
         legend.text = element_text(size = 13))
 ```
 
-Count DE genes for each perturbation (Bonferroni adjusted p-value < 0.05)
+Number of DE genes for each perturbation (Chi-squared test Bonferroni adjusted p-value < 0.05)
 ```{r count-de-genes-bonferroni}
 perturb_names <- rownames(bonferroni_mat)
 perturb_names <- c("NonTarget", perturb_names[perturb_names!="NonTarget"])
