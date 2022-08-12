@@ -1,7 +1,7 @@
 ---
 title: "Two step clustering analysis on LUHMES CROP-seq data"
 author: "Kaixuan Luo"
-date: "2022-07-14"
+date: "2022-08-10"
 output:
   workflowr::wflow_html:
     code_folding: hide
@@ -76,12 +76,15 @@ QC and selecting cells for further analysis.
 
 ```{r qc-1}
 # The number of unique genes detected in each cell.
+cat("The number of unique genes detected in each cell:\n")
 range(combined_obj$nFeature_RNA)
 
 # The total number of molecules detected within a cell
+cat("The total number of molecules detected within a cell:\n")
 range(combined_obj$nCount_RNA)
 
 # The percentage of reads that map to the mitochondrial genome
+cat("The percentage of reads that map to the mitochondrial genome:\n")
 range(combined_obj$percent_mt)
 ```
 
@@ -200,7 +203,7 @@ rownames(cluster_matrix) <- rownames(perturb_matrix)
 colnames(cluster_matrix) <- new_cluster_labels
 ```
 
-Chi-squared contingency table tests 
+Use Chi-squared tests for the association of perturbations and clusters
 ```{r chisq-test}
 summary_df <- expand.grid(colnames(perturb_matrix), colnames(cluster_matrix))
 colnames(summary_df) <- c("perturb", "cluster")
@@ -233,7 +236,7 @@ rownames(bonferroni_mat) <- bonferroni_mat$perturb
 bonferroni_mat$perturb <- NULL
 ```
 
-Dot plot for the perturbation ~ cluster associations (standardized residues and FDRs)
+Prturbation ~ cluster associations (show FDR)
 ```{r stdres-fdr-dotplot, eval=TRUE, fig.width=9, fig.height=5.5}
 KO_names <- rownames(fdr_mat)
 dotplot_effectsize(t(stdres_mat), t(fdr_mat),
@@ -245,7 +248,7 @@ dotplot_effectsize(t(stdres_mat), t(fdr_mat),
                    by_score = 2) + coord_flip()
 ```
 
-Dot plot for the perturbation ~ cluster associations (standardized residues and Bonferroni adjusted p-values)
+Prturbation ~ cluster associations (show Bonferroni adjusted p-values)
 ```{r stdres-bonferroni-dotplot, eval=TRUE, fig.width=9, fig.height=5.5}
 KO_names <- rownames(bonferroni_mat)
 dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
@@ -257,7 +260,11 @@ dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
                    by_score = 2) + coord_flip()
 ```
 
-## Load DE genes for each cluster and assign DE genes to associated perturbations
+## Find DE genes for each cluster and assign DE genes to associated perturbations
+
+First, find DE genes for each cluster using MAST (Bonferroni adjusted p-values < 0.05),
+Then, for each perturbation, find the associated clusters, and pull the DE genes for those clusters.
+
 ```{r get-de-genes}
 feature.names <- data.frame(fread(file.path(data_dir, "LUHMES_GSM4219575_Run1_genes.tsv.gz"),
                                   header = FALSE), stringsAsFactors = FALSE)
@@ -276,7 +283,7 @@ for( i in 1:length(de.genes.clusters)){
 ```
 
 
-Count DE genes for each perturbation (FDR < 0.05)
+Number of DE genes for each perturbation (Chi-squared test FDR < 0.05)
 ```{r count-de-genes-fdr, fig.width=13, fig.height=5}
 perturb_names <- rownames(fdr_mat)
 perturb_names <- c("Nontargeting", perturb_names[perturb_names!="Nontargeting"])
@@ -310,7 +317,7 @@ ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
         legend.text = element_text(size = 13))
 ```
 
-Count DE genes for each perturbation (Bonferroni adjusted p-value < 0.05)
+Number of DE genes for each perturbation (Chi-squared test Bonferroni adjusted p-value < 0.05)
 ```{r count-de-genes-bonferroni, fig.width=13, fig.height=5}
 
 perturb_names <- rownames(bonferroni_mat)
