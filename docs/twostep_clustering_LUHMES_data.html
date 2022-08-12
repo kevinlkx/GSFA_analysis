@@ -529,15 +529,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree0bc181bacc6609fbc469f59189c24b5f750d60fetargetblank0bc181ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree9212bba175c0271e68187f3470d7484c40a25c9dtargetblank9212bbaa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/0bc181bacc6609fbc469f59189c24b5f750d60fe" target="_blank">0bc181b</a>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/9212bba175c0271e68187f3470d7484c40a25c9d" target="_blank">9212bba</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree0bc181bacc6609fbc469f59189c24b5f750d60fetargetblank0bc181ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree9212bba175c0271e68187f3470d7484c40a25c9dtargetblank9212bbaa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -547,7 +547,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/0bc181bacc6609fbc469f59189c24b5f750d60fe" target="_blank">0bc181b</a>.
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/9212bba175c0271e68187f3470d7484c40a25c9d" target="_blank">9212bba</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -634,6 +634,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/9212bba175c0271e68187f3470d7484c40a25c9d/analysis/twostep_clustering_LUHMES_data.Rmd" target="_blank">9212bba</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+added more descriptions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/d7c7e29ec98e98bf3d4074724d18952cd30770e0/docs/twostep_clustering_LUHMES_data.html" target="_blank">d7c7e29</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -901,6 +935,10 @@ kevinlkx
 </div>
 <div id="cluster-the-cells" class="section level2">
 <h2>Cluster the cells</h2>
+<p>Embed cells in K-nearest neighbor (KNN) graph using
+<code>FindNeighbors()</code> using the first 30 PCs. Then apply the
+Louvain algorithm to find clusters using
+<code>FindClusters() function</code> with default resolution (0.8).</p>
 <pre class="r"><code>combined_obj &lt;- FindNeighbors(combined_obj, dims = 1:30)
 combined_obj &lt;- FindClusters(combined_obj)
 
