@@ -11,7 +11,7 @@
 
 <meta name="author" content="Kaixuan Luo" />
 
-<meta name="date" content="2022-07-14" />
+<meta name="date" content="2022-08-10" />
 
 <title>Two step clustering analysis on CD8+ T Cell (stimulated) CROP-seq data</title>
 
@@ -369,7 +369,7 @@ div.tocify {
 <h1 class="title toc-ignore">Two step clustering analysis on CD8+ T Cell
 (stimulated) CROP-seq data</h1>
 <h4 class="author">Kaixuan Luo</h4>
-<h4 class="date">2022-07-14</h4>
+<h4 class="date">2022-08-10</h4>
 
 </div>
 
@@ -398,7 +398,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-11
+<strong>Last updated:</strong> 2022-08-12
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -529,15 +529,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreece094cdc91cf4d438c8a79430b8d94fd78dc0a4btargetblankce094cda">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree9c0697696961f66bdcbb5c01d603c1dbe454d202targetblank9c06976a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/ce094cdc91cf4d438c8a79430b8d94fd78dc0a4b" target="_blank">ce094cd</a>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/9c0697696961f66bdcbb5c01d603c1dbe454d202" target="_blank">9c06976</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreece094cdc91cf4d438c8a79430b8d94fd78dc0a4btargetblankce094cda"
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree9c0697696961f66bdcbb5c01d603c1dbe454d202targetblank9c06976a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -547,7 +547,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/ce094cdc91cf4d438c8a79430b8d94fd78dc0a4b" target="_blank">ce094cd</a>.
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/9c0697696961f66bdcbb5c01d603c1dbe454d202" target="_blank">9c06976</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -578,8 +578,6 @@ Untracked files:
     Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
     Untracked:  code/run_spca_LUHMES.R
     Untracked:  code/run_spca_TCells.R
-    Untracked:  code/run_twostep_clustering_LUHMES_data.R
-    Untracked:  code/run_twostep_clustering_Tcells_stimulated_data.R
     Untracked:  code/sceptre_LUHMES_data.R
     Untracked:  code/sceptre_Tcells_stimulated_data.R
     Untracked:  code/sceptre_Tcells_unstimulated_data.R
@@ -635,6 +633,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/9c0697696961f66bdcbb5c01d603c1dbe454d202/analysis/twostep_clustering_TCells_data.Rmd" target="_blank">9c06976</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+added more descriptions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/ee884c45858acc41f9e7b9c4ab878029576c1a51/docs/twostep_clustering_TCells_data.html" target="_blank">ee884c4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -725,13 +757,12 @@ TCells_D1S TCells_D2S
       6843       7435 </code></pre>
 </div>
 <div id="pre-processing" class="section level2">
-<h2>pre-processing</h2>
+<h2>Pre-processing</h2>
 <p>The steps below encompass the standard pre-processing workflow for
 scRNA-seq data in Seurat.</p>
 <p>These represent the selection and filtration of cells based on QC
 metrics, data normalization and scaling, and the detection of highly
 variable features.</p>
-<p>QC and selecting cells for further analysis.</p>
 <pre class="r"><code># The number of unique genes detected in each cell.
 range(combined_obj$nFeature_RNA)
 
@@ -745,19 +776,17 @@ range(combined_obj$percent_mt)</code></pre>
 [1] 0.01762736 9.96515679</code></pre>
 <pre class="r"><code># Visualize QC metrics as a violin plot
 VlnPlot(combined_obj, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent_mt&quot;), ncol = 3)</code></pre>
-<p>We filter cells that have more than 500 genes identified.</p>
+<p>We filter cells that have more than 500 genes identified, as in the
+Shifrut et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- subset(combined_obj, subset = nFeature_RNA &gt; 500)</code></pre>
-<div id="normalizing-the-data" class="section level3">
-<h3>Normalizing the data</h3>
+<p>Normalizing the data</p>
 <pre class="r"><code>combined_obj &lt;- NormalizeData(combined_obj, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
-</div>
-<div id="identification-of-highly-variable-features-feature-selection"
-class="section level3">
-<h3>Identification of highly variable features (feature selection)</h3>
+<p>Identification of highly variable features (feature selection)</p>
 <p>Select a subset of features that exhibit high cell-to-cell variation
 in the dataset, by modeling the mean-variance relationship inherent in
 single-cell data.</p>
-<p>Select the 1,000 most variable genes across cells.</p>
+<p>Select the 1,000 most variable genes across cells, as in the Shifrut
+et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- FindVariableFeatures(combined_obj, selection.method = &quot;vst&quot;, nfeatures = 1000)</code></pre>
 <!-- Select the 6k genes used for GSFA in this analysis -->
 <!-- ```{r select-genes} -->
@@ -767,14 +796,9 @@ single-cell data.</p>
 <!-- selected_gene_id <- rownames(scaled_gene_matrix_in_gsfa) -->
 <!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
 <!-- ``` -->
-</div>
-<div
-id="regress-out-total-umi-counts-per-cell-and-percent-of-mitochondrial-genes-detected-per-cell-and-scaled-to-obtain-gene-level-z-scores."
-class="section level3">
-<h3>Regress out total UMI counts per cell and percent of mitochondrial
-genes detected per cell and scaled to obtain gene level z-scores.</h3>
-<p>The results of this are stored in combined_obj[[“RNA”]]<span
-class="citation">@scale.data</span></p>
+<p>Regress out total UMI counts per cell and percent of mitochondrial
+genes detected per cell and scaled to obtain gene level z-scores, as in
+the Shifrut et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;))
 # combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;), features = selected_gene_id)
 dim(combined_obj[[&quot;RNA&quot;]]@counts)
@@ -783,7 +807,6 @@ dim(combined_obj[[&quot;RNA&quot;]]@scale.data)
 
 saveRDS(combined_obj, file = file.path(res_dir, &quot;TCells_stimulated_seurat_processed_data.rds&quot;))</code></pre>
 </div>
-</div>
 <div id="perform-dimensional-reduction" class="section level2">
 <h2>Perform dimensional reduction</h2>
 <p>Perform PCA on the scaled data.</p>
@@ -791,17 +814,55 @@ saveRDS(combined_obj, file = file.path(res_dir, &quot;TCells_stimulated_seurat_p
 combined_obj &lt;- RunPCA(combined_obj, features = VariableFeatures(object = combined_obj))
 ElbowPlot(combined_obj, ndims = 50)</code></pre>
 <p><img src="figure/twostep_clustering_TCells_data.Rmd/pca-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-pca-1">
+Past versions of pca-1.png
+</button>
+</p>
+<div id="fig-pca-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ee884c45858acc41f9e7b9c4ab878029576c1a51/docs/figure/twostep_clustering_TCells_data.Rmd/pca-1.png" target="_blank">ee884c4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cluster-the-cells" class="section level2">
 <h2>Cluster the cells</h2>
+<p>Embed cells in K-nearest neighbor (KNN) graph using
+<code>FindNeighbors()</code> using the first 30 PCs. Then apply the
+Louvain algorithm to find clusters using
+<code>FindClusters() function</code> with default resolution (0.8).</p>
 <pre class="r"><code>combined_obj &lt;- FindNeighbors(combined_obj, dims = 1:30)
 combined_obj &lt;- FindClusters(combined_obj)
 
 saveRDS(combined_obj, file = file.path(res_dir, &quot;TCells_stimulated_seurat_clustered.rds&quot;))</code></pre>
-</div>
-<div id="run-non-linear-dimensional-reduction-umaptsne"
-class="section level2">
-<h2>Run non-linear dimensional reduction (UMAP/tSNE)</h2>
+<p>Visualize the clusters using UMAP</p>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;TCells_stimulated_seurat_clustered.rds&quot;))
 
 cluster_labels &lt;- Idents(combined_obj)
@@ -813,10 +874,47 @@ combined_obj &lt;- RenameIdents(combined_obj, new_cluster_labels)
 combined_obj &lt;- RunUMAP(combined_obj, dims = 1:30)
 DimPlot(combined_obj, reduction = &quot;umap&quot;, label = TRUE)</code></pre>
 <p><img src="figure/twostep_clustering_TCells_data.Rmd/umap-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-umap-1">
+Past versions of umap-1.png
+</button>
+</p>
+<div id="fig-umap-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ee884c45858acc41f9e7b9c4ab878029576c1a51/docs/figure/twostep_clustering_TCells_data.Rmd/umap-1.png" target="_blank">ee884c4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="finding-differentially-expressed-features-cluster-biomarkers"
+</div>
+</div>
+<div id="finding-differentially-expressed-genes-using-mast"
 class="section level2">
-<h2>Finding differentially expressed features (cluster biomarkers)</h2>
+<h2>Finding differentially expressed genes using MAST</h2>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;TCells_stimulated_seurat_clustered.rds&quot;))
 
 cat(&quot;Run DE test using MAST...\n&quot;)
@@ -830,9 +928,8 @@ proc.time() - ptm
 stopImplicitCluster()
 saveRDS(de.markers, file = file.path(res_dir, &quot;TCells_stimulated_seurat_MAST_DEGs.rds&quot;))</code></pre>
 </div>
-<div id="associate-perturbation-with-clustering-results"
-class="section level2">
-<h2>Associate perturbation with clustering results</h2>
+<div id="associate-perturbations-with-clusters" class="section level2">
+<h2>Associate perturbations with clusters</h2>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;TCells_stimulated_seurat_clustered.rds&quot;))
 perturb_matrix &lt;- combined_obj@meta.data[, 4:24]
 
@@ -846,7 +943,8 @@ cluster_matrix &lt;- matrix(0, nrow = nrow(perturb_matrix), ncol = length(levels
 cluster_matrix[cbind(1:nrow(perturb_matrix), cluster_labels)] &lt;- 1
 rownames(cluster_matrix) &lt;- rownames(perturb_matrix)
 colnames(cluster_matrix) &lt;- new_cluster_labels</code></pre>
-<p>Chi-squared contingency table tests</p>
+<p>Use Chi-squared tests for the association of perturbations and
+clusters (2 x 2 tables)</p>
 <pre class="r"><code>summary_df &lt;- expand.grid(colnames(perturb_matrix), colnames(cluster_matrix))
 colnames(summary_df) &lt;- c(&quot;perturb&quot;, &quot;cluster&quot;)
 
@@ -876,8 +974,7 @@ bonferroni_mat &lt;- reshape2::dcast(summary_df %&gt;% dplyr::select(perturb, cl
                                   perturb ~ cluster, value.var = &quot;bonferroni_adj&quot;)
 rownames(bonferroni_mat) &lt;- bonferroni_mat$perturb
 bonferroni_mat$perturb &lt;- NULL</code></pre>
-<p>Dot plot for the perturbation ~ cluster associations (standardized
-residues and FDRs)</p>
+<p>Plot perturbation ~ cluster associations (show FDR)</p>
 <pre class="r"><code>KO_names &lt;- rownames(fdr_mat)
 dotplot_effectsize(t(stdres_mat), t(fdr_mat),
                    reorder_markers = c(KO_names[KO_names!=&quot;NonTarget&quot;], &quot;NonTarget&quot;),
@@ -887,8 +984,45 @@ dotplot_effectsize(t(stdres_mat), t(fdr_mat),
                    min_score = -4,
                    by_score = 2) + coord_flip()</code></pre>
 <p><img src="figure/twostep_clustering_TCells_data.Rmd/stdres-fdr-dotplot-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p>Dot plot for the perturbation ~ cluster associations (standardized
-residues and Bonferroni adjusted p-values)</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-stdres-fdr-dotplot-1">
+Past versions of stdres-fdr-dotplot-1.png
+</button>
+</p>
+<div id="fig-stdres-fdr-dotplot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ee884c45858acc41f9e7b9c4ab878029576c1a51/docs/figure/twostep_clustering_TCells_data.Rmd/stdres-fdr-dotplot-1.png" target="_blank">ee884c4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Plot perturbation ~ cluster associations (show Bonferroni adjusted
+p-values)</p>
 <pre class="r"><code>KO_names &lt;- rownames(bonferroni_mat)
 dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!=&quot;NonTarget&quot;], &quot;NonTarget&quot;),
@@ -898,12 +1032,52 @@ dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
                    min_score = -4,
                    by_score = 2) + coord_flip()</code></pre>
 <p><img src="figure/twostep_clustering_TCells_data.Rmd/stdres-bonferroni-dotplot-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-stdres-bonferroni-dotplot-1">
+Past versions of stdres-bonferroni-dotplot-1.png
+</button>
+</p>
+<div id="fig-stdres-bonferroni-dotplot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ee884c45858acc41f9e7b9c4ab878029576c1a51/docs/figure/twostep_clustering_TCells_data.Rmd/stdres-bonferroni-dotplot-1.png" target="_blank">ee884c4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div
-id="load-de-genes-for-each-cluster-and-assign-de-genes-to-associated-perturbations"
+id="find-de-genes-for-each-cluster-and-assign-de-genes-to-associated-perturbations"
 class="section level2">
-<h2>Load DE genes for each cluster and assign DE genes to associated
+<h2>Find DE genes for each cluster and assign DE genes to associated
 perturbations</h2>
+<p>First, find DE genes for each cluster using MAST (Bonferroni adjusted
+p-values &lt; 0.05), Then, for each perturbation, find the associated
+clusters, and pull the DE genes for those clusters.</p>
 <pre class="r"><code>feature.names &lt;- data.frame(fread(file.path(data_dir, &quot;Stimulated_T_Cells_GSE119450_RAW_D1N_genes.tsv.gz&quot;),
                                   header = FALSE), stringsAsFactors = FALSE)
 
@@ -918,7 +1092,8 @@ for( i in 1:length(de.genes.clusters)){
   de_genes &lt;- feature.names$V2[match(de_genes, feature.names$V1)]
   de.genes.clusters[[i]] &lt;- de_genes
 }</code></pre>
-<p>Count DE genes for each perturbation (FDR &lt; 0.05)</p>
+<p>Number of DE genes for each perturbation (Chi-squared test FDR &lt;
+0.05)</p>
 <pre class="r"><code>perturb_names &lt;- rownames(fdr_mat)
 perturb_names &lt;- c(&quot;NonTarget&quot;, perturb_names[perturb_names!=&quot;NonTarget&quot;])
 
@@ -950,8 +1125,45 @@ ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
         legend.position = &quot;bottom&quot;,
         legend.text = element_text(size = 13))</code></pre>
 <p><img src="figure/twostep_clustering_TCells_data.Rmd/count-de-genes-fdr-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Count DE genes for each perturbation (Bonferroni adjusted p-value
-&lt; 0.05)</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-count-de-genes-fdr-1">
+Past versions of count-de-genes-fdr-1.png
+</button>
+</p>
+<div id="fig-count-de-genes-fdr-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ee884c45858acc41f9e7b9c4ab878029576c1a51/docs/figure/twostep_clustering_TCells_data.Rmd/count-de-genes-fdr-1.png" target="_blank">ee884c4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Number of DE genes for each perturbation (Chi-squared test Bonferroni
+adjusted p-value &lt; 0.05)</p>
 <pre class="r"><code>perturb_names &lt;- rownames(bonferroni_mat)
 perturb_names &lt;- c(&quot;NonTarget&quot;, perturb_names[perturb_names!=&quot;NonTarget&quot;])
 
@@ -983,6 +1195,43 @@ ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
         legend.position = &quot;bottom&quot;,
         legend.text = element_text(size = 13))</code></pre>
 <p><img src="figure/twostep_clustering_TCells_data.Rmd/count-de-genes-bonferroni-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-count-de-genes-bonferroni-1">
+Past versions of count-de-genes-bonferroni-1.png
+</button>
+</p>
+<div id="fig-count-de-genes-bonferroni-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ee884c45858acc41f9e7b9c4ab878029576c1a51/docs/figure/twostep_clustering_TCells_data.Rmd/count-de-genes-bonferroni-1.png" target="_blank">ee884c4</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
