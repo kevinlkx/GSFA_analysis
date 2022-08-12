@@ -529,15 +529,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree9212bba175c0271e68187f3470d7484c40a25c9dtargetblank9212bbaa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree71a5d699401a6402c9e1f555eff245109cb22e61targetblank71a5d69a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/9212bba175c0271e68187f3470d7484c40a25c9d" target="_blank">9212bba</a>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/71a5d699401a6402c9e1f555eff245109cb22e61" target="_blank">71a5d69</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree9212bba175c0271e68187f3470d7484c40a25c9dtargetblank9212bbaa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree71a5d699401a6402c9e1f555eff245109cb22e61targetblank71a5d69a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -547,7 +547,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/9212bba175c0271e68187f3470d7484c40a25c9d" target="_blank">9212bba</a>.
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/71a5d699401a6402c9e1f555eff245109cb22e61" target="_blank">71a5d69</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -634,6 +634,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/71a5d699401a6402c9e1f555eff245109cb22e61/analysis/twostep_clustering_LUHMES_data.Rmd" target="_blank">71a5d69</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+added more descriptions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/12f1a27d59bb09d02295d07b76e1a232fa962107/docs/twostep_clustering_LUHMES_data.html" target="_blank">12f1a27</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -861,7 +895,8 @@ The percentage of reads that map to the mitochondrial genome:
 [1] 0.128082 9.804772</code></pre>
 <pre class="r"><code># Visualize QC metrics as a violin plot
 VlnPlot(combined_obj, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent_mt&quot;), ncol = 3)</code></pre>
-<p>We filter cells that have more than 500 genes identified.</p>
+<p>We filter cells that have more than 500 genes identified, as in the
+Shifrut et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- subset(combined_obj, subset = nFeature_RNA &gt; 500)</code></pre>
 <p>Normalizing the data</p>
 <pre class="r"><code>combined_obj &lt;- NormalizeData(combined_obj, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
@@ -869,7 +904,8 @@ VlnPlot(combined_obj, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&qu
 <p>Select a subset of features that exhibit high cell-to-cell variation
 in the dataset, by modeling the mean-variance relationship inherent in
 single-cell data.</p>
-<p>Select the 1,000 most variable genes across cells.</p>
+<p>Select the 1,000 most variable genes across cells, as in the Shifrut
+et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- FindVariableFeatures(combined_obj, selection.method = &quot;vst&quot;, nfeatures = 1000)</code></pre>
 <!-- Select the 6k genes used for GSFA in this analysis -->
 <!-- ```{r select-genes} -->
@@ -880,9 +916,8 @@ single-cell data.</p>
 <!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
 <!-- ``` -->
 <p>Regress out total UMI counts per cell and percent of mitochondrial
-genes detected per cell and scaled to obtain gene level z-scores. The
-results of this are stored in combined_obj[[“RNA”]]<span
-class="citation">@scale.data</span></p>
+genes detected per cell and scaled to obtain gene level z-scores, as in
+the Shifrut et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;))
 # combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;), features = selected_gene_id)
 
@@ -943,9 +978,7 @@ Louvain algorithm to find clusters using
 combined_obj &lt;- FindClusters(combined_obj)
 
 saveRDS(combined_obj, file = file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))</code></pre>
-</div>
-<div id="umap-plot" class="section level2">
-<h2>UMAP plot</h2>
+<p>Visualize the clusters using UMAP</p>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))
 
 cluster_labels &lt;- Idents(combined_obj)
