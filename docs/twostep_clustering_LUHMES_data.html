@@ -529,15 +529,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreea900cfd5a9e856bdb1a0b00452e97ef491fbfa65targetblanka900cfda">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree0bc181bacc6609fbc469f59189c24b5f750d60fetargetblank0bc181ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/a900cfd5a9e856bdb1a0b00452e97ef491fbfa65" target="_blank">a900cfd</a>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/0bc181bacc6609fbc469f59189c24b5f750d60fe" target="_blank">0bc181b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreea900cfd5a9e856bdb1a0b00452e97ef491fbfa65targetblanka900cfda"
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree0bc181bacc6609fbc469f59189c24b5f750d60fetargetblank0bc181ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -547,7 +547,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/a900cfd5a9e856bdb1a0b00452e97ef491fbfa65" target="_blank">a900cfd</a>.
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/0bc181bacc6609fbc469f59189c24b5f750d60fe" target="_blank">0bc181b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -634,6 +634,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/0bc181bacc6609fbc469f59189c24b5f750d60fe/analysis/twostep_clustering_LUHMES_data.Rmd" target="_blank">0bc181b</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+added more descriptions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/056e9c8c6f652a886e24e977bf8941a0d25bb356/docs/twostep_clustering_LUHMES_data.html" target="_blank">056e9c8</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -768,13 +802,12 @@ dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)</code></pre>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(data_dir,&quot;LUHMES_cropseq_data_seurat.rds&quot;))</code></pre>
 </div>
 <div id="pre-processing" class="section level2">
-<h2>pre-processing</h2>
+<h2>Pre-processing</h2>
 <p>The steps below encompass the standard pre-processing workflow for
 scRNA-seq data in Seurat.</p>
 <p>These represent the selection and filtration of cells based on QC
 metrics, data normalization and scaling, and the detection of highly
 variable features.</p>
-<p>QC and selecting cells for further analysis.</p>
 <pre class="r"><code># The number of unique genes detected in each cell.
 cat(&quot;The number of unique genes detected in each cell:\n&quot;)
 range(combined_obj$nFeature_RNA)
@@ -796,13 +829,9 @@ The percentage of reads that map to the mitochondrial genome:
 VlnPlot(combined_obj, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent_mt&quot;), ncol = 3)</code></pre>
 <p>We filter cells that have more than 500 genes identified.</p>
 <pre class="r"><code>combined_obj &lt;- subset(combined_obj, subset = nFeature_RNA &gt; 500)</code></pre>
-<div id="normalizing-the-data" class="section level3">
-<h3>Normalizing the data</h3>
+<p>Normalizing the data</p>
 <pre class="r"><code>combined_obj &lt;- NormalizeData(combined_obj, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
-</div>
-<div id="identification-of-highly-variable-features-feature-selection"
-class="section level3">
-<h3>Identification of highly variable features (feature selection)</h3>
+<p>Identification of highly variable features (feature selection)</p>
 <p>Select a subset of features that exhibit high cell-to-cell variation
 in the dataset, by modeling the mean-variance relationship inherent in
 single-cell data.</p>
@@ -816,22 +845,14 @@ single-cell data.</p>
 <!-- selected_gene_id <- rownames(scaled_gene_matrix_in_gsfa) -->
 <!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
 <!-- ``` -->
-</div>
-<div
-id="regress-out-total-umi-counts-per-cell-and-percent-of-mitochondrial-genes-detected-per-cell-and-scaled-to-obtain-gene-level-z-scores."
-class="section level3">
-<h3>Regress out total UMI counts per cell and percent of mitochondrial
-genes detected per cell and scaled to obtain gene level z-scores.</h3>
-<p>The results of this are stored in combined_obj[[“RNA”]]<span
+<p>Regress out total UMI counts per cell and percent of mitochondrial
+genes detected per cell and scaled to obtain gene level z-scores. The
+results of this are stored in combined_obj[[“RNA”]]<span
 class="citation">@scale.data</span></p>
 <pre class="r"><code>combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;))
 # combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;), features = selected_gene_id)
-dim(combined_obj[[&quot;RNA&quot;]]@counts)
-dim(combined_obj[[&quot;RNA&quot;]]@data)
-dim(combined_obj[[&quot;RNA&quot;]]@scale.data)
 
 saveRDS(combined_obj, file = file.path(res_dir, &quot;LUHMES_seurat_processed_data.rds&quot;))</code></pre>
-</div>
 </div>
 <div id="perform-dimensional-reduction" class="section level2">
 <h2>Perform dimensional reduction</h2>
@@ -885,9 +906,8 @@ combined_obj &lt;- FindClusters(combined_obj)
 
 saveRDS(combined_obj, file = file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))</code></pre>
 </div>
-<div id="run-non-linear-dimensional-reduction-umaptsne"
-class="section level2">
-<h2>Run non-linear dimensional reduction (UMAP/tSNE)</h2>
+<div id="umap-plot" class="section level2">
+<h2>UMAP plot</h2>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))
 
 cluster_labels &lt;- Idents(combined_obj)
@@ -937,25 +957,20 @@ kevinlkx
 </div>
 </div>
 </div>
-<div id="finding-differentially-expressed-features-cluster-biomarkers"
+<div id="finding-differentially-expressed-genes-using-mast"
 class="section level2">
-<h2>Finding differentially expressed features (cluster biomarkers)</h2>
+<h2>Finding differentially expressed genes using MAST</h2>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))
-
-cat(&quot;Run DE test using MAST...\n&quot;)
 cat(length(levels(combined_obj)), &quot;clusters.\n&quot;)
 registerDoParallel(cores=n_cores)
-ptm &lt;- proc.time()
 de.markers &lt;- foreach(i=levels(combined_obj), .packages=&quot;Seurat&quot;) %dopar% {
   FindMarkers(combined_obj, ident.1 = i, test.use = &quot;MAST&quot;)
 }
-proc.time() - ptm
 stopImplicitCluster()
 saveRDS(de.markers, file = file.path(res_dir, &quot;LUHMES_seurat_MAST_DEGs.rds&quot;))</code></pre>
 </div>
-<div id="associate-perturbation-with-clustering-results"
-class="section level2">
-<h2>Associate perturbation with clustering results</h2>
+<div id="associate-perturbations-with-clusters" class="section level2">
+<h2>Associate perturbations with clusters</h2>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;LUHMES_seurat_clustered.rds&quot;))
 perturb_matrix &lt;- combined_obj@meta.data[, 4:18]
 
@@ -970,7 +985,7 @@ cluster_matrix[cbind(1:nrow(perturb_matrix), cluster_labels)] &lt;- 1
 rownames(cluster_matrix) &lt;- rownames(perturb_matrix)
 colnames(cluster_matrix) &lt;- new_cluster_labels</code></pre>
 <p>Use Chi-squared tests for the association of perturbations and
-clusters</p>
+clusters (2 x 2 tables)</p>
 <pre class="r"><code>summary_df &lt;- expand.grid(colnames(perturb_matrix), colnames(cluster_matrix))
 colnames(summary_df) &lt;- c(&quot;perturb&quot;, &quot;cluster&quot;)
 
@@ -1000,7 +1015,7 @@ bonferroni_mat &lt;- reshape2::dcast(summary_df %&gt;% dplyr::select(perturb, cl
                                   perturb ~ cluster, value.var = &quot;bonferroni_adj&quot;)
 rownames(bonferroni_mat) &lt;- bonferroni_mat$perturb
 bonferroni_mat$perturb &lt;- NULL</code></pre>
-<p>Prturbation ~ cluster associations (show FDR)</p>
+<p>Plot perturbation ~ cluster associations (show FDR)</p>
 <pre class="r"><code>KO_names &lt;- rownames(fdr_mat)
 dotplot_effectsize(t(stdres_mat), t(fdr_mat),
                    reorder_markers = c(KO_names[KO_names!=&quot;Nontargeting&quot;], &quot;Nontargeting&quot;),
@@ -1047,7 +1062,7 @@ kevinlkx
 </table>
 </div>
 </div>
-<p>Prturbation ~ cluster associations (show Bonferroni adjusted
+<p>Plot perturbation ~ cluster associations (show Bonferroni adjusted
 p-values)</p>
 <pre class="r"><code>KO_names &lt;- rownames(bonferroni_mat)
 dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
