@@ -139,6 +139,9 @@ ElbowPlot(combined_obj, ndims = 50)
 
 ## Cluster the cells
 
+Embed cells in K-nearest neighbor (KNN) graph using `FindNeighbors()` using the first 30 PCs. 
+Then apply the Louvain algorithm to find clusters using `FindClusters() function` with default resolution (0.8).
+
 ```{r clustering, eval=FALSE}
 combined_obj <- FindNeighbors(combined_obj, dims = 1:30)
 combined_obj <- FindClusters(combined_obj)
