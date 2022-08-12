@@ -90,7 +90,7 @@ range(combined_obj$percent_mt)
 VlnPlot(combined_obj, features = c("nFeature_RNA", "nCount_RNA", "percent_mt"), ncol = 3)
 ```
 
-We filter cells that have more than 500 genes identified.
+We filter cells that have more than 500 genes identified, as in the Shifrut et al. paper. 
 ```{r qc-filter-cells, eval=FALSE}
 combined_obj <- subset(combined_obj, subset = nFeature_RNA > 500)
 ```
@@ -105,7 +105,7 @@ Identification of highly variable features (feature selection)
 
 Select a subset of features that exhibit high cell-to-cell variation in the dataset, by modeling the mean-variance relationship inherent in single-cell data.
 
-Select the 1,000 most variable genes across cells. 
+Select the 1,000 most variable genes across cells, as in the Shifrut et al. paper. 
 ```{r select-variable-genes, eval=FALSE}
 combined_obj <- FindVariableFeatures(combined_obj, selection.method = "vst", nfeatures = 1000)
 ```
@@ -119,8 +119,7 @@ combined_obj <- FindVariableFeatures(combined_obj, selection.method = "vst", nfe
 <!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
 <!-- ``` -->
 
-Regress out total UMI counts per cell and percent of mitochondrial genes detected per cell and scaled to obtain gene level z-scores. The results of this are stored in combined_obj[["RNA"]]@scale.data
-
+Regress out total UMI counts per cell and percent of mitochondrial genes detected per cell and scaled to obtain gene level z-scores, as in the Shifrut et al. paper. 
 ```{r regress-out-totalcounts-mt-percent, eval=FALSE}
 combined_obj <- ScaleData(combined_obj, vars.to.regress = c("nCount_RNA", "percent_mt"))
 # combined_obj <- ScaleData(combined_obj, vars.to.regress = c("nCount_RNA", "percent_mt"), features = selected_gene_id)
@@ -149,7 +148,7 @@ combined_obj <- FindClusters(combined_obj)
 saveRDS(combined_obj, file = file.path(res_dir, "LUHMES_seurat_clustered.rds"))
 ```
 
-## UMAP plot
+Visualize the clusters using UMAP
 ```{r umap, message=FALSE}
 combined_obj <- readRDS(file.path(res_dir, "LUHMES_seurat_clustered.rds"))
 
