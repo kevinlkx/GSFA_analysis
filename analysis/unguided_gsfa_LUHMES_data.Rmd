@@ -79,37 +79,37 @@ KO_names <- colnames(G_mat)
 negctrl_index <- which(KO_names == "Nontargeting")
 ```
 
-```{r, include=FALSE, eval=FALSE}
-# Associate factors to guides with marginal linear regression
-Z_pm <- fit$posterior_means$Z_pm
-if(!all.equal(rownames(G_mat), rownames(Z_pm))){
-  stop("Rownames of G_mat do not match with Z_pm!")
-}
+<!-- ```{r, include=FALSE, eval=FALSE} -->
+<!-- # Associate factors to guides with marginal linear regression -->
+<!-- Z_pm <- fit$posterior_means$Z_pm -->
+<!-- if(!all.equal(rownames(G_mat), rownames(Z_pm))){ -->
+<!--   stop("Rownames of G_mat do not match with Z_pm!") -->
+<!-- } -->
 
-guide_names <- colnames(G_mat)
-factor_names <- colnames(Z_pm)
+<!-- guide_names <- colnames(G_mat) -->
+<!-- factor_names <- colnames(Z_pm) -->
 
-pval.mat <- matrix(0, nrow=ncol(G_mat), ncol=ncol(Z_pm))
-rownames(pval.mat) <- guide_names
-colnames(pval.mat) <- factor_names
+<!-- pval.mat <- matrix(0, nrow=ncol(G_mat), ncol=ncol(Z_pm)) -->
+<!-- rownames(pval.mat) <- guide_names -->
+<!-- colnames(pval.mat) <- factor_names -->
 
-beta.mat <- stat.mat <- pval.mat
+<!-- beta.mat <- stat.mat <- pval.mat -->
 
-for (i in 1:nrow(pval.mat)) {
-  for (j in 1:ncol(pval.mat)){
-    df <- data.frame(factor = Z_pm[,j], guide = G_mat[,i])
-    lm.res <- lm(factor ~ guide, data=df)
-    beta.mat[i,j] <- summary(lm.res)$coefficients[2,1]
-    stat.mat[i,j] <- summary(lm.res)$coefficients[2,3]
-    pval.mat[i,j] <- summary(lm.res)$coefficients[2,4]
-  }
-}
+<!-- for (i in 1:nrow(pval.mat)) { -->
+<!--   for (j in 1:ncol(pval.mat)){ -->
+<!--     df <- data.frame(factor = Z_pm[,j], guide = G_mat[,i]) -->
+<!--     lm.res <- lm(factor ~ guide, data=df) -->
+<!--     beta.mat[i,j] <- summary(lm.res)$coefficients[2,1] -->
+<!--     stat.mat[i,j] <- summary(lm.res)$coefficients[2,3] -->
+<!--     pval.mat[i,j] <- summary(lm.res)$coefficients[2,4] -->
+<!--   } -->
+<!-- } -->
 
-# aggregate DEGs from factors to guides.
-fdr.mat <- matrix(p.adjust(c(pval.mat),"BH"), nrow=nrow(pval.mat))
-rownames(fdr.mat) <- rownames(pval.mat)
-colnames(fdr.mat) <- colnames(pval.mat)
-```
+<!-- # aggregate DEGs from factors to guides. -->
+<!-- fdr.mat <- matrix(p.adjust(c(pval.mat),"BH"), nrow=nrow(pval.mat)) -->
+<!-- rownames(fdr.mat) <- rownames(pval.mat) -->
+<!-- colnames(fdr.mat) <- colnames(pval.mat) -->
+<!-- ``` -->
 
 Use linear regression to test for the association between perturbations and factors
 ```{r chisq-test}
@@ -197,23 +197,23 @@ First, find DE genes for each factor using F matrix (PIP>0.95).
 
 Then, for each perturbation, find the associated factors, and pull the DE genes for those factors.
 
-```{r, include=FALSE, eval=FALSE}
-F_pm <- fit$posterior_means$F_pm
-dim(F_pm)
+<!-- ```{r, include=FALSE, eval=FALSE} -->
+<!-- F_pm <- fit$posterior_means$F_pm -->
+<!-- dim(F_pm) -->
 
-DEGs.factors <- foreach(i=1:ncol(F_pm)) %do% {
-  rownames(F_pm)[which(F_pm[,i]>0.95)]
-}
-names(DEGs.factors) <- colnames(F_pm)
+<!-- DEGs.factors <- foreach(i=1:ncol(F_pm)) %do% { -->
+<!--   rownames(F_pm)[which(F_pm[,i]>0.95)] -->
+<!-- } -->
+<!-- names(DEGs.factors) <- colnames(F_pm) -->
 
-associated.factors <- foreach(i=1:nrow(fdr.mat)) %do% which(fdr.mat[i,]<0.05)
+<!-- associated.factors <- foreach(i=1:nrow(fdr.mat)) %do% which(fdr.mat[i,]<0.05) -->
 
-guide.DEGs <- foreach(i=1:nrow(fdr.mat)) %do% unique(unlist(DEGs.factors[ associated.factors[[i]] ]))
-names(guide.DEGs) <- rownames(fdr.mat)
+<!-- guide.DEGs <- foreach(i=1:nrow(fdr.mat)) %do% unique(unlist(DEGs.factors[ associated.factors[[i]] ])) -->
+<!-- names(guide.DEGs) <- rownames(fdr.mat) -->
 
-num.guide.DEGs <- sapply(guide.DEGs, length)
-num.guide.DEGs
-```
+<!-- num.guide.DEGs <- sapply(guide.DEGs, length) -->
+<!-- num.guide.DEGs -->
+<!-- ``` -->
 
 
 ```{r get-de-genes}
