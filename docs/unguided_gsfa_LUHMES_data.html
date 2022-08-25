@@ -481,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeae5b1ad03c079234f362342ad2897a91bb25e8f4targetblankae5b1ada"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/ae5b1ad03c079234f362342ad2897a91bb25e8f4" target="_blank">ae5b1ad</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree150dbc126e30156ea5104b20f142f7112b4460aetargetblank150dbc1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/150dbc126e30156ea5104b20f142f7112b4460ae" target="_blank">150dbc1</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeae5b1ad03c079234f362342ad2897a91bb25e8f4targetblankae5b1ada" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree150dbc126e30156ea5104b20f142f7112b4460aetargetblank150dbc1a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/ae5b1ad03c079234f362342ad2897a91bb25e8f4" target="_blank">ae5b1ad</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/150dbc126e30156ea5104b20f142f7112b4460ae" target="_blank">150dbc1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -578,6 +578,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/150dbc126e30156ea5104b20f142f7112b4460ae/analysis/unguided_gsfa_LUHMES_data.Rmd" target="_blank">150dbc1</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+<td>
+unguided GSFA res for LUHMES data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/2cefbda6a664a8afe9da8e9967af11b2f7f89e5c/docs/unguided_gsfa_LUHMES_data.html" target="_blank">2cefbda</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/ae5b1ad03c079234f362342ad2897a91bb25e8f4/analysis/unguided_gsfa_LUHMES_data.Rmd" target="_blank">ae5b1ad</a>
 </td>
 <td>
@@ -646,6 +680,32 @@ G_mat &lt;- metadata[, 4:18]
 G_mat &lt;- as.matrix(G_mat)
 KO_names &lt;- colnames(G_mat)
 negctrl_index &lt;- which(KO_names == &quot;Nontargeting&quot;)</code></pre>
+<!-- ```{r, include=FALSE, eval=FALSE} -->
+<!-- # Associate factors to guides with marginal linear regression -->
+<!-- Z_pm <- fit$posterior_means$Z_pm -->
+<!-- if(!all.equal(rownames(G_mat), rownames(Z_pm))){ -->
+<!--   stop("Rownames of G_mat do not match with Z_pm!") -->
+<!-- } -->
+<!-- guide_names <- colnames(G_mat) -->
+<!-- factor_names <- colnames(Z_pm) -->
+<!-- pval.mat <- matrix(0, nrow=ncol(G_mat), ncol=ncol(Z_pm)) -->
+<!-- rownames(pval.mat) <- guide_names -->
+<!-- colnames(pval.mat) <- factor_names -->
+<!-- beta.mat <- stat.mat <- pval.mat -->
+<!-- for (i in 1:nrow(pval.mat)) { -->
+<!--   for (j in 1:ncol(pval.mat)){ -->
+<!--     df <- data.frame(factor = Z_pm[,j], guide = G_mat[,i]) -->
+<!--     lm.res <- lm(factor ~ guide, data=df) -->
+<!--     beta.mat[i,j] <- summary(lm.res)$coefficients[2,1] -->
+<!--     stat.mat[i,j] <- summary(lm.res)$coefficients[2,3] -->
+<!--     pval.mat[i,j] <- summary(lm.res)$coefficients[2,4] -->
+<!--   } -->
+<!-- } -->
+<!-- # aggregate DEGs from factors to guides. -->
+<!-- fdr.mat <- matrix(p.adjust(c(pval.mat),"BH"), nrow=nrow(pval.mat)) -->
+<!-- rownames(fdr.mat) <- rownames(pval.mat) -->
+<!-- colnames(fdr.mat) <- colnames(pval.mat) -->
+<!-- ``` -->
 <p>Use linear regression to test for the association between perturbations and factors</p>
 <pre class="r"><code>Z_pm &lt;- fit$posterior_means$Z_pm
 if(!all.equal(rownames(G_mat), rownames(Z_pm))){
@@ -704,6 +764,43 @@ dotplot_effectsize(t(stat_mat), t(fdr_mat),
                    min_score = -4,
                    by_score = 2) + coord_flip()</code></pre>
 <p><img src="figure/unguided_gsfa_LUHMES_data.Rmd/stat-fdr-dotplot-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-stat-fdr-dotplot-1">
+Past versions of stat-fdr-dotplot-1.png
+</button>
+</p>
+<div id="fig-stat-fdr-dotplot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2cefbda6a664a8afe9da8e9967af11b2f7f89e5c/docs/figure/unguided_gsfa_LUHMES_data.Rmd/stat-fdr-dotplot-1.png" target="_blank">2cefbda</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 <p>Plot perturbation ~ cluster associations (show Bonferroni adjusted p-values)</p>
 <pre class="r"><code># pdf(file.path(res_dir, &quot;stat-bonferroni-dotplot.pdf&quot;), width = 9, height = 5.5)
@@ -716,12 +813,62 @@ dotplot_effectsize(t(stat_mat), t(bonferroni_mat),
                    min_score = -4,
                    by_score = 2) + coord_flip()</code></pre>
 <p><img src="figure/unguided_gsfa_LUHMES_data.Rmd/stat-bonferroni-dotplot-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-stat-bonferroni-dotplot-1">
+Past versions of stat-bonferroni-dotplot-1.png
+</button>
+</p>
+<div id="fig-stat-bonferroni-dotplot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2cefbda6a664a8afe9da8e9967af11b2f7f89e5c/docs/figure/unguided_gsfa_LUHMES_data.Rmd/stat-bonferroni-dotplot-1.png" target="_blank">2cefbda</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 </div>
 <div id="find-de-genes-for-each-factor-and-assign-de-genes-to-associated-perturbations" class="section level2">
 <h2>Find DE genes for each factor and assign DE genes to associated perturbations</h2>
 <p>First, find DE genes for each factor using F matrix (PIP&gt;0.95).</p>
 <p>Then, for each perturbation, find the associated factors, and pull the DE genes for those factors.</p>
+<!-- ```{r, include=FALSE, eval=FALSE} -->
+<!-- F_pm <- fit$posterior_means$F_pm -->
+<!-- dim(F_pm) -->
+<!-- DEGs.factors <- foreach(i=1:ncol(F_pm)) %do% { -->
+<!--   rownames(F_pm)[which(F_pm[,i]>0.95)] -->
+<!-- } -->
+<!-- names(DEGs.factors) <- colnames(F_pm) -->
+<!-- associated.factors <- foreach(i=1:nrow(fdr.mat)) %do% which(fdr.mat[i,]<0.05) -->
+<!-- guide.DEGs <- foreach(i=1:nrow(fdr.mat)) %do% unique(unlist(DEGs.factors[ associated.factors[[i]] ])) -->
+<!-- names(guide.DEGs) <- rownames(fdr.mat) -->
+<!-- num.guide.DEGs <- sapply(guide.DEGs, length) -->
+<!-- num.guide.DEGs -->
+<!-- ``` -->
 <pre class="r"><code>F_pm &lt;- fit$posterior_means$F_pm
 dim(F_pm)
 # feature.names &lt;- data.frame(fread(file.path(data_dir, &quot;LUHMES_GSM4219575_Run1_genes.tsv.gz&quot;),
@@ -770,6 +917,43 @@ ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
         legend.position = &quot;bottom&quot;,
         legend.text = element_text(size = 13))</code></pre>
 <p><img src="figure/unguided_gsfa_LUHMES_data.Rmd/count-de-genes-fdr-1.png" width="1248" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-count-de-genes-fdr-1">
+Past versions of count-de-genes-fdr-1.png
+</button>
+</p>
+<div id="fig-count-de-genes-fdr-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2cefbda6a664a8afe9da8e9967af11b2f7f89e5c/docs/figure/unguided_gsfa_LUHMES_data.Rmd/count-de-genes-fdr-1.png" target="_blank">2cefbda</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 <p>Number of DE genes for each perturbation (Bonferroni adjusted p-value &lt; 0.05)</p>
 <pre class="r"><code>perturb_names &lt;- colnames(perturb_matrix)
@@ -804,6 +988,43 @@ ggplot(data=dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1)) +
         legend.position = &quot;bottom&quot;,
         legend.text = element_text(size = 13))</code></pre>
 <p><img src="figure/unguided_gsfa_LUHMES_data.Rmd/count-de-genes-bonferroni-1.png" width="1248" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-count-de-genes-bonferroni-1">
+Past versions of count-de-genes-bonferroni-1.png
+</button>
+</p>
+<div id="fig-count-de-genes-bonferroni-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2cefbda6a664a8afe9da8e9967af11b2f7f89e5c/docs/figure/unguided_gsfa_LUHMES_data.Rmd/count-de-genes-bonferroni-1.png" target="_blank">2cefbda</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="compare-single-gene-de-p-value-distributions-between-gsfa-and-unguided-gsfa" class="section level2">
 <h2>Compare single-gene DE p-value distributions between GSFA and unguided GSFA</h2>
@@ -880,6 +1101,43 @@ for(i in 1:length(guides)){
 # pdf(file.path(res_dir, &quot;LUHMES_mast_pval_qqplots.pdf&quot;),width = 12,height = 12)
 grid.arrange(grobs = qqplots, nrow = 4, ncol = 2)</code></pre>
 <p><img src="figure/unguided_gsfa_LUHMES_data.Rmd/qqplots-gsfa-unguided-all-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qqplots-gsfa-unguided-all-1">
+Past versions of qqplots-gsfa-unguided-all-1.png
+</button>
+</p>
+<div id="fig-qqplots-gsfa-unguided-all-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2cefbda6a664a8afe9da8e9967af11b2f7f89e5c/docs/figure/unguided_gsfa_LUHMES_data.Rmd/qqplots-gsfa-unguided-all-1.png" target="_blank">2cefbda</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 <pre><code>plot ADNP 
 plot ARID1B 
@@ -916,6 +1174,43 @@ for(i in 1:length(guides)){
 # pdf(file.path(res_dir, &quot;LUHMES_mast_pval_qqplots_gsfa_only_vs_unguided_gsfa_only.pdf&quot;),width = 12,height = 12)
 grid.arrange(grobs = qqplots, nrow = 4, ncol = 2)</code></pre>
 <p><img src="figure/unguided_gsfa_LUHMES_data.Rmd/qqplots-gsfa-unguided-only-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qqplots-gsfa-unguided-only-1">
+Past versions of qqplots-gsfa-unguided-only-1.png
+</button>
+</p>
+<div id="fig-qqplots-gsfa-unguided-only-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2cefbda6a664a8afe9da8e9967af11b2f7f89e5c/docs/figure/unguided_gsfa_LUHMES_data.Rmd/qqplots-gsfa-unguided-only-1.png" target="_blank">2cefbda</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
 <pre><code>plot ADNP 
 plot ARID1B 
