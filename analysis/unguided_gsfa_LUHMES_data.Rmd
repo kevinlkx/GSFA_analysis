@@ -53,7 +53,6 @@ theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
                              panel.grid.minor = element_blank())
 )
 suppressPackageStartupMessages(library(gridExtra))
-library(foreach)
 source("code/plotting_functions.R")
 ```
 
@@ -166,13 +165,13 @@ bonferroni_mat <- as.matrix(bonferroni_mat)
 ```{r stat-fdr-dotplot, eval=TRUE, fig.width=9, fig.height=5.5}
 # pdf(file.path(res_dir, "stat-fdr-dotplot.pdf"), width = 9, height = 5.5)
 KO_names <- rownames(fdr_mat)
-dotplot_effectsize(t(stat_mat), t(fdr_mat),
+dotplot_effectsize(t(beta_mat), t(fdr_mat),
                    reorder_markers = c(KO_names[KO_names!="Nontargeting"], "Nontargeting"),
-                   color_lgd_title = "Linear regression\nT-statistics",
+                   color_lgd_title = "Estimated effect size",
                    size_lgd_title = "FDR",
-                   max_score = 4,
-                   min_score = -4,
-                   by_score = 2) + coord_flip()
+                   max_score = 0.6,
+                   min_score = -0.6,
+                   by_score = 0.3) + coord_flip()
 
 # dev.off()
 ```
@@ -181,13 +180,13 @@ Plot perturbation ~ cluster associations (show Bonferroni adjusted p-values)
 ```{r stat-bonferroni-dotplot, eval=TRUE, fig.width=9, fig.height=5.5}
 # pdf(file.path(res_dir, "stat-bonferroni-dotplot.pdf"), width = 9, height = 5.5)
 KO_names <- rownames(bonferroni_mat)
-dotplot_effectsize(t(stat_mat), t(bonferroni_mat),
+dotplot_effectsize(t(beta_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!="Nontargeting"], "Nontargeting"),
-                   color_lgd_title = "Linear regression\nT-statistics",
+                   color_lgd_title = "Estimated effect size",
                    size_lgd_title = "Bonferroni\nadjusted p-value",
-                   max_score = 4,
-                   min_score = -4,
-                   by_score = 2) + coord_flip()
+                   max_score = 0.6,
+                   min_score = -0.6,
+                   by_score = 0.3) + coord_flip()
 # dev.off()
 ```
 
