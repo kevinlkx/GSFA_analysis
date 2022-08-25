@@ -218,7 +218,7 @@ Then, for each perturbation, find the associated factors, and pull the DE genes 
 
 ```{r get-de-genes}
 F_pm <- fit$posterior_means$F_pm
-dim(F_pm)
+# dim(F_pm)
 # feature.names <- data.frame(fread(file.path(data_dir, "LUHMES_GSM4219575_Run1_genes.tsv.gz"),
 #                                   header = FALSE), stringsAsFactors = FALSE)
 
@@ -345,8 +345,7 @@ for (m in guides){
   mast_list[[m]] <- tmp_df
 }
 mast_signif_counts <- sapply(mast_list, function(x){filter(x, FDR < fdr_cutoff) %>% nrow()})
-
-summary(mast_list)
+# summary(mast_list)
 ```
 
 QQ-plots of MAST DE p-values for the GSFA genes vs unguided GSFA genes.
@@ -374,10 +373,7 @@ for(i in 1:length(guides)){
   }
 }
 
-# pdf(file.path(res_dir, "LUHMES_mast_pval_qqplots.pdf"),width = 12,height = 12)
 grid.arrange(grobs = qqplots, nrow = 4, ncol = 2)
-# dev.off()
-
 ```
 
 
@@ -407,7 +403,5 @@ for(i in 1:length(guides)){
   }
 }
 
-# pdf(file.path(res_dir, "LUHMES_mast_pval_qqplots_gsfa_only_vs_unguided_gsfa_only.pdf"),width = 12,height = 12)
 grid.arrange(grobs = qqplots, nrow = 4, ncol = 2)
-# dev.off()
 ```
