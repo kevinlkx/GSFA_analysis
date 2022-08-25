@@ -15,7 +15,6 @@
 
 <title>Two step clustering analysis on CD8+ T Cell (stimulated) CROP-seq data</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -46,8 +45,6 @@ div.section {
   padding-top: 12px;
 }
 </style>
-
-
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -366,8 +363,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Two step clustering analysis on CD8+ T Cell
-(stimulated) CROP-seq data</h1>
+<h1 class="title toc-ignore">Two step clustering analysis on CD8+ T Cell (stimulated) CROP-seq data</h1>
 <h4 class="author">Kaixuan Luo</h4>
 <h4 class="date">2022-08-10</h4>
 
@@ -376,9 +372,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -387,9 +381,7 @@ aria-hidden="true"></span>
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -398,27 +390,17 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-12
+<strong>Last updated:</strong> 2022-08-25
 </p>
 <p>
-<strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
-title="This is the local directory in which the code in this file was executed.">
-</span>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
-analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
-that were applied when the results were created. The <em>Past
-versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -427,138 +409,91 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
-class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the
-global environment can affect the analysis in your R Markdown file in
-unknown ways. For reproduciblity it’s best to always run the code in an
-empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20220524)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220524)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220524code"
-class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220524code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220524)</code> was run prior to running
-the code in the R Markdown file. Setting a seed ensures that any results
-that rely on randomness, e.g. subsampling or permutations, are
-reproducible.</p>
+<p>The command <code>set.seed(20220524)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Session information:</strong>
-recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded"
-class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package
-versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be
-confident that you successfully produced the results during this
-run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr
-project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree717bb32112990968e6c864d2739f071a5aa7d2d8targetblank717bb32a">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/717bb32112990968e6c864d2739f071a5aa7d2d8" target="_blank">717bb32</a>
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreea27762bf831c5b690dc92314cf11ad36f1e1ae56targetblanka27762ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/a27762bf831c5b690dc92314cf11ad36f1e1ae56" target="_blank">a27762b</a> </a>
 </p>
 </div>
-<div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree717bb32112990968e6c864d2739f071a5aa7d2d8targetblank717bb32a"
-class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreea27762bf831c5b690dc92314cf11ad36f1e1ae56targetblanka27762ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development
-and connecting the code version to the results is critical for
-reproducibility.
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version
-<a href="https://github.com/kevinlkx/GSFA-analysis/tree/717bb32112990968e6c864d2739f071a5aa7d2d8" target="_blank">717bb32</a>.
-See the <em>Past versions</em> tab to see a history of the changes made
-to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/a27762bf831c5b690dc92314cf11ad36f1e1ae56" target="_blank">a27762b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for
-the analysis have been committed to Git prior to generating the results
-(you can use <code>wflow_publish</code> or
-<code>wflow_git_commit</code>). workflowr only checks the R Markdown
-file, but you know if there are other scripts or data files that it
-depends on. Below is the status of the Git repository when the results
-were generated:
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
@@ -566,11 +501,17 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
+    Untracked:  Rplots.pdf
     Untracked:  analysis/interpret_gsfa_LUHMES.Rmd
+    Untracked:  analysis/interpret_gsfa_TCells.Rmd
     Untracked:  analysis/spca_LUHMES_data.Rmd
     Untracked:  analysis/test_seurat.Rmd
+    Untracked:  analysis/unguided_gsfa_Tcells_data.Rmd
+    Untracked:  code/gsfa_negctrl_job.sbatch
     Untracked:  code/music_LUHMES_Yifan.R
     Untracked:  code/plotting_functions.R
+    Untracked:  code/run_gsfa_2groups_negctrl.R
+    Untracked:  code/run_gsfa_negctrl.R
     Untracked:  code/run_music_LUHMES.R
     Untracked:  code/run_music_LUHMES_data.sbatch
     Untracked:  code/run_sceptre_LUHMES_data.sbatch
@@ -578,21 +519,25 @@ Untracked files:
     Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
     Untracked:  code/run_spca_LUHMES.R
     Untracked:  code/run_spca_TCells.R
+    Untracked:  code/run_unguided_gsfa_LUHMES.R
+    Untracked:  code/run_unguided_gsfa_LUHMES.sbatch
+    Untracked:  code/run_unguided_gsfa_Tcells.R
+    Untracked:  code/run_unguided_gsfa_Tcells.sbatch
     Untracked:  code/sceptre_LUHMES_data.R
     Untracked:  code/sceptre_Tcells_stimulated_data.R
     Untracked:  code/sceptre_Tcells_unstimulated_data.R
     Untracked:  code/seurat_sim_fpr_tpr.R
+    Untracked:  code/unguided_GFSA_mixture_normal_prior.cpp
 
 Unstaged changes:
     Modified:   analysis/sceptre_LUHMES_data.Rmd
+    Modified:   analysis/unguided_gsfa_LUHMES_data.Rmd
     Modified:   code/run_sceptre_cropseq_data.sbatch
     Modified:   code/sceptre_analysis.R
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not
-included in this status report because it is ok for generated content to
-have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </p>
 </div>
 </div>
@@ -603,13 +548,7 @@ have uncommitted changes.
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/twostep_clustering_TCells_data.Rmd</code>) and HTML
-(<code>docs/twostep_clustering_TCells_data.html</code>) files. If you’ve
-configured a remote Git repository (see <code>?wflow_git_remote</code>),
-click on the hyperlinks in the table below to view the files as they
-were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/twostep_clustering_TCells_data.Rmd</code>) and HTML (<code>docs/twostep_clustering_TCells_data.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -633,6 +572,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/a27762bf831c5b690dc92314cf11ad36f1e1ae56/analysis/twostep_clustering_TCells_data.Rmd" target="_blank">a27762b</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+<td>
+added qqplots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/16d92267a0f0919ca70ece1ad5a7fc524c912a0a/docs/twostep_clustering_TCells_data.html" target="_blank">16d9226</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -736,17 +709,10 @@ cp /project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/GSE119450_RAW/D1N/ge
   /project2/xinhe/kevinluo/GSFA/data/Stimulated_T_Cells_GSE119450_RAW_D1N_genes.tsv.gz</code></pre>
 <div id="load-the-data-sets" class="section level2">
 <h2>Load the data sets</h2>
-<p>CROP-seq datasets:
-<code>/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds</code>
-The data are Seurat objects, with raw gene counts stored in
-<code>obj@assays$RNA@counts</code>, and cell meta data stored in
-<code>obj@meta.data</code>. Normalized and scaled data used for GSFA are
-stored in <code>obj@assays$RNA@scale.data</code>, the rownames of which
-are the 6k genes used for GSFA.</p>
+<p>CROP-seq datasets: <code>/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds</code> The data are Seurat objects, with raw gene counts stored in <code>obj@assays$RNA@counts</code>, and cell meta data stored in <code>obj@meta.data</code>. Normalized and scaled data used for GSFA are stored in <code>obj@assays$RNA@scale.data</code>, the rownames of which are the 6k genes used for GSFA.</p>
 <p>Load packages</p>
 <pre class="r"><code>suppressPackageStartupMessages(library(data.table))
 suppressPackageStartupMessages(library(Seurat))
-suppressPackageStartupMessages(library(MUSIC))
 suppressPackageStartupMessages(library(ComplexHeatmap))
 suppressPackageStartupMessages(library(ggplot2))
 require(reshape2)
@@ -760,6 +726,7 @@ theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
                              panel.grid.minor = element_blank())
 )
 
+library(gridExtra)
 source(&quot;code/plotting_functions.R&quot;)</code></pre>
 <p>Set directories</p>
 <pre class="r"><code>data_dir &lt;- &quot;/project2/xinhe/kevinluo/GSFA/data/&quot;
@@ -792,11 +759,8 @@ TCells_D1S TCells_D2S
 </div>
 <div id="pre-processing" class="section level2">
 <h2>Pre-processing</h2>
-<p>The steps below encompass the standard pre-processing workflow for
-scRNA-seq data in Seurat.</p>
-<p>These represent the selection and filtration of cells based on QC
-metrics, data normalization and scaling, and the detection of highly
-variable features.</p>
+<p>The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat.</p>
+<p>These represent the selection and filtration of cells based on QC metrics, data normalization and scaling, and the detection of highly variable features.</p>
 <pre class="r"><code># The number of unique genes detected in each cell.
 range(combined_obj$nFeature_RNA)
 
@@ -810,17 +774,13 @@ range(combined_obj$percent_mt)</code></pre>
 [1] 0.01762736 9.96515679</code></pre>
 <pre class="r"><code># Visualize QC metrics as a violin plot
 VlnPlot(combined_obj, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent_mt&quot;), ncol = 3)</code></pre>
-<p>We filter cells that have more than 500 genes identified, as in the
-Shifrut et al. paper.</p>
+<p>We filter cells that have more than 500 genes identified, as in the Shifrut et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- subset(combined_obj, subset = nFeature_RNA &gt; 500)</code></pre>
 <p>Normalizing the data</p>
 <pre class="r"><code>combined_obj &lt;- NormalizeData(combined_obj, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</code></pre>
 <p>Identification of highly variable features (feature selection)</p>
-<p>Select a subset of features that exhibit high cell-to-cell variation
-in the dataset, by modeling the mean-variance relationship inherent in
-single-cell data.</p>
-<p>Select the 1,000 most variable genes across cells, as in the Shifrut
-et al. paper.</p>
+<p>Select a subset of features that exhibit high cell-to-cell variation in the dataset, by modeling the mean-variance relationship inherent in single-cell data.</p>
+<p>Select the 1,000 most variable genes across cells, as in the Shifrut et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- FindVariableFeatures(combined_obj, selection.method = &quot;vst&quot;, nfeatures = 1000)</code></pre>
 <!-- Select the 6k genes used for GSFA in this analysis -->
 <!-- ```{r select-genes} -->
@@ -830,9 +790,7 @@ et al. paper.</p>
 <!-- selected_gene_id <- rownames(scaled_gene_matrix_in_gsfa) -->
 <!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
 <!-- ``` -->
-<p>Regress out total UMI counts per cell and percent of mitochondrial
-genes detected per cell and scaled to obtain gene level z-scores, as in
-the Shifrut et al. paper.</p>
+<p>Regress out total UMI counts per cell and percent of mitochondrial genes detected per cell and scaled to obtain gene level z-scores, as in the Shifrut et al. paper.</p>
 <pre class="r"><code>combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;))
 # combined_obj &lt;- ScaleData(combined_obj, vars.to.regress = c(&quot;nCount_RNA&quot;, &quot;percent_mt&quot;), features = selected_gene_id)
 dim(combined_obj[[&quot;RNA&quot;]]@counts)
@@ -888,10 +846,7 @@ kevinlkx
 </div>
 <div id="cluster-the-cells" class="section level2">
 <h2>Cluster the cells</h2>
-<p>Embed cells in K-nearest neighbor (KNN) graph using
-<code>FindNeighbors()</code> using the first 30 PCs, as in the Shifrut
-et al. paper Then apply the Louvain algorithm to find clusters using
-<code>FindClusters() function</code> with default resolution (0.8).</p>
+<p>Embed cells in K-nearest neighbor (KNN) graph using <code>FindNeighbors()</code> using the first 30 PCs, as in the Shifrut et al. paper Then apply the Louvain algorithm to find clusters using <code>FindClusters() function</code> with default resolution (0.8).</p>
 <pre class="r"><code>combined_obj &lt;- FindNeighbors(combined_obj, dims = 1:30)
 combined_obj &lt;- FindClusters(combined_obj)
 
@@ -946,8 +901,7 @@ kevinlkx
 </div>
 </div>
 </div>
-<div id="finding-differentially-expressed-genes-using-mast"
-class="section level2">
+<div id="finding-differentially-expressed-genes-using-mast" class="section level2">
 <h2>Finding differentially expressed genes using MAST</h2>
 <pre class="r"><code>combined_obj &lt;- readRDS(file.path(res_dir, &quot;TCells_stimulated_seurat_clustered.rds&quot;))
 
@@ -977,8 +931,7 @@ cluster_matrix &lt;- matrix(0, nrow = nrow(perturb_matrix), ncol = length(levels
 cluster_matrix[cbind(1:nrow(perturb_matrix), cluster_labels)] &lt;- 1
 rownames(cluster_matrix) &lt;- rownames(perturb_matrix)
 colnames(cluster_matrix) &lt;- new_cluster_labels</code></pre>
-<p>Use Chi-squared tests for the association of perturbations and
-clusters (2 x 2 tables)</p>
+<p>Use Chi-squared tests for the association of perturbations and clusters (2 x 2 tables)</p>
 <pre class="r"><code>summary_df &lt;- expand.grid(colnames(perturb_matrix), colnames(cluster_matrix))
 colnames(summary_df) &lt;- c(&quot;perturb&quot;, &quot;cluster&quot;)
 
@@ -995,6 +948,7 @@ for(i in 1:nrow(summary_df)){
 
 summary_df$fdr &lt;- p.adjust(summary_df$pval, method = &quot;BH&quot;)
 summary_df$bonferroni_adj &lt;- p.adjust(summary_df$pval, method = &quot;bonferroni&quot;)
+saveRDS(summary_df, file = file.path(res_dir, &quot;TCells_stimulated_seurat_guide_cluster_chisq_summary_df.rds&quot;))
 
 stdres_mat &lt;- reshape2::dcast(summary_df %&gt;% dplyr::select(perturb, cluster, stdres), perturb ~ cluster, value.var = &quot;stdres&quot;)
 rownames(stdres_mat) &lt;- stdres_mat$perturb
@@ -1055,8 +1009,7 @@ kevinlkx
 </table>
 </div>
 </div>
-<p>Plot perturbation ~ cluster associations (show Bonferroni adjusted
-p-values)</p>
+<p>Plot perturbation ~ cluster associations (show Bonferroni adjusted p-values)</p>
 <pre class="r"><code>KO_names &lt;- rownames(bonferroni_mat)
 dotplot_effectsize(t(stdres_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!=&quot;NonTarget&quot;], &quot;NonTarget&quot;),
@@ -1104,14 +1057,9 @@ kevinlkx
 </div>
 </div>
 </div>
-<div
-id="find-de-genes-for-each-cluster-and-assign-de-genes-to-associated-perturbations"
-class="section level2">
-<h2>Find DE genes for each cluster and assign DE genes to associated
-perturbations</h2>
-<p>First, find DE genes for each cluster using MAST (Bonferroni adjusted
-p-values &lt; 0.05), Then, for each perturbation, find the associated
-clusters, and pull the DE genes for those clusters.</p>
+<div id="find-de-genes-for-each-cluster-and-assign-de-genes-to-associated-perturbations" class="section level2">
+<h2>Find DE genes for each cluster and assign DE genes to associated perturbations</h2>
+<p>First, find DE genes for each cluster using MAST (Bonferroni adjusted p-values &lt; 0.05), Then, for each perturbation, find the associated clusters, and pull the DE genes for those clusters.</p>
 <pre class="r"><code>feature.names &lt;- data.frame(fread(file.path(data_dir, &quot;Stimulated_T_Cells_GSE119450_RAW_D1N_genes.tsv.gz&quot;),
                                   header = FALSE), stringsAsFactors = FALSE)
 
@@ -1123,11 +1071,10 @@ names(de.genes.clusters) &lt;- names(de.markers)
 for( i in 1:length(de.genes.clusters)){
   de_sumstats &lt;- de.markers[[i]]
   de_genes &lt;- unique(rownames(de_sumstats[de_sumstats$p_val_adj &lt; 0.05,]))
-  de_genes &lt;- feature.names$V2[match(de_genes, feature.names$V1)]
+  # de_genes &lt;- feature.names$V2[match(de_genes, feature.names$V1)]
   de.genes.clusters[[i]] &lt;- de_genes
 }</code></pre>
-<p>Number of DE genes for each perturbation (Chi-squared test FDR &lt;
-0.05)</p>
+<p>Number of DE genes for each perturbation (Chi-squared test FDR &lt; 0.05)</p>
 <pre class="r"><code>perturb_names &lt;- rownames(fdr_mat)
 perturb_names &lt;- c(&quot;NonTarget&quot;, perturb_names[perturb_names!=&quot;NonTarget&quot;])
 
@@ -1143,6 +1090,7 @@ for(i in 1:length(de.genes.perturbs)){
 }
 
 num.de.genes.perturbs &lt;- sapply(de.genes.perturbs, length)
+twostep_clustering_fdr0.05_genes &lt;- de.genes.perturbs
 
 dge_plot_df &lt;- data.frame(Perturbation = names(num.de.genes.perturbs), Num_DEGs = num.de.genes.perturbs)
 dge_plot_df$Perturbation &lt;- factor(dge_plot_df$Perturbation, levels = names(num.de.genes.perturbs))
@@ -1196,8 +1144,7 @@ kevinlkx
 </table>
 </div>
 </div>
-<p>Number of DE genes for each perturbation (Chi-squared test Bonferroni
-adjusted p-value &lt; 0.05)</p>
+<p>Number of DE genes for each perturbation (Chi-squared test Bonferroni adjusted p-value &lt; 0.05)</p>
 <pre class="r"><code>perturb_names &lt;- rownames(bonferroni_mat)
 perturb_names &lt;- c(&quot;NonTarget&quot;, perturb_names[perturb_names!=&quot;NonTarget&quot;])
 
@@ -1213,6 +1160,7 @@ for(i in 1:length(de.genes.perturbs)){
 }
 
 num.de.genes.perturbs &lt;- sapply(de.genes.perturbs, length)
+twostep_clustering_bonferroni0.05_genes &lt;- de.genes.perturbs
 
 dge_plot_df &lt;- data.frame(Perturbation = names(num.de.genes.perturbs), Num_DEGs = num.de.genes.perturbs)
 dge_plot_df$Perturbation &lt;- factor(dge_plot_df$Perturbation, levels = names(num.de.genes.perturbs))
@@ -1266,16 +1214,115 @@ kevinlkx
 </table>
 </div>
 </div>
+</div>
+<div id="compare-single-gene-de-p-value-distributions-between-two-step-clustering-analysis-and-gsfa" class="section level2">
+<h2>Compare single-gene DE p-value distributions between two-step clustering analysis and GSFA</h2>
+<pre class="r"><code>fdr_cutoff &lt;- 0.05
+lfsr_cutoff &lt;- 0.05</code></pre>
+<p>Load the output of GSFA <code>fit_gsfa_multivar()</code> run.</p>
+<pre class="r"><code>data_folder &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/&quot;
+fit &lt;- readRDS(paste0(data_folder,
+                      &quot;gsfa_output_detect_01/all_uncorrected_by_group.use_negctrl/All.gibbs_obj_k20.svd_negctrl.restart.light.rds&quot;))
+gibbs_PM &lt;- fit$posterior_means
+lfsr_mat1 &lt;- fit$lfsr1[, -ncol(fit$lfsr1)]
+lfsr_mat0 &lt;- fit$lfsr0[, -ncol(fit$lfsr0)]
+total_effect1 &lt;- fit$total_effect1[, -ncol(fit$total_effect1)]
+total_effect0 &lt;- fit$total_effect0[, -ncol(fit$total_effect0)]
+KO_names &lt;- colnames(lfsr_mat1)</code></pre>
+<p>DEGs detected by GSFA</p>
+<pre><code>   ARID1A      BTLA  C10orf54      CBLB      CD3D       CD5    CDKN1B      DGKA 
+      393       107        66       631         0       645       468        32 
+     DGKZ    HAVCR2      LAG3      LCP2     MEF2D NonTarget     PDCD1     RASA2 
+      113        35         1       589        15         0         0       277 
+    SOCS1     STAT6     TCEB2   TMEM222   TNFRSF9 
+      356         1       300         4        14 </code></pre>
+<p>Load MAST single-gene DE result</p>
+<pre class="r"><code>guides &lt;- KO_names[KO_names!=&quot;NonTarget&quot;]
+
+mast_list &lt;- list()
+for (m in guides){
+  fname &lt;- paste0(data_folder, &quot;processed_data/MAST/all_by_stim_negctrl/gRNA_&quot;, 
+                  m, &quot;.dev_res_top6k.vs_negctrl.rds&quot;)
+  tmp_df &lt;- readRDS(fname)
+  tmp_df$geneID &lt;- rownames(tmp_df)
+  tmp_df &lt;- tmp_df %&gt;% dplyr::rename(FDR = fdr, PValue = pval)
+  mast_list[[m]] &lt;- tmp_df
+}
+mast_signif_counts &lt;- sapply(mast_list, function(x){filter(x, FDR &lt; fdr_cutoff) %&gt;% nrow()})</code></pre>
+<p>QQ-plots of MAST DE p-values for the GSFA significant genes vs two-step clustering DE genes.</p>
+<pre class="r"><code>qqplots &lt;- list()
+for(i in 1:length(guides)){
+  guide &lt;- guides[i]
+  mast_res &lt;- mast_list[[guide]]
+  tsc_de_genes &lt;- twostep_clustering_fdr0.05_genes[[guide]]
+  gsfa_de_genes &lt;- gsfa_sig_genes[[guide]]
+  tsc_de_genes &lt;- intersect(tsc_de_genes, rownames(mast_res))
+  gsfa_de_genes &lt;- intersect(gsfa_de_genes, rownames(mast_res))
+  
+  if(length(tsc_de_genes)&gt;0 &amp;&amp; length(gsfa_de_genes) &gt;0){
+    cat(&quot;plot&quot;, guide, &quot;\n&quot;)
+    mast_res$tsc_gene &lt;- 0
+    mast_res[tsc_de_genes, ]$tsc_gene &lt;- 1
+    mast_res$gsfa_gene &lt;- 0
+    mast_res[gsfa_de_genes, ]$gsfa_gene &lt;- 1
+    pvalue_list &lt;- list(&#39;Two-step clustering&#39;=dplyr::filter(mast_res,tsc_gene==1)$PValue,
+                        &#39;GSFA&#39;=dplyr::filter(mast_res,gsfa_gene==1)$PValue,
+                        &#39;MAST&#39;=mast_res$PValue)
+    qqplots[[guide]] &lt;- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5))
+  }
+}
+
+grid.arrange(grobs = qqplots, nrow = 3, ncol = 2)</code></pre>
+<p><img src="figure/twostep_clustering_TCells_data.Rmd/qqplots-gsfa-tsc-all-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>plot CBLB 
+plot CD5 
+plot CDKN1B 
+plot LCP2 
+plot TCEB2 
+plot TNFRSF9 </code></pre>
+<p>QQ-plots of MAST DE p-values for the GSFA only genes vs two-step only genes.</p>
+<pre class="r"><code>qqplots &lt;- list()
+for(i in 1:length(guides)){
+  guide &lt;- guides[i]
+  mast_res &lt;- mast_list[[guide]]
+  tsc_de_genes &lt;- twostep_clustering_fdr0.05_genes[[guide]]
+  gsfa_de_genes &lt;- gsfa_sig_genes[[guide]]
+  tsc_de_genes &lt;- intersect(tsc_de_genes, rownames(mast_res))
+  gsfa_de_genes &lt;- intersect(gsfa_de_genes, rownames(mast_res))
+  
+  if(length(tsc_de_genes)&gt;0 &amp;&amp; length(gsfa_de_genes) &gt;0){
+    cat(&quot;plot&quot;, guide, &quot;\n&quot;)
+    mast_res$tsc_only_gene &lt;- 0
+    mast_res[setdiff(tsc_de_genes, gsfa_de_genes), ]$tsc_only_gene &lt;- 1
+    mast_res$gsfa_only_gene &lt;- 0
+    mast_res[setdiff(gsfa_de_genes, tsc_de_genes), ]$gsfa_only_gene &lt;- 1
+    
+    pvalue_list &lt;- list(&#39;Two-step clustering only&#39;=dplyr::filter(mast_res,tsc_only_gene==1)$PValue,
+                        &#39;GSFA only&#39;=dplyr::filter(mast_res,gsfa_only_gene==1)$PValue,
+                        &#39;MAST&#39;=mast_res$PValue)
+    qqplots[[guide]] &lt;- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5))
+  }
+}
+
+grid.arrange(grobs = qqplots, nrow = 3, ncol = 2)</code></pre>
+<p><img src="figure/twostep_clustering_TCells_data.Rmd/qqplots-gsfa-tsc-only-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>plot CBLB 
+plot CD5 
+plot CDKN1B 
+plot LCP2 
+plot TCEB2 
+plot TNFRSF9 </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.1.0 (2021-05-18)
+<pre><code>R version 4.0.4 (2021-02-15)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Scientific Linux 7.4 (Nitrogen)
 
@@ -1291,75 +1338,60 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
- [1] grid      stats4    parallel  stats     graphics  grDevices utils    
- [8] datasets  methods   base     
+[1] grid      stats     graphics  grDevices utils     datasets  methods  
+[8] base     
 
 other attached packages:
- [1] lattice_0.20-45        dplyr_1.0.8            reshape2_1.4.4        
- [4] ggplot2_3.3.5          ComplexHeatmap_2.6.2   MUSIC_1.0             
- [7] SAVER_1.1.2            clusterProfiler_3.18.1 hash_2.2.6.2          
-[10] topicmodels_0.2-12     Biostrings_2.58.0      XVector_0.30.0        
-[13] IRanges_2.24.1         S4Vectors_0.28.1       BiocGenerics_0.36.1   
-[16] SeuratObject_4.0.4     Seurat_4.1.0           data.table_1.14.2     
-[19] workflowr_1.7.0       
+ [1] lattice_0.20-45      gridExtra_2.3        dplyr_1.0.8         
+ [4] reshape2_1.4.4       ggplot2_3.3.5        ComplexHeatmap_2.6.2
+ [7] SeuratObject_4.0.4   Seurat_4.1.0         data.table_1.14.2   
+[10] workflowr_1.7.0     
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.2.2            R.utils_2.11.0        reticulate_1.24      
-  [4] tidyselect_1.1.2      RSQLite_2.2.11        AnnotationDbi_1.52.0 
-  [7] htmlwidgets_1.5.4     BiocParallel_1.24.1   Rtsne_0.15           
- [10] scatterpie_0.1.7      munsell_0.5.0         codetools_0.2-18     
- [13] ica_1.0-2             future_1.24.0         miniUI_0.1.1.1       
- [16] withr_2.5.0           spatstat.random_2.1-0 colorspace_2.0-3     
- [19] GOSemSim_2.16.1       Biobase_2.50.0        highr_0.9            
- [22] NLP_0.2-1             knitr_1.38            rstudioapi_0.13      
- [25] ROCR_1.0-11           tensor_1.5            DOSE_3.16.0          
- [28] listenv_0.8.0         labeling_0.4.2        git2r_0.30.1         
- [31] slam_0.1-50           polyclip_1.10-0       bit64_4.0.5          
- [34] farver_2.1.0          rprojroot_2.0.2       downloader_0.4       
- [37] parallelly_1.31.0     vctrs_0.4.1           generics_0.1.2       
- [40] xfun_0.30             R6_2.5.1              clue_0.3-60          
- [43] graphlayouts_0.8.0    spatstat.utils_2.3-0  cachem_1.0.6         
- [46] fgsea_1.21.0          assertthat_0.2.1      promises_1.2.0.1     
- [49] scales_1.2.0          ggraph_2.0.5          enrichplot_1.10.2    
- [52] gtable_0.3.0          Cairo_1.5-15          globals_0.14.0       
- [55] processx_3.5.3        goftest_1.2-3         tidygraph_1.2.0      
- [58] rlang_1.0.4           GlobalOptions_0.1.2   splines_4.1.0        
- [61] lazyeval_0.2.2        spatstat.geom_2.3-2   BiocManager_1.30.16  
- [64] yaml_2.3.5            abind_1.4-5           httpuv_1.6.5         
- [67] qvalue_2.22.0         tools_4.1.0           ellipsis_0.3.2       
- [70] spatstat.core_2.4-0   jquerylib_0.1.4       RColorBrewer_1.1-3   
- [73] ggridges_0.5.3        Rcpp_1.0.9            plyr_1.8.6           
- [76] zlibbioc_1.36.0       purrr_0.3.4           ps_1.6.0             
- [79] rpart_4.1-15          deldir_1.0-6          GetoptLong_1.0.5     
- [82] pbapply_1.5-0         viridis_0.6.2         cowplot_1.1.1        
- [85] zoo_1.8-9             ggrepel_0.9.1         cluster_2.1.2        
- [88] fs_1.5.2              magrittr_2.0.3        RSpectra_0.16-0      
- [91] scattermore_0.7       DO.db_2.9             circlize_0.4.14      
- [94] lmtest_0.9-40         RANN_2.6.1            whisker_0.4          
- [97] fitdistrplus_1.1-8    matrixStats_0.61.0    patchwork_1.1.1      
-[100] mime_0.12             evaluate_0.15         xtable_1.8-4         
-[103] shape_1.4.6           gridExtra_2.3         compiler_4.1.0       
-[106] tibble_3.1.6          KernSmooth_2.23-20    crayon_1.5.1         
-[109] shadowtext_0.1.1      R.oo_1.24.0           htmltools_0.5.2      
-[112] ggfun_0.0.5           mgcv_1.8-39           later_1.3.0          
-[115] tidyr_1.2.0           DBI_1.1.2             tweenr_1.0.2         
-[118] MASS_7.3-56           Matrix_1.4-1          cli_3.3.0            
-[121] R.methodsS3_1.8.1     igraph_1.2.11         pkgconfig_2.0.3      
-[124] getPass_0.2-2         rvcheck_0.2.1         plotly_4.10.0        
-[127] spatstat.sparse_2.1-0 foreach_1.5.2         xml2_1.3.3           
-[130] bslib_0.3.1           yulab.utils_0.0.4     stringr_1.4.0        
-[133] callr_3.7.0           digest_0.6.29         sctransform_0.3.3    
-[136] RcppAnnoy_0.0.19      spatstat.data_2.1-2   tm_0.7-8             
-[139] rmarkdown_2.13        leiden_0.3.9          fastmatch_1.1-3      
-[142] uwot_0.1.11           shiny_1.7.1           modeltools_0.2-23    
-[145] rjson_0.2.21          lifecycle_1.0.1       nlme_3.1-155         
-[148] jsonlite_1.8.0        viridisLite_0.4.0     fansi_1.0.3          
-[151] pillar_1.7.0          fastmap_1.1.0         httr_1.4.2           
-[154] survival_3.3-1        GO.db_3.12.1          glue_1.6.2           
-[157] iterators_1.0.14      png_0.1-7             bit_4.0.4            
-[160] ggforce_0.3.3         stringi_1.7.6         sass_0.4.1           
-[163] blob_1.2.3            memoise_2.0.1         irlba_2.3.5          
-[166] future.apply_1.8.1   </code></pre>
+  [1] circlize_0.4.15       plyr_1.8.6            igraph_1.3.4         
+  [4] lazyeval_0.2.2        splines_4.0.4         listenv_0.8.0        
+  [7] scattermore_0.7       digest_0.6.29         htmltools_0.5.3      
+ [10] fansi_1.0.3           magrittr_2.0.3        tensor_1.5           
+ [13] cluster_2.1.3         ROCR_1.0-11           globals_0.16.0       
+ [16] matrixStats_0.62.0    R.utils_2.12.0        spatstat.sparse_2.1-0
+ [19] colorspace_2.0-3      ggrepel_0.9.1         xfun_0.30            
+ [22] callr_3.7.0           crayon_1.5.1          jsonlite_1.8.0       
+ [25] spatstat.data_2.1-2   survival_3.3-1        zoo_1.8-9            
+ [28] glue_1.6.2            polyclip_1.10-0       gtable_0.3.0         
+ [31] leiden_0.3.9          GetoptLong_1.0.5      future.apply_1.8.1   
+ [34] shape_1.4.6           BiocGenerics_0.36.1   abind_1.4-5          
+ [37] scales_1.2.0          DBI_1.1.3             spatstat.random_2.1-0
+ [40] miniUI_0.1.1.1        Rcpp_1.0.9            viridisLite_0.4.0    
+ [43] xtable_1.8-4          clue_0.3-60           reticulate_1.25      
+ [46] spatstat.core_2.4-0   stats4_4.0.4          htmlwidgets_1.5.4    
+ [49] httr_1.4.2            RColorBrewer_1.1-3    ellipsis_0.3.2       
+ [52] ica_1.0-2             R.methodsS3_1.8.1     pkgconfig_2.0.3      
+ [55] farver_2.1.1          sass_0.4.1            uwot_0.1.11          
+ [58] deldir_1.0-6          utf8_1.2.2            tidyselect_1.1.2     
+ [61] labeling_0.4.2        rlang_1.0.4           later_1.3.0          
+ [64] munsell_0.5.0         tools_4.0.4           cli_3.3.0            
+ [67] generics_0.1.3        ggridges_0.5.3        evaluate_0.16        
+ [70] stringr_1.4.0         fastmap_1.1.0         yaml_2.3.5           
+ [73] goftest_1.2-3         processx_3.5.3        knitr_1.38           
+ [76] fs_1.5.2              fitdistrplus_1.1-8    purrr_0.3.4          
+ [79] RANN_2.6.1            pbapply_1.5-0         future_1.24.0        
+ [82] nlme_3.1-159          whisker_0.4           mime_0.12            
+ [85] R.oo_1.24.0           compiler_4.0.4        rstudioapi_0.13      
+ [88] plotly_4.10.0         png_0.1-7             spatstat.utils_2.3-0 
+ [91] tibble_3.1.6          bslib_0.3.1           stringi_1.7.6        
+ [94] highr_0.9             ps_1.7.1              RSpectra_0.16-0      
+ [97] Matrix_1.4-1          vctrs_0.4.1           pillar_1.8.0         
+[100] lifecycle_1.0.1       spatstat.geom_2.3-2   lmtest_0.9-40        
+[103] jquerylib_0.1.4       GlobalOptions_0.1.2   RcppAnnoy_0.0.19     
+[106] cowplot_1.1.1         irlba_2.3.5           httpuv_1.6.5         
+[109] patchwork_1.1.1       R6_2.5.1              promises_1.2.0.1     
+[112] KernSmooth_2.23-20    IRanges_2.24.1        parallelly_1.32.1    
+[115] codetools_0.2-18      MASS_7.3-58.1         assertthat_0.2.1     
+[118] rprojroot_2.0.2       rjson_0.2.21          withr_2.5.0          
+[121] sctransform_0.3.3     S4Vectors_0.28.1      mgcv_1.8-39          
+[124] parallel_4.0.4        rpart_4.1-15          tidyr_1.2.0          
+[127] rmarkdown_2.13        Cairo_1.6-0           Rtsne_0.15           
+[130] git2r_0.30.1          getPass_0.2-2         shiny_1.7.1          </code></pre>
 </div>
 </div>
 
@@ -1375,8 +1407,6 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
-
-
 
 
 </div>
