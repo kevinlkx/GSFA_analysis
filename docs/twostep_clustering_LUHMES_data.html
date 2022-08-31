@@ -390,7 +390,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-25
+<strong>Last updated:</strong> 2022-08-31
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -481,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree98940172159ed5e570bc9f2edc9d4f76879dd58ftargetblank9894017a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/98940172159ed5e570bc9f2edc9d4f76879dd58f" target="_blank">9894017</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreead6135c1de5f3a3574ebbf790b46a733cdf3c7c9targetblankad6135ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/ad6135c1de5f3a3574ebbf790b46a733cdf3c7c9" target="_blank">ad6135c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree98940172159ed5e570bc9f2edc9d4f76879dd58ftargetblank9894017a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreead6135c1de5f3a3574ebbf790b46a733cdf3c7c9targetblankad6135ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/98940172159ed5e570bc9f2edc9d4f76879dd58f" target="_blank">9894017</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/ad6135c1de5f3a3574ebbf790b46a733cdf3c7c9" target="_blank">ad6135c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -502,11 +502,11 @@ Ignored files:
 
 Untracked files:
     Untracked:  Rplots.pdf
+    Untracked:  analysis/check_Tcells_datasets.Rmd
     Untracked:  analysis/interpret_gsfa_LUHMES.Rmd
     Untracked:  analysis/interpret_gsfa_TCells.Rmd
     Untracked:  analysis/spca_LUHMES_data.Rmd
     Untracked:  analysis/test_seurat.Rmd
-    Untracked:  analysis/unguided_gsfa_Tcells_data.Rmd
     Untracked:  code/gsfa_negctrl_job.sbatch
     Untracked:  code/music_LUHMES_Yifan.R
     Untracked:  code/plotting_functions.R
@@ -532,7 +532,6 @@ Untracked files:
 Unstaged changes:
     Modified:   analysis/sceptre_LUHMES_data.Rmd
     Modified:   analysis/twostep_clustering_TCells_data.Rmd
-    Modified:   analysis/unguided_gsfa_LUHMES_data.Rmd
     Modified:   code/run_sceptre_cropseq_data.sbatch
     Modified:   code/sceptre_analysis.R
 
@@ -573,6 +572,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ad6135c1de5f3a3574ebbf790b46a733cdf3c7c9/analysis/twostep_clustering_LUHMES_data.Rmd" target="_blank">ad6135c</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-31
+</td>
+<td>
+added qqplots for combined results
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/040c06a9b76f1cf4d95a6d97e9714cb4568e0c70/docs/twostep_clustering_LUHMES_data.html" target="_blank">040c06a</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1346,16 +1379,84 @@ for(i in 1:length(guides)){
                         &#39;GSFA&#39;=dplyr::filter(mast_res,gsfa_gene==1)$PValue,
                         &#39;MAST&#39;=mast_res$PValue)
     qqplots[[guide]] &lt;- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5))
+      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name=&quot;Method&quot;)
   }
 }
 
 grid.arrange(grobs = qqplots, nrow = 2, ncol = 2)</code></pre>
 <p><img src="figure/twostep_clustering_LUHMES_data.Rmd/qqplots-gsfa-tsc-all-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qqplots-gsfa-tsc-all-1">
+Past versions of qqplots-gsfa-tsc-all-1.png
+</button>
+</p>
+<div id="fig-qqplots-gsfa-tsc-all-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/040c06a9b76f1cf4d95a6d97e9714cb4568e0c70/docs/figure/twostep_clustering_LUHMES_data.Rmd/qqplots-gsfa-tsc-all-1.png" target="_blank">040c06a</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>plot ADNP 
 plot CHD2 
 plot DYRK1A 
 plot PTEN </code></pre>
+<p>Pooling p-values from all perturbations</p>
+<pre class="r"><code>combined_mast_res &lt;- data.frame()
+for(i in 1:length(guides)){
+  guide &lt;- guides[i]
+  mast_res &lt;- mast_list[[guide]]
+  tsc_de_genes &lt;- twostep_clustering_fdr0.05_genes[[guide]]
+  gsfa_de_genes &lt;- gsfa_sig_genes[[guide]]
+  tsc_de_genes &lt;- intersect(tsc_de_genes, rownames(mast_res))
+  gsfa_de_genes &lt;- intersect(gsfa_de_genes, rownames(mast_res))
+  mast_res$tsc_gene &lt;- 0
+  if(length(tsc_de_genes) &gt;0){
+    mast_res[tsc_de_genes, ]$tsc_gene &lt;- 1
+  }
+  mast_res$gsfa_gene &lt;- 0
+  if(length(gsfa_de_genes) &gt;0){
+    mast_res[gsfa_de_genes, ]$gsfa_gene &lt;- 1
+  }
+  combined_mast_res &lt;- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list &lt;- list(&#39;Two-step clustering&#39;=dplyr::filter(combined_mast_res,tsc_gene==1)$PValue,
+                    &#39;GSFA&#39;=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
+                    &#39;MAST&#39;=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, &quot;qqplot_all_combined.pdf&quot;))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle(&quot;All perturbations&quot;) + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name=&quot;Method&quot;)</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/qqplots-gsfa-tsc-all-combined-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># dev.off()</code></pre>
 <p>QQ-plots of MAST DE p-values for the GSFA only genes vs two-step only genes.</p>
 <pre class="r"><code>qqplots &lt;- list()
 for(i in 1:length(guides)){
@@ -1377,16 +1478,85 @@ for(i in 1:length(guides)){
                         &#39;GSFA only&#39;=dplyr::filter(mast_res,gsfa_only_gene==1)$PValue,
                         &#39;MAST&#39;=mast_res$PValue)
     qqplots[[guide]] &lt;- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5))
+      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name=&quot;Method&quot;)
+
   }
 }
 
 grid.arrange(grobs = qqplots, nrow = 2, ncol = 2)</code></pre>
 <p><img src="figure/twostep_clustering_LUHMES_data.Rmd/qqplots-gsfa-tsc-only-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qqplots-gsfa-tsc-only-1">
+Past versions of qqplots-gsfa-tsc-only-1.png
+</button>
+</p>
+<div id="fig-qqplots-gsfa-tsc-only-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/040c06a9b76f1cf4d95a6d97e9714cb4568e0c70/docs/figure/twostep_clustering_LUHMES_data.Rmd/qqplots-gsfa-tsc-only-1.png" target="_blank">040c06a</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>plot ADNP 
 plot CHD2 
 plot DYRK1A 
 plot PTEN </code></pre>
+<p>Pooling p-values from all perturbations</p>
+<pre class="r"><code>combined_mast_res &lt;- data.frame()
+for(i in 1:length(guides)){
+  guide &lt;- guides[i]
+  mast_res &lt;- mast_list[[guide]]
+  tsc_de_genes &lt;- twostep_clustering_fdr0.05_genes[[guide]]
+  gsfa_de_genes &lt;- gsfa_sig_genes[[guide]]
+  tsc_de_genes &lt;- intersect(tsc_de_genes, rownames(mast_res))
+  gsfa_de_genes &lt;- intersect(gsfa_de_genes, rownames(mast_res))
+  mast_res$tsc_only_gene &lt;- 0
+  if(length(setdiff(tsc_de_genes, gsfa_de_genes)) &gt;0){
+    mast_res[setdiff(tsc_de_genes, gsfa_de_genes), ]$tsc_only_gene &lt;- 1
+  }
+  mast_res$gsfa_only_gene &lt;- 0
+  if(length(setdiff(gsfa_de_genes, tsc_de_genes)) &gt;0){
+    mast_res[setdiff(gsfa_de_genes, tsc_de_genes), ]$gsfa_only_gene &lt;- 1
+  }
+  combined_mast_res &lt;- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list &lt;- list(&#39;Two-step clustering only&#39;=dplyr::filter(combined_mast_res,tsc_only_gene==1)$PValue,
+                    &#39;GSFA only&#39;=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
+                    &#39;MAST&#39;=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, &quot;qqplot_only_combined.pdf&quot;))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle(&quot;All perturbations&quot;) + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name=&quot;Method&quot;)</code></pre>
+<p><img src="figure/twostep_clustering_LUHMES_data.Rmd/qqplots-gsfa-tsc-only-combined-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># dev.off()</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
