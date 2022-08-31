@@ -436,13 +436,47 @@ for(i in 1:length(guides)){
                         'GSFA'=dplyr::filter(mast_res,gsfa_gene==1)$PValue,
                         'MAST'=mast_res$PValue)
     qqplots[[guide]] <- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5))
+      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name="Method")
   }
 }
 
 grid.arrange(grobs = qqplots, nrow = 3, ncol = 2)
 ```
 
+
+Pooling p-values from all perturbations
+```{r qqplots-gsfa-tsc-all-combined}
+combined_mast_res <- data.frame()
+for(i in 1:length(guides)){
+  guide <- guides[i]
+  mast_res <- mast_list[[guide]]
+  tsc_de_genes <- twostep_clustering_fdr0.05_genes[[guide]]
+  gsfa_de_genes <- gsfa_sig_genes[[guide]]
+  tsc_de_genes <- intersect(tsc_de_genes, rownames(mast_res))
+  gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
+  mast_res$tsc_gene <- 0
+  if(length(tsc_de_genes) >0){
+    mast_res[tsc_de_genes, ]$tsc_gene <- 1
+  }
+  mast_res$gsfa_gene <- 0
+  if(length(gsfa_de_genes) >0){
+    mast_res[gsfa_de_genes, ]$gsfa_gene <- 1
+  }
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('Two-step clustering'=dplyr::filter(combined_mast_res,tsc_gene==1)$PValue,
+                    'GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
+                    'MAST'=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, "qqplot_all_combined.pdf"))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name="Method")
+
+# dev.off()
+```
 
 QQ-plots of MAST DE p-values for the GSFA only genes vs two-step only genes.
 ```{r qqplots-gsfa-tsc-only, fig.width=12, fig.height=8}
@@ -466,9 +500,43 @@ for(i in 1:length(guides)){
                         'GSFA only'=dplyr::filter(mast_res,gsfa_only_gene==1)$PValue,
                         'MAST'=mast_res$PValue)
     qqplots[[guide]] <- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5))
+      ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name="Method")
   }
 }
 
 grid.arrange(grobs = qqplots, nrow = 3, ncol = 2)
+```
+
+
+Pooling p-values from all perturbations
+```{r qqplots-gsfa-tsc-only-combined}
+combined_mast_res <- data.frame()
+for(i in 1:length(guides)){
+  guide <- guides[i]
+  mast_res <- mast_list[[guide]]
+  tsc_de_genes <- twostep_clustering_fdr0.05_genes[[guide]]
+  gsfa_de_genes <- gsfa_sig_genes[[guide]]
+  tsc_de_genes <- intersect(tsc_de_genes, rownames(mast_res))
+  gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
+  mast_res$tsc_only_gene <- 0
+  if(length(setdiff(tsc_de_genes, gsfa_de_genes)) >0){
+    mast_res[setdiff(tsc_de_genes, gsfa_de_genes), ]$tsc_only_gene <- 1
+  }
+  mast_res$gsfa_only_gene <- 0
+  if(length(setdiff(gsfa_de_genes, tsc_de_genes)) >0){
+    mast_res[setdiff(gsfa_de_genes, tsc_de_genes), ]$gsfa_only_gene <- 1
+  }
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('Two-step clustering only'=dplyr::filter(combined_mast_res,tsc_only_gene==1)$PValue,
+                    'GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
+                    'MAST'=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, "qqplot_only_combined.pdf"))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name="Method")
+# dev.off()
 ```
