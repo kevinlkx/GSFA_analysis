@@ -35,3 +35,8 @@ Two-step factor analysis using unguided GSFA
 
 * [Two-step unguided GSFA analysis on LUHMES CROP-seq data](unguided_gsfa_LUHMES_data.html)
 * [Two-step unguided GSFA analysis on CD8+ T Cell (stimulated) CROP-seq data](unguided_gsfa_Tcells_data.html)
+
+Other analysis
+
+* [Distribution of DEGs by expression level bins](check_gsfa_deg_exp.html)
+
