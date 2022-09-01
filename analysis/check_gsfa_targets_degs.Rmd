@@ -1,5 +1,5 @@
 ---
-title: "Check the DEGs of targets by GSFA vs other methods"
+title: "Check the DEGs of targeted genes by GSFA vs other methods"
 author: "Kaixuan Luo"
 date: "2022-09-01"
 output:
@@ -67,7 +67,7 @@ names(genes_df) <- c("ID", "Name")
 ```
 
 
-Check the gene loadings to see if the target genes in any of the factors P(F) > 0.95?
+Check the gene loadings to see if the targeted genes in any of the factors P(F) > 0.95?
 ```{r}
 F_pm <- gibbs_PM$F_pm
 guide_genes_df <- feature.names[match(guides, feature.names$V2), ]
@@ -82,7 +82,7 @@ gsfa_num_highpip_factors <- rowSums(F_pm_guides_highpip)
 ```
 
 
-## DEGs for target genes
+## DEGs for targeted genes
 
 GSFA result
 ```{r gsfa_LUHMES}
@@ -251,7 +251,7 @@ genes_df <- feature.names[match(rownames(lfsr_mat1), feature.names$V1), ]
 names(genes_df) <- c("ID", "Name")
 ```
 
-Check the gene loadings to see if the target genes in any of the factors P(F) > 0.95?
+Check the gene loadings to see if the targeted genes in any of the factors P(F) > 0.95?
 ```{r}
 F_pm <- gibbs_PM$F_pm
 guide_genes_df <- feature.names[match(guides, feature.names$V2), ]
@@ -266,7 +266,7 @@ gsfa_num_highpip_factors <- rowSums(F_pm_guides_highpip)
 ```
 
 
-## DEGs for target genes
+## DEGs for targeted genes
 
 GSFA result
 ```{r gsfa_t_cells}
