@@ -39,4 +39,5 @@ Two-step factor analysis using unguided GSFA
 Other analysis
 
 * [Distribution of DEGs by expression level bins](check_gsfa_deg_exp.html)
+* [Check DEG results for target genes](check_gsfa_targets_degs.html)
 
