@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-09-01" />
 
-<title>Check the DEGs of targets by GSFA vs other methods</title>
+<title>Check the DEGs of targeted genes by GSFA vs other methods</title>
 
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -371,7 +371,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Check the DEGs of targets by GSFA vs other methods</h1>
+<h1 class="title toc-ignore">Check the DEGs of targeted genes by GSFA vs other methods</h1>
 <h4 class="author">Kaixuan Luo</h4>
 <h4 class="date">2022-09-01</h4>
 
@@ -489,16 +489,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2679534ddf544cbf2f15a26f4aa3c01ebb0f655ctargetblank2679534a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2679534ddf544cbf2f15a26f4aa3c01ebb0f655c" target="_blank">2679534</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree551050c0f392d78fc0976084368d5b95c8762b17targetblank551050ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/551050c0f392d78fc0976084368d5b95c8762b17" target="_blank">551050c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2679534ddf544cbf2f15a26f4aa3c01ebb0f655ctargetblank2679534a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree551050c0f392d78fc0976084368d5b95c8762b17targetblank551050ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2679534ddf544cbf2f15a26f4aa3c01ebb0f655c" target="_blank">2679534</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/551050c0f392d78fc0976084368d5b95c8762b17" target="_blank">551050c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -580,6 +580,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/551050c0f392d78fc0976084368d5b95c8762b17/analysis/check_gsfa_targets_degs.Rmd" target="_blank">551050c</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+checked DEG results for targets
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/b0c5501580e66baccf956d8fcb6294fa54fbb086/docs/check_gsfa_targets_degs.html" target="_blank">b0c5501</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -679,7 +713,7 @@ guides &lt;- KO_names[KO_names!=&quot;Nontargeting&quot;]</code></pre>
                                   header = FALSE), stringsAsFactors = FALSE)
 genes_df &lt;- feature.names[match(rownames(lfsr_mat), feature.names$V1), ]
 names(genes_df) &lt;- c(&quot;ID&quot;, &quot;Name&quot;)</code></pre>
-<p>Check the gene loadings to see if the target genes in any of the factors P(F) &gt; 0.95?</p>
+<p>Check the gene loadings to see if the targeted genes in any of the factors P(F) &gt; 0.95?</p>
 <pre class="r"><code>F_pm &lt;- gibbs_PM$F_pm
 guide_genes_df &lt;- feature.names[match(guides, feature.names$V2), ]
 names(guide_genes_df) &lt;- c(&quot;ID&quot;, &quot;Name&quot;)
@@ -690,8 +724,8 @@ rownames(F_pm_guides) &lt;- guides
 F_pm_guides_highpip &lt;- ifelse(F_pm_guides &gt; 0.95, 1, 0)
 F_pm_guides_highpip[is.na(F_pm_guides_highpip)] &lt;- 0
 gsfa_num_highpip_factors &lt;- rowSums(F_pm_guides_highpip)</code></pre>
-<div id="degs-for-target-genes" class="section level2">
-<h2>DEGs for target genes</h2>
+<div id="degs-for-targeted-genes" class="section level2">
+<h2>DEGs for targeted genes</h2>
 <p>GSFA result</p>
 <pre class="r"><code>effect_mat &lt;- total_effect
 rownames(effect_mat) &lt;- rownames(lfsr_mat)
@@ -836,7 +870,7 @@ guides &lt;- KO_names[KO_names!=&quot;NonTarget&quot;]</code></pre>
                                   header = FALSE), stringsAsFactors = FALSE)
 genes_df &lt;- feature.names[match(rownames(lfsr_mat1), feature.names$V1), ]
 names(genes_df) &lt;- c(&quot;ID&quot;, &quot;Name&quot;)</code></pre>
-<p>Check the gene loadings to see if the target genes in any of the factors P(F) &gt; 0.95?</p>
+<p>Check the gene loadings to see if the targeted genes in any of the factors P(F) &gt; 0.95?</p>
 <pre class="r"><code>F_pm &lt;- gibbs_PM$F_pm
 guide_genes_df &lt;- feature.names[match(guides, feature.names$V2), ]
 names(guide_genes_df) &lt;- c(&quot;ID&quot;, &quot;Name&quot;)
@@ -847,8 +881,8 @@ rownames(F_pm_guides) &lt;- guides
 F_pm_guides_highpip &lt;- ifelse(F_pm_guides &gt; 0.95, 1, 0)
 F_pm_guides_highpip[is.na(F_pm_guides_highpip)] &lt;- 0
 gsfa_num_highpip_factors &lt;- rowSums(F_pm_guides_highpip)</code></pre>
-<div id="degs-for-target-genes-1" class="section level2">
-<h2>DEGs for target genes</h2>
+<div id="degs-for-targeted-genes-1" class="section level2">
+<h2>DEGs for targeted genes</h2>
 <p>GSFA result</p>
 <pre class="r"><code>lfsr_mat &lt;- lfsr_mat1
 effect_mat &lt;- total_effect1
