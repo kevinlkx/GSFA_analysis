@@ -1,35 +1,23 @@
 ---
 title: "Check the expression levels for DEGs found by GSFA"
 author: "Kaixuan Luo"
+date: "2022-08-20"
 output:
-  html_document:
-    number_sections: yes
-    toc: yes
-    toc_float: true
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+editor_options:
+  chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-requireNamespace("pander", quietly = TRUE)
-# set default chunk output
-knitr::opts_chunk$set(echo = T,
-                      message = FALSE,
-                      warning = FALSE,
-                      comment = NA,
-                      tidy = FALSE,
-                      fig.width = 8,
-                      fig.height = 6,
-                      fig.align = "center",
-                      results = "asis")
-
-# formatting of pander tables
-pander::panderOptions('knitr.auto.asis', FALSE)
-pander::panderOptions("table.split.table", Inf)
+```{r knitr-opts, include=FALSE}
+knitr::opts_chunk$set(results = "hold", fig.align = "center", message=FALSE, warning=FALSE)
 ```
-
 
 ## Load necessary packages and data
 
 ```{r}
+library(Seurat)
 library(data.table)
 library(Matrix)
 library(tidyverse)
@@ -45,7 +33,7 @@ library(gridExtra)
 library(ComplexHeatmap)
 library(kableExtra)
 library(WebGestaltR)
-
+library(GSFA)
 source("/project2/xinhe/yifan/Factor_analysis/analysis_website_for_Kevin/scripts/plotting_functions.R")
 ```
 
@@ -57,14 +45,32 @@ dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)
 
 # LUHMES data
 
-Load processed gene expression matrix
+Load raw gene expression data
 ```{r}
-data_folder <- "/project2/xinhe/yifan/Factor_analysis/LUHMES/"
-scaled.gene_exp <- readRDS(paste0(data_folder,"processed_data/deviance_residual.merged_top_6k.corrected_4.scaled.rds"))
+combined_obj <- readRDS("/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds")
+dim(combined_obj)
+```
+
+Normalizing the data by log2 CPM
+```{r}
+combined_obj <- NormalizeData(combined_obj, scale.factor = 1e6)
+log2cpm_exp_mat <- GetAssayData(combined_obj) / log(2)
+
+dim(log2cpm_exp_mat)
+```
+
+Select the 6k genes used for GSFA in this analysis
+```{r}
+# Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA
+scaled_gene_matrix_in_gsfa <- combined_obj@assays$RNA@scale.data
+selected_gene_ids <- rownames(scaled_gene_matrix_in_gsfa)
+log2cpm_exp_mat <- log2cpm_exp_mat[selected_gene_ids, ]
+dim(log2cpm_exp_mat)
 ```
 
 Load GSFA result
 ```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/LUHMES/"
 fit <- readRDS(paste0(data_folder,
                       "gsfa_output_detect_01/use_negctrl/All.gibbs_obj_k20.svd_negctrl.seed_14314.light.rds"))
 gibbs_PM <- fit$posterior_means
@@ -75,13 +81,13 @@ guides <- KO_names[KO_names!="Nontargeting"]
 ```
 
 ```{r LUHMES-num-deg-exp-levels, fig.width=13, fig.height=5.5}
-if(!all.equal(rownames(lfsr_mat), rownames(scaled.gene_exp))){stop("Gene names not match!")}
+if(!all.equal(rownames(lfsr_mat), rownames(log2cpm_exp_mat))){stop("Gene names not match!")}
 
-mean_gene_exp <- rowMeans(scaled.gene_exp)
+mean_gene_exp <- rowMeans(log2cpm_exp_mat)
 exp_breaks <- quantile(mean_gene_exp, probs = seq(0,1,0.2))
 gene_exp_bins <- cut(mean_gene_exp, breaks = exp_breaks, labels = 1:5)
 gene_exp_bins[is.na(gene_exp_bins)] <- 1
-gene_exp_bins.df <- data.frame(geneID = rownames(scaled.gene_exp), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
+gene_exp_bins.df <- data.frame(geneID = rownames(log2cpm_exp_mat), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
 table(gene_exp_bins.df$exp_bin)
 
 lfsr_signif_num_bins <- data.frame()
@@ -95,15 +101,14 @@ for(l in 1:5){
 }
 colnames(lfsr_signif_num_bins) <- c("bin", colnames(lfsr_mat))
 
-lfsr_signif_num_bins.df <- tidyr::gather(lfsr_signif_num_bins[,c("bin", guides)], guide, num_genes, guides, factor_key=TRUE)
-lfsr_signif_num_bins.df$bin <- factor(lfsr_signif_num_bins.df$bin, levels = 5:1, 
-                                      labels = c("highest", "mid-high", "mid", "low-mid", "lowest"))
-
+lfsr_signif_num_bins.df <- tidyr::gather(lfsr_signif_num_bins[,c("bin", guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
+lfsr_signif_num_bins.df$bin <- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
+                                      labels = c("[0-20%]", "[20-40%]", "[40-60%]", "[60-80%]", "[80-100%]"))
 # pdf(file.path(res_dir, "LUHMES_stimulated_lfsr_signif_num_by_exp_bins.pdf"), width = 14, height = 3)
 ggplot(lfsr_signif_num_bins.df, aes(x=guide, y=num_genes, fill=bin)) + 
   geom_bar(position="stack", stat="identity") +
-  scale_fill_brewer(palette = "Greens") + 
-  guides(fill=guide_legend(title="Gene expression level")) +
+  scale_fill_brewer(palette = "Blues") + 
+  guides(fill=guide_legend(title="Gene expression (log2 CPM) percentile")) +
   labs(x = "Target genes",
        y = "Number of DEGs",
        title = "Number of DEGs detected by gene expression level") +
@@ -117,14 +122,44 @@ ggplot(lfsr_signif_num_bins.df, aes(x=guide, y=num_genes, fill=bin)) +
 
 # T cells data
 
-Load processed gene expression matrix
+Load input data
 ```{r}
-data_folder <- "/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/"
-scaled.gene_exp <- readRDS(paste0(data_folder,"processed_data/deviance_residual.all_T_cells_merged_top_6k.batch_uncorrected.rds"))
+combined_obj <- readRDS('/project2/xinhe/yifan/Factor_analysis/shared_data/TCells_cropseq_data_seurat.rds')
+```
+
+Extract data for stimulated cells
+```{r}
+metadata <- combined_obj@meta.data
+table(metadata$orig.ident)
+
+combined_obj@meta.data$condition <- "unstimulated"
+combined_obj@meta.data$condition[which(endsWith(combined_obj@meta.data$orig.ident, "S"))] <- "stimulated"
+
+combined_obj <- subset(combined_obj, subset = condition == "stimulated")
+combined_obj
+table(combined_obj@meta.data$orig.ident)
+
+dim(combined_obj)
+```
+
+Normalizing the data
+```{r}
+combined_obj <- NormalizeData(combined_obj, scale.factor = 1e6)
+log2cpm_exp_mat <- GetAssayData(combined_obj) / log(2)
+```
+
+Select the 6k genes used for GSFA in this analysis
+```{r}
+# Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA
+scaled_gene_matrix_in_gsfa <- combined_obj@assays$RNA@scale.data
+selected_gene_ids <- rownames(scaled_gene_matrix_in_gsfa)
+log2cpm_exp_mat <- log2cpm_exp_mat[selected_gene_ids, ]
+dim(log2cpm_exp_mat)
 ```
 
 Load GSFA result
 ```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/"
 fit <- readRDS(paste0(data_folder,
                       "gsfa_output_detect_01/all_uncorrected_by_group.use_negctrl/All.gibbs_obj_k20.svd_negctrl.restart.light.rds"))
 gibbs_PM <- fit$posterior_means
@@ -139,13 +174,13 @@ guides <- KO_names[KO_names!="NonTarget"]
 ```{r Tcells-stimulated-num-deg-exp-levels, fig.width=13, fig.height=5.5}
 lfsr_mat <- lfsr_mat1
 
-if(!all.equal(rownames(lfsr_mat), rownames(scaled.gene_exp))){stop("Gene names not match!")}
+if(!all.equal(rownames(lfsr_mat), rownames(log2cpm_exp_mat))){stop("Gene names not match!")}
 
-mean_gene_exp <- rowMeans(scaled.gene_exp)
+mean_gene_exp <- rowMeans(log2cpm_exp_mat)
 exp_breaks <- quantile(mean_gene_exp, probs = seq(0,1,0.2))
 gene_exp_bins <- cut(mean_gene_exp, breaks = exp_breaks, labels = 1:5)
 gene_exp_bins[is.na(gene_exp_bins)] <- 1
-gene_exp_bins.df <- data.frame(geneID = rownames(scaled.gene_exp), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
+gene_exp_bins.df <- data.frame(geneID = rownames(log2cpm_exp_mat), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
 table(gene_exp_bins.df$exp_bin)
 
 lfsr_signif_num_bins <- data.frame()
@@ -159,15 +194,15 @@ for(l in 1:5){
 }
 colnames(lfsr_signif_num_bins) <- c("bin", colnames(lfsr_mat))
 
-lfsr_signif_num_bins.df <- tidyr::gather(lfsr_signif_num_bins[,c("bin", guides)], guide, num_genes, guides, factor_key=TRUE)
-lfsr_signif_num_bins.df$bin <- factor(lfsr_signif_num_bins.df$bin, levels = 5:1, 
-                                      labels = c("highest", "mid-high", "mid", "low-mid", "lowest"))
+lfsr_signif_num_bins.df <- tidyr::gather(lfsr_signif_num_bins[,c("bin", guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
+lfsr_signif_num_bins.df$bin <- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
+                                      labels = c("[0-20%]", "[20-40%]", "[40-60%]", "[60-80%]", "[80-100%]"))
 
 # pdf(file.path(res_dir, "Tcells_stimulated_lfsr_signif_num_by_exp_bins.pdf"), width = 14, height = 3)
 ggplot(lfsr_signif_num_bins.df, aes(x=guide, y=num_genes, fill=bin)) + 
   geom_bar(position="stack", stat="identity") +
-  scale_fill_brewer(palette = "Greens") + 
-  guides(fill=guide_legend(title="Gene expression level")) +
+  scale_fill_brewer(palette = "Blues") + 
+  guides(fill=guide_legend(title="Gene expression (log2 CPM) percentile")) +
   labs(x = "Target genes",
        y = "Number of DEGs",
        title = "Number of DEGs detected by gene expression level") +
