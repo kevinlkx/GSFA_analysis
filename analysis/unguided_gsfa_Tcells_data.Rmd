@@ -499,6 +499,7 @@ pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
 
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
       ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
-      scale_colour_discrete(name="Method")
-
+      scale_colour_discrete(name="Method") + 
+      scale_color_manual(values=c("#00BA38","#619CFF"))
 ```
+
