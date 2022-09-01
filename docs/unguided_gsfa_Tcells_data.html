@@ -481,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree182fbec68c6977b6d164601e062dac01cac8c2f0targetblank182fbeca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/182fbec68c6977b6d164601e062dac01cac8c2f0" target="_blank">182fbec</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeccd0e1c580382fc8067d1d11768fe8cc007493dftargetblankccd0e1ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/ccd0e1c580382fc8067d1d11768fe8cc007493df" target="_blank">ccd0e1c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree182fbec68c6977b6d164601e062dac01cac8c2f0targetblank182fbeca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeccd0e1c580382fc8067d1d11768fe8cc007493dftargetblankccd0e1ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/182fbec68c6977b6d164601e062dac01cac8c2f0" target="_blank">182fbec</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/ccd0e1c580382fc8067d1d11768fe8cc007493df" target="_blank">ccd0e1c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -572,6 +572,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/ccd0e1c580382fc8067d1d11768fe8cc007493df/analysis/unguided_gsfa_Tcells_data.Rmd" target="_blank">ccd0e1c</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+updated colors for qq plot
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/0edbbc2f6940e36e63fa5c1212f956f27205a5e9/docs/unguided_gsfa_Tcells_data.html" target="_blank">0edbbc2</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1376,8 +1410,46 @@ pvalue_list &lt;- list(&#39;GSFA&#39;=dplyr::filter(combined_mast_res,gsfa_gene=
 
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
       ggtitle(&quot;All perturbations&quot;) + theme(plot.title = element_text(hjust = 0.5)) +
-      scale_colour_discrete(name=&quot;Method&quot;)</code></pre>
+      scale_colour_discrete(name=&quot;Method&quot;) + 
+      scale_color_manual(values=c(&quot;#00BA38&quot;,&quot;#619CFF&quot;))</code></pre>
 <p><img src="figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-mast-all-combined-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qqplots-gsfa-mast-all-combined-1">
+Past versions of qqplots-gsfa-mast-all-combined-1.png
+</button>
+</p>
+<div id="fig-qqplots-gsfa-mast-all-combined-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/0edbbc2f6940e36e63fa5c1212f956f27205a5e9/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-mast-all-combined-1.png" target="_blank">0edbbc2</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
