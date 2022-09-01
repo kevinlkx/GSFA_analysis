@@ -470,3 +470,28 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
       scale_colour_discrete(name="Method")
 # dev.off()
 ```
+
+
+QQ plots comparing GSFA with MAST
+```{r qqplots-gsfa-mast-all-combined}
+combined_mast_res <- data.frame()
+for(i in 1:length(guides)){
+  guide <- guides[i]
+  mast_res <- mast_list[[guide]]
+  gsfa_de_genes <- gsfa_sig_genes[[guide]]
+  gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
+  mast_res$gsfa_gene <- 0
+  if(length(gsfa_de_genes) >0){
+    mast_res[gsfa_de_genes, ]$gsfa_gene <- 1
+  }
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
+                    'MAST'=combined_mast_res$PValue)
+
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name="Method")
+
+```
