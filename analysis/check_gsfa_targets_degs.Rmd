@@ -1,0 +1,418 @@
+---
+title: "Check the DEGs of targets by GSFA vs other methods"
+author: "Kaixuan Luo"
+date: "2022-09-01"
+output:
+  workflowr::wflow_html:
+    toc: true
+editor_options:
+  chunk_output_type: console
+---
+
+```{r knitr-opts, include=FALSE}
+knitr::opts_chunk$set(results = "hold", fig.align = "center", message=FALSE, warning=FALSE)
+```
+
+## Load necessary packages and data
+
+```{r}
+library(Seurat)
+library(data.table)
+library(Matrix)
+library(tidyverse)
+library(ggplot2)
+theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
+                             axis.title = element_text(size = 14),
+                             axis.text = element_text(size = 12),
+                             legend.title = element_text(size = 13),
+                             legend.text = element_text(size = 12),
+                             panel.grid.minor = element_blank())
+)
+library(gridExtra)
+library(ComplexHeatmap)
+library(kableExtra)
+library(WebGestaltR)
+library(GSFA)
+library(DT)
+source("code/plotting_functions.R")
+```
+
+Set directories
+```{r dir}
+res_dir <- "/project2/xinhe/kevinluo/GSFA/DEGs_by_expression_level"
+dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)
+```
+
+# LUHMES data
+
+Load GSFA result
+```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/LUHMES/"
+fit <- readRDS(paste0(data_folder,
+                      "gsfa_output_detect_01/use_negctrl/All.gibbs_obj_k20.svd_negctrl.seed_14314.light.rds"))
+gibbs_PM <- fit$posterior_means
+lfsr_mat <- fit$lfsr[, -ncol(fit$lfsr)]
+total_effect <- fit$total_effect[, -ncol(fit$total_effect)]
+KO_names <- colnames(lfsr_mat)
+guides <- KO_names[KO_names!="Nontargeting"]
+```
+
+Load the mapping from gene name to ENSEMBL ID for all 6k genes used in GSFA
+```{r}
+feature.names <- data.frame(fread(paste0(data_folder, "GSE142078_raw/GSM4219576_Run2_genes.tsv.gz"),
+                                  header = FALSE), stringsAsFactors = FALSE)
+genes_df <- feature.names[match(rownames(lfsr_mat), feature.names$V1), ]
+names(genes_df) <- c("ID", "Name")
+```
+
+
+Check the gene loadings to see if the target genes in any of the factors P(F) > 0.95?
+```{r}
+F_pm <- gibbs_PM$F_pm
+guide_genes_df <- feature.names[match(guides, feature.names$V2), ]
+names(guide_genes_df) <- c("ID", "Name")
+
+F_pm_guides <- F_pm[match(guide_genes_df$ID, rownames(F_pm)), ]
+rownames(F_pm_guides) <- guides
+
+F_pm_guides_highpip <- ifelse(F_pm_guides > 0.95, 1, 0)
+F_pm_guides_highpip[is.na(F_pm_guides_highpip)] <- 0
+gsfa_num_highpip_factors <- rowSums(F_pm_guides_highpip)
+```
+
+
+## DEGs for target genes
+
+GSFA result
+```{r gsfa_LUHMES}
+effect_mat <- total_effect
+rownames(effect_mat) <- rownames(lfsr_mat)
+colnames(effect_mat) <- colnames(lfsr_mat)
+
+gsfa_deg_guides.df <- data.frame()
+for(guide in guides){
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(lfsr_mat)){
+    gsfa_deg_guides.df <- rbind(gsfa_deg_guides.df, 
+                 data.frame(guide = guide, lfsr = lfsr_mat[guide_geneID, guide], effect = effect_mat[guide_geneID, guide]))
+  }else{
+    gsfa_deg_guides.df <- rbind(gsfa_deg_guides.df, 
+                          data.frame(guide = guide, lfsr = NA, effect = NA))
+  }
+}
+
+gsfa_deg_guides.df$sig_DE <- ifelse(gsfa_deg_guides.df$lfsr < 0.05, "DE", "")
+```
+
+
+MAST
+```{r mast_LUHMES}
+mast_deg_guides.df <- data.frame()
+for (guide in guides){
+  fname <- paste0(data_folder, "processed_data/MAST/dev_top6k_negctrl/gRNA_", 
+                  guide, ".dev_res_top6k.vs_negctrl.rds")
+  mast_df <- readRDS(fname)
+  mast_df$geneID <- rownames(mast_df)
+  mast_df <- mast_df %>% dplyr::rename(FDR = fdr, PValue = pval)
+  
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(mast_df)){
+    mast_deg_guides.df <- rbind(mast_deg_guides.df, 
+                 data.frame(guide = guide, fdr = mast_df[guide_geneID, "FDR"], logFC = mast_df[guide_geneID, "logFC"]))
+  }else{
+    mast_deg_guides.df <- rbind(mast_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, logFC = NA))
+  }
+}
+
+mast_deg_guides.df$fdr <- round(mast_deg_guides.df$fdr, 2)
+mast_deg_guides.df$logFC <- round(mast_deg_guides.df$logFC, 2)
+mast_deg_guides.df$sig_DE <- ifelse(mast_deg_guides.df$fdr < 0.05, "DE", "")
+```
+
+DESeq2
+```{r deseq_LUHMES}
+deseq_deg_guides.df <- data.frame()
+
+for (guide in guides){
+  fname <- paste0(data_folder, "processed_data/DESeq2/dev_top6k_negctrl/gRNA_", 
+                  guide, ".dev_res_top6k.vs_negctrl.rds")
+  res <- readRDS(fname)
+  res <- as.data.frame(res@listData, row.names = res@rownames)
+  res$geneID <- rownames(res)
+  deseq_df <- res %>% dplyr::rename(FDR = padj, PValue = pvalue)
+  
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(deseq_df)){
+    deseq_deg_guides.df <- rbind(deseq_deg_guides.df, 
+                 data.frame(guide = guide, fdr = deseq_df[guide_geneID, "FDR"], logFC = deseq_df[guide_geneID, "log2FoldChange"]))
+  }else{
+    deseq_deg_guides.df <- rbind(deseq_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, logFC = NA))
+  }
+}
+
+
+deseq_deg_guides.df$fdr <- round(deseq_deg_guides.df$fdr, 2)
+deseq_deg_guides.df$logFC <- round(deseq_deg_guides.df$logFC, 2)
+deseq_deg_guides.df$sig_DE <- ifelse(deseq_deg_guides.df$fdr < 0.05, "DE", "")
+```
+
+scMAGeCK
+```{r scmageck_LUHMES}
+scmageck_res <- readRDS(paste0(data_folder, "scmageck/scmageck_lr.LUHMES.dev_res_top_6k.rds"))
+colnames(scmageck_res$fdr)[colnames(scmageck_res$fdr) == "NegCtrl"] <- "Nontargeting"
+colnames(scmageck_res$score)[colnames(scmageck_res$score) == "NegCtrl"] <- "Nontargeting"
+
+scmageck_deg_guides.df <- data.frame()
+for (guide in guides){
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(scmageck_res$fdr)){
+    scmageck_deg_guides.df <- rbind(scmageck_deg_guides.df, 
+                 data.frame(guide = guide, fdr = scmageck_res$fdr[guide_geneID, guide], score = scmageck_res$score[guide_geneID, guide]))
+  }else{
+    scmageck_deg_guides.df <- rbind(scmageck_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, score = NA))
+  }
+}
+
+scmageck_deg_guides.df$fdr <- round(scmageck_deg_guides.df$fdr, 2)
+scmageck_deg_guides.df$score <- round(scmageck_deg_guides.df$score, 2)
+scmageck_deg_guides.df$sig_DE <- ifelse(scmageck_deg_guides.df$fdr < 0.05, "DE", "")
+```
+
+SCEPTRE
+```{r sceptre_LUHMES}
+sceptre_res <- readRDS("/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data/sceptre_output/sceptre.result.rds")
+sceptre_count_df <- data.frame(matrix(nrow = length(guides), ncol = 2))
+colnames(sceptre_count_df) <- c("target", "num_DEG")
+
+sceptre_deg_guides.df <- data.frame()
+for (guide in guides){
+  curr_sceptre_res <- sceptre_res %>% filter(gRNA_id == guide)
+  curr_sceptre_res$fdr <- p.adjust(curr_sceptre_res$p_value, method = "fdr")
+  
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% curr_sceptre_res$gene_id){
+    sceptre_deg_guides.df <- rbind(sceptre_deg_guides.df, 
+                 data.frame(guide = guide, fdr = curr_sceptre_res$fdr[curr_sceptre_res$gene_id == guide_geneID], 
+                            z_value = curr_sceptre_res$z_value[curr_sceptre_res$gene_id == guide_geneID]))
+  }else{
+    sceptre_deg_guides.df <- rbind(sceptre_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, z_value = NA))
+  }
+}
+
+sceptre_deg_guides.df$fdr <- round(sceptre_deg_guides.df$fdr, 2)
+sceptre_deg_guides.df$z_value <- round(sceptre_deg_guides.df$z_value, 2)
+sceptre_deg_guides.df$sig_DE <- ifelse(sceptre_deg_guides.df$fdr < 0.05, "DE", "")
+
+```
+
+Compare across methods
+```{r deg_comparison_LUHMES}
+dge_guides_comparison_df <- data.frame(Perturbation = guides,
+                                       num_GSFA_factors = gsfa_num_highpip_factors, 
+                                       GSFA = gsfa_deg_guides.df$sig_DE,
+                                       scMAGeCK = scmageck_deg_guides.df$sig_DE,
+                                       DESeq2 = deseq_deg_guides.df$sig_DE,
+                                       MAST = mast_deg_guides.df$sig_DE,
+                                       SCEPTRE = sceptre_deg_guides.df$sig_DE)
+
+DT::datatable(dge_guides_comparison_df, 
+              rownames = FALSE, 
+              options = list(pageLength = length(guides), 
+                             columnDefs = list(list(className = 'dt-center', targets = 0:4))))
+```
+
+# T cells data
+
+Load GSFA result
+```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/"
+fit <- readRDS(paste0(data_folder,
+                      "gsfa_output_detect_01/all_uncorrected_by_group.use_negctrl/All.gibbs_obj_k20.svd_negctrl.restart.light.rds"))
+gibbs_PM <- fit$posterior_means
+lfsr_mat1 <- fit$lfsr1[, -ncol(fit$lfsr1)]
+lfsr_mat0 <- fit$lfsr0[, -ncol(fit$lfsr0)]
+total_effect1 <- fit$total_effect1[, -ncol(fit$total_effect1)]
+total_effect0 <- fit$total_effect0[, -ncol(fit$total_effect0)]
+KO_names <- colnames(lfsr_mat1)
+guides <- KO_names[KO_names!="NonTarget"]
+```
+
+Load the mapping from gene name to ENSEMBL ID for all 6k genes used in GSFA.
+
+```{r}
+feature.names <- data.frame(fread(paste0(data_folder, "GSE119450_RAW/D1N/genes.tsv"),
+                                  header = FALSE), stringsAsFactors = FALSE)
+genes_df <- feature.names[match(rownames(lfsr_mat1), feature.names$V1), ]
+names(genes_df) <- c("ID", "Name")
+```
+
+Check the gene loadings to see if the target genes in any of the factors P(F) > 0.95?
+```{r}
+F_pm <- gibbs_PM$F_pm
+guide_genes_df <- feature.names[match(guides, feature.names$V2), ]
+names(guide_genes_df) <- c("ID", "Name")
+
+F_pm_guides <- F_pm[match(guide_genes_df$ID, rownames(F_pm)), ]
+rownames(F_pm_guides) <- guides
+
+F_pm_guides_highpip <- ifelse(F_pm_guides > 0.95, 1, 0)
+F_pm_guides_highpip[is.na(F_pm_guides_highpip)] <- 0
+gsfa_num_highpip_factors <- rowSums(F_pm_guides_highpip)
+```
+
+
+## DEGs for target genes
+
+GSFA result
+```{r gsfa_t_cells}
+lfsr_mat <- lfsr_mat1
+effect_mat <- total_effect1
+rownames(effect_mat) <- rownames(lfsr_mat)
+colnames(effect_mat) <- colnames(lfsr_mat)
+
+gsfa_deg_guides.df <- data.frame()
+for(guide in guides){
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(lfsr_mat)){
+    gsfa_deg_guides.df <- rbind(gsfa_deg_guides.df, 
+                 data.frame(guide = guide, lfsr = lfsr_mat[guide_geneID, guide], effect = effect_mat[guide_geneID, guide]))
+  }else{
+    gsfa_deg_guides.df <- rbind(gsfa_deg_guides.df, 
+                          data.frame(guide = guide, lfsr = NA, effect = NA))
+  }
+}
+
+gsfa_deg_guides.df$sig_DE <- ifelse(gsfa_deg_guides.df$lfsr < 0.05, "DE", "")
+```
+
+MAST
+```{r mast_t_cells}
+mast_deg_guides.df <- data.frame()
+for (guide in guides){
+  fname <- paste0(data_folder, "processed_data/MAST/all_by_stim_negctrl/gRNA_", 
+                  guide, ".dev_res_top6k.vs_negctrl.rds")
+  mast_df <- readRDS(fname)
+  mast_df$geneID <- rownames(mast_df)
+  mast_df <- mast_df %>% dplyr::rename(FDR = fdr, PValue = pval)
+  
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(mast_df)){
+    mast_deg_guides.df <- rbind(mast_deg_guides.df, 
+                 data.frame(guide = guide, fdr = mast_df[guide_geneID, "FDR"], logFC = mast_df[guide_geneID, "logFC"]))
+  }else{
+    mast_deg_guides.df <- rbind(mast_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, logFC = NA))
+  }
+}
+
+mast_deg_guides.df$fdr <- round(mast_deg_guides.df$fdr, 2)
+mast_deg_guides.df$logFC <- round(mast_deg_guides.df$logFC, 2)
+mast_deg_guides.df$sig_DE <- ifelse(mast_deg_guides.df$fdr < 0.05, "DE", "")
+```
+
+DESeq2
+```{r deseq_t_cells}
+deseq_deg_guides.df <- data.frame()
+
+for (guide in guides){
+  fname <- paste0(data_folder, "processed_data/DESeq2/all_by_stim_negctrl/gRNA_", 
+                  guide, ".dev_res_top6k.vs_negctrl.rds")
+  res <- readRDS(fname)
+  res <- as.data.frame(res@listData, row.names = res@rownames)
+  res$geneID <- rownames(res)
+  deseq_df <- res %>% dplyr::rename(FDR = padj, PValue = pvalue)
+  
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(deseq_df)){
+    deseq_deg_guides.df <- rbind(deseq_deg_guides.df, 
+                 data.frame(guide = guide, fdr = deseq_df[guide_geneID, "FDR"], logFC = deseq_df[guide_geneID, "log2FoldChange"]))
+  }else{
+    deseq_deg_guides.df <- rbind(deseq_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, logFC = NA))
+  }
+}
+
+
+deseq_deg_guides.df$fdr <- round(deseq_deg_guides.df$fdr, 2)
+deseq_deg_guides.df$logFC <- round(deseq_deg_guides.df$logFC, 2)
+deseq_deg_guides.df$sig_DE <- ifelse(deseq_deg_guides.df$fdr < 0.05, "DE", "")
+
+```
+
+scMAGeCK
+```{r scmageck_t_cells}
+scmageck_res <- readRDS(paste0(data_folder, "scmageck/scmageck_lr.TCells_stim.dev_res_top_6k.rds"))
+colnames(scmageck_res$fdr)[colnames(scmageck_res$fdr) == "NegCtrl"] <- "NonTarget"
+colnames(scmageck_res$score)[colnames(scmageck_res$score) == "NegCtrl"] <- "NonTarget"
+
+scmageck_deg_guides.df <- data.frame()
+for (guide in guides){
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% rownames(scmageck_res$fdr)){
+    scmageck_deg_guides.df <- rbind(scmageck_deg_guides.df, 
+                 data.frame(guide = guide, fdr = scmageck_res$fdr[guide_geneID, guide], score = scmageck_res$score[guide_geneID, guide]))
+  }else{
+    scmageck_deg_guides.df <- rbind(scmageck_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, score = NA))
+  }
+}
+
+scmageck_deg_guides.df$fdr <- round(scmageck_deg_guides.df$fdr, 2)
+scmageck_deg_guides.df$score <- round(scmageck_deg_guides.df$score, 2)
+scmageck_deg_guides.df$sig_DE <- ifelse(scmageck_deg_guides.df$fdr < 0.05, "DE", "")
+```
+
+SCEPTRE
+```{r sceptre_t_cells}
+sceptre_res <- readRDS("/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/simulated_data/sceptre_output/sceptre.result.rds")
+sceptre_count_df <- data.frame(matrix(nrow = length(guides), ncol = 2))
+colnames(sceptre_count_df) <- c("target", "num_DEG")
+
+sceptre_deg_guides.df <- data.frame()
+for (guide in guides){
+  curr_sceptre_res <- sceptre_res %>% filter(gRNA_id == guide)
+  curr_sceptre_res$fdr <- p.adjust(curr_sceptre_res$p_value, method = "fdr")
+  
+  guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
+  if(guide_geneID %in% curr_sceptre_res$gene_id){
+    sceptre_deg_guides.df <- rbind(sceptre_deg_guides.df, 
+                 data.frame(guide = guide, fdr = curr_sceptre_res$fdr[curr_sceptre_res$gene_id == guide_geneID], 
+                            z_value = curr_sceptre_res$z_value[curr_sceptre_res$gene_id == guide_geneID]))
+  }else{
+    sceptre_deg_guides.df <- rbind(sceptre_deg_guides.df, 
+                          data.frame(guide = guide, fdr = NA, z_value = NA))
+  }
+}
+
+sceptre_deg_guides.df$fdr <- round(sceptre_deg_guides.df$fdr, 2)
+sceptre_deg_guides.df$z_value <- round(sceptre_deg_guides.df$z_value, 2)
+sceptre_deg_guides.df$sig_DE <- ifelse(sceptre_deg_guides.df$fdr < 0.05, "DE", "")
+
+```
+
+Compare across methods
+```{r deg_comparison_t_cells}
+dge_guides_comparison_df <- data.frame(Perturbation = guides,
+                                       num_GSFA_factors = gsfa_num_highpip_factors, 
+                                       GSFA = gsfa_deg_guides.df$sig_DE,
+                                       scMAGeCK = scmageck_deg_guides.df$sig_DE,
+                                       DESeq2 = deseq_deg_guides.df$sig_DE,
+                                       MAST = mast_deg_guides.df$sig_DE,
+                                       SCEPTRE = sceptre_deg_guides.df$sig_DE)
+
+
+DT::datatable(dge_guides_comparison_df, 
+              rownames = FALSE, 
+              options = list(pageLength = length(guides), 
+                             columnDefs = list(list(className = 'dt-center', targets = 0:4))))
+```
+
+# Session Information
+
+```{r results="markup"}
+sessionInfo()
+```
