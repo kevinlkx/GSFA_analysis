@@ -4,6 +4,7 @@ author: "Kaixuan Luo"
 date: "2022-09-01"
 output:
   workflowr::wflow_html:
+    code_folding: hide
     toc: true
 editor_options:
   chunk_output_type: console
@@ -409,10 +410,4 @@ DT::datatable(dge_guides_comparison_df,
               rownames = FALSE, 
               options = list(pageLength = length(guides), 
                              columnDefs = list(list(className = 'dt-center', targets = 0:4))))
-```
-
-# Session Information
-
-```{r results="markup"}
-sessionInfo()
 ```
