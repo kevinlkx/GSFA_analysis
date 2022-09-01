@@ -101,6 +101,9 @@ for(l in 1:5){
 }
 colnames(lfsr_signif_num_bins) <- c("bin", colnames(lfsr_mat))
 
+cat("Total number of DEGs: \n")
+colSums(lfsr_signif_num_bins[,guides])
+
 lfsr_signif_num_bins.df <- tidyr::gather(lfsr_signif_num_bins[,c("bin", guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
 lfsr_signif_num_bins.df$bin <- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
                                       labels = c("[0-20%]", "[20-40%]", "[40-60%]", "[60-80%]", "[80-100%]"))
@@ -194,6 +197,9 @@ for(l in 1:5){
 }
 colnames(lfsr_signif_num_bins) <- c("bin", colnames(lfsr_mat))
 
+cat("Total number of DEGs: \n")
+colSums(lfsr_signif_num_bins[,guides])
+ 
 lfsr_signif_num_bins.df <- tidyr::gather(lfsr_signif_num_bins[,c("bin", guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
 lfsr_signif_num_bins.df$bin <- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
                                       labels = c("[0-20%]", "[20-40%]", "[40-60%]", "[60-80%]", "[80-100%]"))
