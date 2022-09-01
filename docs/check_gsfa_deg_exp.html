@@ -11,6 +11,7 @@
 
 <meta name="author" content="Kaixuan Luo" />
 
+<meta name="date" content="2022-08-20" />
 
 <title>Check the expression levels for DEGs found by GSFA</title>
 
@@ -33,6 +34,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -230,6 +232,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -348,10 +353,19 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Check the expression levels for DEGs found by GSFA</h1>
 <h4 class="author">Kaixuan Luo</h4>
+<h4 class="date">2022-08-20</h4>
 
 </div>
 
@@ -376,7 +390,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-31
+<strong>Last updated:</strong> 2022-09-01
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -467,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeb709053944fa906ac0f4444f606dd7eb94cca831targetblankb709053a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/b709053944fa906ac0f4444f606dd7eb94cca831" target="_blank">b709053</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2aae326df19149488c4956af35a4d2c826bd67eetargetblank2aae326a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2aae326df19149488c4956af35a4d2c826bd67ee" target="_blank">2aae326</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreeb709053944fa906ac0f4444f606dd7eb94cca831targetblankb709053a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2aae326df19149488c4956af35a4d2c826bd67eetargetblank2aae326a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/b709053944fa906ac0f4444f606dd7eb94cca831" target="_blank">b709053</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2aae326df19149488c4956af35a4d2c826bd67ee" target="_blank">2aae326</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -517,6 +531,7 @@ Untracked files:
 
 Unstaged changes:
     Modified:   analysis/sceptre_LUHMES_data.Rmd
+    Modified:   analysis/twostep_clustering_LUHMES_data.Rmd
     Modified:   code/run_sceptre_cropseq_data.sbatch
     Modified:   code/sceptre_analysis.R
 
@@ -562,6 +577,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2aae326df19149488c4956af35a4d2c826bd67ee/analysis/check_gsfa_deg_exp.Rmd" target="_blank">2aae326</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+updated figure legend
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/cf9232cb0071ab928935139a66d179ab58d75f9b/docs/check_gsfa_deg_exp.html" target="_blank">cf9232c</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-31
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/b709053944fa906ac0f4444f606dd7eb94cca831/analysis/check_gsfa_deg_exp.Rmd" target="_blank">b709053</a>
 </td>
 <td>
@@ -583,7 +632,8 @@ checked the distribution of DEGs by expression bins
 </div>
 <div id="load-necessary-packages-and-data" class="section level2">
 <h2>Load necessary packages and data</h2>
-<pre class="r"><code>library(data.table)
+<pre class="r"><code>library(Seurat)
+library(data.table)
 library(Matrix)
 library(tidyverse)
 library(ggplot2)
@@ -598,7 +648,7 @@ library(gridExtra)
 library(ComplexHeatmap)
 library(kableExtra)
 library(WebGestaltR)
-
+library(GSFA)
 source(&quot;/project2/xinhe/yifan/Factor_analysis/analysis_website_for_Kevin/scripts/plotting_functions.R&quot;)</code></pre>
 <p>Set directories</p>
 <pre class="r"><code>res_dir &lt;- &quot;/project2/xinhe/kevinluo/GSFA/DEGs_by_expression_level&quot;
@@ -606,27 +656,42 @@ dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)</code></pre>
 </div>
 <div id="luhmes-data" class="section level1">
 <h1>LUHMES data</h1>
-<p>Load processed gene expression matrix</p>
-<pre class="r"><code>data_folder &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/LUHMES/&quot;
-scaled.gene_exp &lt;- readRDS(paste0(data_folder,&quot;processed_data/deviance_residual.merged_top_6k.corrected_4.scaled.rds&quot;))</code></pre>
+<p>Load raw gene expression data</p>
+<pre class="r"><code>combined_obj &lt;- readRDS(&quot;/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds&quot;)
+dim(combined_obj)</code></pre>
+<pre><code>[1] 33694  8708</code></pre>
+<p>Normalizing the data by log2 CPM</p>
+<pre class="r"><code>combined_obj &lt;- NormalizeData(combined_obj, scale.factor = 1e6)
+log2cpm_exp_mat &lt;- GetAssayData(combined_obj) / log(2)
+
+dim(log2cpm_exp_mat)</code></pre>
+<pre><code>[1] 33694  8708</code></pre>
+<p>Select the 6k genes used for GSFA in this analysis</p>
+<pre class="r"><code># Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA
+scaled_gene_matrix_in_gsfa &lt;- combined_obj@assays$RNA@scale.data
+selected_gene_ids &lt;- rownames(scaled_gene_matrix_in_gsfa)
+log2cpm_exp_mat &lt;- log2cpm_exp_mat[selected_gene_ids, ]
+dim(log2cpm_exp_mat)</code></pre>
+<pre><code>[1] 6000 8708</code></pre>
 <p>Load GSFA result</p>
-<pre class="r"><code>fit &lt;- readRDS(paste0(data_folder,
+<pre class="r"><code>data_folder &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/LUHMES/&quot;
+fit &lt;- readRDS(paste0(data_folder,
                       &quot;gsfa_output_detect_01/use_negctrl/All.gibbs_obj_k20.svd_negctrl.seed_14314.light.rds&quot;))
 gibbs_PM &lt;- fit$posterior_means
 lfsr_mat &lt;- fit$lfsr[, -ncol(fit$lfsr)]
 total_effect &lt;- fit$total_effect[, -ncol(fit$total_effect)]
 KO_names &lt;- colnames(lfsr_mat)
 guides &lt;- KO_names[KO_names!=&quot;Nontargeting&quot;]</code></pre>
-<pre class="r"><code>if(!all.equal(rownames(lfsr_mat), rownames(scaled.gene_exp))){stop(&quot;Gene names not match!&quot;)}
+<pre class="r"><code>if(!all.equal(rownames(lfsr_mat), rownames(log2cpm_exp_mat))){stop(&quot;Gene names not match!&quot;)}
 
-mean_gene_exp &lt;- rowMeans(scaled.gene_exp)
+mean_gene_exp &lt;- rowMeans(log2cpm_exp_mat)
 exp_breaks &lt;- quantile(mean_gene_exp, probs = seq(0,1,0.2))
 gene_exp_bins &lt;- cut(mean_gene_exp, breaks = exp_breaks, labels = 1:5)
 gene_exp_bins[is.na(gene_exp_bins)] &lt;- 1
-gene_exp_bins.df &lt;- data.frame(geneID = rownames(scaled.gene_exp), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
-table(gene_exp_bins.df$exp_bin)</code></pre>
-<p>1 2 3 4 5 1200 1200 1200 1200 1200</p>
-<pre class="r"><code>lfsr_signif_num_bins &lt;- data.frame()
+gene_exp_bins.df &lt;- data.frame(geneID = rownames(log2cpm_exp_mat), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
+table(gene_exp_bins.df$exp_bin)
+
+lfsr_signif_num_bins &lt;- data.frame()
 for(l in 1:5){
   curr_genes &lt;- gene_exp_bins.df[gene_exp_bins.df$exp_bin == l, ]$geneID
   cat(length(curr_genes), &quot;genes in bin&quot;, l, &quot;\n&quot;)
@@ -634,19 +699,17 @@ for(l in 1:5){
   curr_lfsr_signif_num &lt;- colSums(curr_lfsr_mat &lt; 0.05)
   lfsr_signif_num_bins &lt;- rbind(lfsr_signif_num_bins, 
                                 c(bin = l, curr_lfsr_signif_num))
-}</code></pre>
-<p>1200 genes in bin 1 1200 genes in bin 2 1200 genes in bin 3 1200 genes in bin 4 1200 genes in bin 5</p>
-<pre class="r"><code>colnames(lfsr_signif_num_bins) &lt;- c(&quot;bin&quot;, colnames(lfsr_mat))
+}
+colnames(lfsr_signif_num_bins) &lt;- c(&quot;bin&quot;, colnames(lfsr_mat))
 
-lfsr_signif_num_bins.df &lt;- tidyr::gather(lfsr_signif_num_bins[,c(&quot;bin&quot;, guides)], guide, num_genes, guides, factor_key=TRUE)
-lfsr_signif_num_bins.df$bin &lt;- factor(lfsr_signif_num_bins.df$bin, levels = 5:1, 
-                                      labels = c(&quot;highest&quot;, &quot;mid-high&quot;, &quot;mid&quot;, &quot;low-mid&quot;, &quot;lowest&quot;))
-
+lfsr_signif_num_bins.df &lt;- tidyr::gather(lfsr_signif_num_bins[,c(&quot;bin&quot;, guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
+lfsr_signif_num_bins.df$bin &lt;- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
+                                      labels = c(&quot;[0-20%]&quot;, &quot;[20-40%]&quot;, &quot;[40-60%]&quot;, &quot;[60-80%]&quot;, &quot;[80-100%]&quot;))
 # pdf(file.path(res_dir, &quot;LUHMES_stimulated_lfsr_signif_num_by_exp_bins.pdf&quot;), width = 14, height = 3)
 ggplot(lfsr_signif_num_bins.df, aes(x=guide, y=num_genes, fill=bin)) + 
   geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) +
-  scale_fill_brewer(palette = &quot;Greens&quot;) + 
-  guides(fill=guide_legend(title=&quot;Gene expression level&quot;)) +
+  scale_fill_brewer(palette = &quot;Blues&quot;) + 
+  guides(fill=guide_legend(title=&quot;Gene expression (log2 CPM) percentile&quot;)) +
   labs(x = &quot;Target genes&quot;,
        y = &quot;Number of DEGs&quot;,
        title = &quot;Number of DEGs detected by gene expression level&quot;) +
@@ -654,15 +717,93 @@ ggplot(lfsr_signif_num_bins.df, aes(x=guide, y=num_genes, fill=bin)) +
         legend.position = &quot;right&quot;,
         legend.text = element_text(size = 13))</code></pre>
 <p><img src="figure/check_gsfa_deg_exp.Rmd/LUHMES-num-deg-exp-levels-1.png" width="1248" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-LUHMES-num-deg-exp-levels-1">
+Past versions of LUHMES-num-deg-exp-levels-1.png
+</button>
+</p>
+<div id="fig-LUHMES-num-deg-exp-levels-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/cf9232cb0071ab928935139a66d179ab58d75f9b/docs/figure/check_gsfa_deg_exp.Rmd/LUHMES-num-deg-exp-levels-1.png" target="_blank">cf9232c</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
+<pre><code>
+   1    2    3    4    5 
+1200 1200 1200 1200 1200 
+1200 genes in bin 1 
+1200 genes in bin 2 
+1200 genes in bin 3 
+1200 genes in bin 4 
+1200 genes in bin 5 </code></pre>
 </div>
 <div id="t-cells-data" class="section level1">
 <h1>T cells data</h1>
-<p>Load processed gene expression matrix</p>
-<pre class="r"><code>data_folder &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/&quot;
-scaled.gene_exp &lt;- readRDS(paste0(data_folder,&quot;processed_data/deviance_residual.all_T_cells_merged_top_6k.batch_uncorrected.rds&quot;))</code></pre>
+<p>Load input data</p>
+<pre class="r"><code>combined_obj &lt;- readRDS(&#39;/project2/xinhe/yifan/Factor_analysis/shared_data/TCells_cropseq_data_seurat.rds&#39;)</code></pre>
+<p>Extract data for stimulated cells</p>
+<pre class="r"><code>metadata &lt;- combined_obj@meta.data
+table(metadata$orig.ident)
+
+combined_obj@meta.data$condition &lt;- &quot;unstimulated&quot;
+combined_obj@meta.data$condition[which(endsWith(combined_obj@meta.data$orig.ident, &quot;S&quot;))] &lt;- &quot;stimulated&quot;
+
+combined_obj &lt;- subset(combined_obj, subset = condition == &quot;stimulated&quot;)
+combined_obj
+table(combined_obj@meta.data$orig.ident)
+
+dim(combined_obj)</code></pre>
+<pre><code>
+TCells_D1N TCells_D1S TCells_D2N TCells_D2S 
+      5533       6843       5144       7435 
+An object of class Seurat 
+33694 features across 14278 samples within 1 assay 
+Active assay: RNA (33694 features, 1000 variable features)
+ 2 dimensional reductions calculated: pca, umap
+
+TCells_D1S TCells_D2S 
+      6843       7435 
+[1] 33694 14278</code></pre>
+<p>Normalizing the data</p>
+<pre class="r"><code>combined_obj &lt;- NormalizeData(combined_obj, scale.factor = 1e6)
+log2cpm_exp_mat &lt;- GetAssayData(combined_obj) / log(2)</code></pre>
+<p>Select the 6k genes used for GSFA in this analysis</p>
+<pre class="r"><code># Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA
+scaled_gene_matrix_in_gsfa &lt;- combined_obj@assays$RNA@scale.data
+selected_gene_ids &lt;- rownames(scaled_gene_matrix_in_gsfa)
+log2cpm_exp_mat &lt;- log2cpm_exp_mat[selected_gene_ids, ]
+dim(log2cpm_exp_mat)</code></pre>
+<pre><code>[1]  6000 14278</code></pre>
 <p>Load GSFA result</p>
-<pre class="r"><code>fit &lt;- readRDS(paste0(data_folder,
+<pre class="r"><code>data_folder &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/&quot;
+fit &lt;- readRDS(paste0(data_folder,
                       &quot;gsfa_output_detect_01/all_uncorrected_by_group.use_negctrl/All.gibbs_obj_k20.svd_negctrl.restart.light.rds&quot;))
 gibbs_PM &lt;- fit$posterior_means
 lfsr_mat1 &lt;- fit$lfsr1[, -ncol(fit$lfsr1)]
@@ -673,16 +814,16 @@ KO_names &lt;- colnames(lfsr_mat1)
 guides &lt;- KO_names[KO_names!=&quot;NonTarget&quot;]</code></pre>
 <pre class="r"><code>lfsr_mat &lt;- lfsr_mat1
 
-if(!all.equal(rownames(lfsr_mat), rownames(scaled.gene_exp))){stop(&quot;Gene names not match!&quot;)}
+if(!all.equal(rownames(lfsr_mat), rownames(log2cpm_exp_mat))){stop(&quot;Gene names not match!&quot;)}
 
-mean_gene_exp &lt;- rowMeans(scaled.gene_exp)
+mean_gene_exp &lt;- rowMeans(log2cpm_exp_mat)
 exp_breaks &lt;- quantile(mean_gene_exp, probs = seq(0,1,0.2))
 gene_exp_bins &lt;- cut(mean_gene_exp, breaks = exp_breaks, labels = 1:5)
 gene_exp_bins[is.na(gene_exp_bins)] &lt;- 1
-gene_exp_bins.df &lt;- data.frame(geneID = rownames(scaled.gene_exp), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
-table(gene_exp_bins.df$exp_bin)</code></pre>
-<p>1 2 3 4 5 1200 1200 1200 1200 1200</p>
-<pre class="r"><code>lfsr_signif_num_bins &lt;- data.frame()
+gene_exp_bins.df &lt;- data.frame(geneID = rownames(log2cpm_exp_mat), mean_exp = mean_gene_exp, exp_bin = gene_exp_bins)
+table(gene_exp_bins.df$exp_bin)
+
+lfsr_signif_num_bins &lt;- data.frame()
 for(l in 1:5){
   curr_genes &lt;- gene_exp_bins.df[gene_exp_bins.df$exp_bin == l, ]$geneID
   cat(length(curr_genes), &quot;genes in bin&quot;, l, &quot;\n&quot;)
@@ -690,19 +831,18 @@ for(l in 1:5){
   curr_lfsr_signif_num &lt;- colSums(curr_lfsr_mat &lt; 0.05)
   lfsr_signif_num_bins &lt;- rbind(lfsr_signif_num_bins, 
                                 c(bin = l, curr_lfsr_signif_num))
-}</code></pre>
-<p>1200 genes in bin 1 1200 genes in bin 2 1200 genes in bin 3 1200 genes in bin 4 1200 genes in bin 5</p>
-<pre class="r"><code>colnames(lfsr_signif_num_bins) &lt;- c(&quot;bin&quot;, colnames(lfsr_mat))
+}
+colnames(lfsr_signif_num_bins) &lt;- c(&quot;bin&quot;, colnames(lfsr_mat))
 
-lfsr_signif_num_bins.df &lt;- tidyr::gather(lfsr_signif_num_bins[,c(&quot;bin&quot;, guides)], guide, num_genes, guides, factor_key=TRUE)
-lfsr_signif_num_bins.df$bin &lt;- factor(lfsr_signif_num_bins.df$bin, levels = 5:1, 
-                                      labels = c(&quot;highest&quot;, &quot;mid-high&quot;, &quot;mid&quot;, &quot;low-mid&quot;, &quot;lowest&quot;))
+lfsr_signif_num_bins.df &lt;- tidyr::gather(lfsr_signif_num_bins[,c(&quot;bin&quot;, guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
+lfsr_signif_num_bins.df$bin &lt;- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
+                                      labels = c(&quot;[0-20%]&quot;, &quot;[20-40%]&quot;, &quot;[40-60%]&quot;, &quot;[60-80%]&quot;, &quot;[80-100%]&quot;))
 
 # pdf(file.path(res_dir, &quot;Tcells_stimulated_lfsr_signif_num_by_exp_bins.pdf&quot;), width = 14, height = 3)
 ggplot(lfsr_signif_num_bins.df, aes(x=guide, y=num_genes, fill=bin)) + 
   geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) +
-  scale_fill_brewer(palette = &quot;Greens&quot;) + 
-  guides(fill=guide_legend(title=&quot;Gene expression level&quot;)) +
+  scale_fill_brewer(palette = &quot;Blues&quot;) + 
+  guides(fill=guide_legend(title=&quot;Gene expression (log2 CPM) percentile&quot;)) +
   labs(x = &quot;Target genes&quot;,
        y = &quot;Number of DEGs&quot;,
        title = &quot;Number of DEGs detected by gene expression level&quot;) +
@@ -710,7 +850,52 @@ ggplot(lfsr_signif_num_bins.df, aes(x=guide, y=num_genes, fill=bin)) +
         legend.position = &quot;right&quot;,
         legend.text = element_text(size = 13))</code></pre>
 <p><img src="figure/check_gsfa_deg_exp.Rmd/Tcells-stimulated-num-deg-exp-levels-1.png" width="1248" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Tcells-stimulated-num-deg-exp-levels-1">
+Past versions of Tcells-stimulated-num-deg-exp-levels-1.png
+</button>
+</p>
+<div id="fig-Tcells-stimulated-num-deg-exp-levels-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/cf9232cb0071ab928935139a66d179ab58d75f9b/docs/figure/check_gsfa_deg_exp.Rmd/Tcells-stimulated-num-deg-exp-levels-1.png" target="_blank">cf9232c</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-08-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># dev.off()</code></pre>
+<pre><code>
+   1    2    3    4    5 
+1200 1200 1200 1200 1200 
+1200 genes in bin 1 
+1200 genes in bin 2 
+1200 genes in bin 3 
+1200 genes in bin 4 
+1200 genes in bin 5 </code></pre>
 </div>
 <div id="session-information" class="section level1">
 <h1>Session Information</h1>
@@ -735,46 +920,64 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] lattice_0.20-45      WebGestaltR_0.4.4    kableExtra_1.3.4    
- [4] ComplexHeatmap_2.6.2 gridExtra_2.3        forcats_0.5.1       
- [7] stringr_1.4.0        dplyr_1.0.8          purrr_0.3.4         
-[10] readr_2.1.2          tidyr_1.2.0          tibble_3.1.6        
-[13] ggplot2_3.3.5        tidyverse_1.3.1      Matrix_1.4-1        
-[16] data.table_1.14.2    workflowr_1.7.0     
+ [1] lattice_0.20-45      GSFA_0.2.8           WebGestaltR_0.4.4   
+ [4] kableExtra_1.3.4     ComplexHeatmap_2.6.2 gridExtra_2.3       
+ [7] forcats_0.5.1        stringr_1.4.0        dplyr_1.0.8         
+[10] purrr_0.3.4          readr_2.1.2          tidyr_1.2.0         
+[13] tibble_3.1.6         ggplot2_3.3.5        tidyverse_1.3.1     
+[16] Matrix_1.4-1         data.table_1.14.2    SeuratObject_4.0.4  
+[19] Seurat_4.1.0         workflowr_1.7.0     
 
 loaded via a namespace (and not attached):
- [1] matrixStats_0.62.0  fs_1.5.2            lubridate_1.8.0    
- [4] doParallel_1.0.17   webshot_0.5.2       RColorBrewer_1.1-3 
- [7] httr_1.4.2          rprojroot_2.0.2     doRNG_1.8.2        
-[10] tools_4.0.4         backports_1.4.1     bslib_0.3.1        
-[13] utf8_1.2.2          R6_2.5.1            DBI_1.1.3          
-[16] BiocGenerics_0.36.1 colorspace_2.0-3    GetoptLong_1.0.5   
-[19] withr_2.5.0         tidyselect_1.1.2    processx_3.5.3     
-[22] compiler_4.0.4      git2r_0.30.1        cli_3.3.0          
-[25] rvest_1.0.2         Cairo_1.6-0         xml2_1.3.3         
-[28] labeling_0.4.2      sass_0.4.1          scales_1.2.0       
-[31] callr_3.7.0         apcluster_1.4.10    systemfonts_1.0.4  
-[34] digest_0.6.29       svglite_2.0.0       rmarkdown_2.13     
-[37] pkgconfig_2.0.3     htmltools_0.5.3     highr_0.9          
-[40] dbplyr_2.1.1        fastmap_1.1.0       rlang_1.0.4        
-[43] GlobalOptions_0.1.2 readxl_1.4.0        rstudioapi_0.13    
-[46] farver_2.1.1        shape_1.4.6         jquerylib_0.1.4    
-[49] generics_0.1.3      jsonlite_1.8.0      magrittr_2.0.3     
-[52] Rcpp_1.0.9          munsell_0.5.0       S4Vectors_0.28.1   
-[55] fansi_1.0.3         lifecycle_1.0.1     stringi_1.7.6      
-[58] whisker_0.4         yaml_2.3.5          parallel_4.0.4     
-[61] promises_1.2.0.1    crayon_1.5.1        haven_2.5.0        
-[64] pander_0.6.5        circlize_0.4.15     hms_1.1.1          
-[67] knitr_1.38          ps_1.7.1            pillar_1.8.0       
-[70] igraph_1.3.4        rjson_0.2.21        rngtools_1.5.2     
-[73] codetools_0.2-18    stats4_4.0.4        reprex_2.0.1       
-[76] glue_1.6.2          evaluate_0.16       getPass_0.2-2      
-[79] modelr_0.1.8        foreach_1.5.2       png_0.1-7          
-[82] vctrs_0.4.1         tzdb_0.3.0          httpuv_1.6.5       
-[85] cellranger_1.1.0    gtable_0.3.0        clue_0.3-60        
-[88] assertthat_0.2.1    xfun_0.30           broom_0.8.0        
-[91] later_1.3.0         viridisLite_0.4.0   iterators_1.0.14   
-[94] IRanges_2.24.1      cluster_2.1.3       ellipsis_0.3.2     </code></pre>
+  [1] utf8_1.2.2            reticulate_1.25       tidyselect_1.1.2     
+  [4] htmlwidgets_1.5.4     Rtsne_0.15            munsell_0.5.0        
+  [7] codetools_0.2-18      ica_1.0-2             future_1.24.0        
+ [10] miniUI_0.1.1.1        withr_2.5.0           spatstat.random_2.1-0
+ [13] colorspace_2.0-3      highr_0.9             knitr_1.38           
+ [16] rstudioapi_0.13       stats4_4.0.4          ROCR_1.0-11          
+ [19] tensor_1.5            listenv_0.8.0         labeling_0.4.2       
+ [22] git2r_0.30.1          polyclip_1.10-0       farver_2.1.1         
+ [25] rprojroot_2.0.2       parallelly_1.32.1     vctrs_0.4.1          
+ [28] generics_0.1.3        xfun_0.30             R6_2.5.1             
+ [31] doParallel_1.0.17     clue_0.3-60           spatstat.utils_2.3-0 
+ [34] assertthat_0.2.1      promises_1.2.0.1      scales_1.2.0         
+ [37] gtable_0.3.0          Cairo_1.6-0           globals_0.16.0       
+ [40] processx_3.5.3        goftest_1.2-3         rlang_1.0.4          
+ [43] systemfonts_1.0.4     GlobalOptions_0.1.2   splines_4.0.4        
+ [46] lazyeval_0.2.2        spatstat.geom_2.3-2   broom_0.8.0          
+ [49] yaml_2.3.5            reshape2_1.4.4        abind_1.4-5          
+ [52] modelr_0.1.8          backports_1.4.1       httpuv_1.6.5         
+ [55] tools_4.0.4           ellipsis_0.3.2        spatstat.core_2.4-0  
+ [58] jquerylib_0.1.4       RColorBrewer_1.1-3    BiocGenerics_0.36.1  
+ [61] ggridges_0.5.3        Rcpp_1.0.9            plyr_1.8.6           
+ [64] ps_1.7.1              rpart_4.1-15          deldir_1.0-6         
+ [67] pbapply_1.5-0         GetoptLong_1.0.5      cowplot_1.1.1        
+ [70] S4Vectors_0.28.1      zoo_1.8-9             haven_2.5.0          
+ [73] ggrepel_0.9.1         cluster_2.1.3         fs_1.5.2             
+ [76] apcluster_1.4.10      magrittr_2.0.3        scattermore_0.7      
+ [79] circlize_0.4.15       lmtest_0.9-40         reprex_2.0.1         
+ [82] RANN_2.6.1            whisker_0.4           fitdistrplus_1.1-8   
+ [85] matrixStats_0.62.0    hms_1.1.1             patchwork_1.1.1      
+ [88] mime_0.12             evaluate_0.16         xtable_1.8-4         
+ [91] readxl_1.4.0          IRanges_2.24.1        shape_1.4.6          
+ [94] compiler_4.0.4        KernSmooth_2.23-20    crayon_1.5.1         
+ [97] htmltools_0.5.3       mgcv_1.8-39           later_1.3.0          
+[100] tzdb_0.3.0            lubridate_1.8.0       DBI_1.1.3            
+[103] dbplyr_2.1.1          MASS_7.3-58.1         cli_3.3.0            
+[106] parallel_4.0.4        igraph_1.3.4          pkgconfig_2.0.3      
+[109] getPass_0.2-2         plotly_4.10.0         spatstat.sparse_2.1-0
+[112] xml2_1.3.3            foreach_1.5.2         svglite_2.0.0        
+[115] bslib_0.3.1           rngtools_1.5.2        webshot_0.5.2        
+[118] rvest_1.0.2           doRNG_1.8.2           callr_3.7.0          
+[121] digest_0.6.29         sctransform_0.3.3     RcppAnnoy_0.0.19     
+[124] spatstat.data_2.1-2   rmarkdown_2.13        cellranger_1.1.0     
+[127] leiden_0.3.9          uwot_0.1.11           shiny_1.7.1          
+[130] rjson_0.2.21          lifecycle_1.0.1       nlme_3.1-159         
+[133] jsonlite_1.8.0        viridisLite_0.4.0     fansi_1.0.3          
+[136] pillar_1.8.0          fastmap_1.1.0         httr_1.4.2           
+[139] survival_3.3-1        glue_1.6.2            png_0.1-7            
+[142] iterators_1.0.14      stringi_1.7.6         sass_0.4.1           
+[145] irlba_2.3.5           future.apply_1.8.1   </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -783,53 +986,84 @@ loaded via a namespace (and not attached):
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<p>R version 4.0.4 (2021-02-15) Platform: x86_64-pc-linux-gnu (64-bit) Running under: Scientific Linux 7.4 (Nitrogen)</p>
-<p>Matrix products: default BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so</p>
-<p>locale: [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C<br />
-[3] LC_TIME=en_US.UTF-8 LC_COLLATE=en_US.UTF-8<br />
-[5] LC_MONETARY=en_US.UTF-8 LC_MESSAGES=en_US.UTF-8<br />
-[7] LC_PAPER=en_US.UTF-8 LC_NAME=C<br />
-[9] LC_ADDRESS=C LC_TELEPHONE=C<br />
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C</p>
-<p>attached base packages: [1] grid stats graphics grDevices utils datasets methods<br />
-[8] base</p>
-<p>other attached packages: [1] lattice_0.20-45 WebGestaltR_0.4.4 kableExtra_1.3.4<br />
-[4] ComplexHeatmap_2.6.2 gridExtra_2.3 forcats_0.5.1<br />
-[7] stringr_1.4.0 dplyr_1.0.8 purrr_0.3.4<br />
-[10] readr_2.1.2 tidyr_1.2.0 tibble_3.1.6<br />
-[13] ggplot2_3.3.5 tidyverse_1.3.1 Matrix_1.4-1<br />
-[16] data.table_1.14.2 workflowr_1.7.0</p>
-<p>loaded via a namespace (and not attached): [1] matrixStats_0.62.0 fs_1.5.2 lubridate_1.8.0<br />
-[4] doParallel_1.0.17 webshot_0.5.2 RColorBrewer_1.1-3 [7] httr_1.4.2 rprojroot_2.0.2 doRNG_1.8.2<br />
-[10] tools_4.0.4 backports_1.4.1 bslib_0.3.1<br />
-[13] utf8_1.2.2 R6_2.5.1 DBI_1.1.3<br />
-[16] BiocGenerics_0.36.1 colorspace_2.0-3 GetoptLong_1.0.5<br />
-[19] withr_2.5.0 tidyselect_1.1.2 processx_3.5.3<br />
-[22] compiler_4.0.4 git2r_0.30.1 cli_3.3.0<br />
-[25] rvest_1.0.2 Cairo_1.6-0 xml2_1.3.3<br />
-[28] labeling_0.4.2 sass_0.4.1 scales_1.2.0<br />
-[31] callr_3.7.0 apcluster_1.4.10 systemfonts_1.0.4<br />
-[34] digest_0.6.29 svglite_2.0.0 rmarkdown_2.13<br />
-[37] pkgconfig_2.0.3 htmltools_0.5.3 highr_0.9<br />
-[40] dbplyr_2.1.1 fastmap_1.1.0 rlang_1.0.4<br />
-[43] GlobalOptions_0.1.2 readxl_1.4.0 rstudioapi_0.13<br />
-[46] farver_2.1.1 shape_1.4.6 jquerylib_0.1.4<br />
-[49] generics_0.1.3 jsonlite_1.8.0 magrittr_2.0.3<br />
-[52] Rcpp_1.0.9 munsell_0.5.0 S4Vectors_0.28.1<br />
-[55] fansi_1.0.3 lifecycle_1.0.1 stringi_1.7.6<br />
-[58] whisker_0.4 yaml_2.3.5 parallel_4.0.4<br />
-[61] promises_1.2.0.1 crayon_1.5.1 haven_2.5.0<br />
-[64] pander_0.6.5 circlize_0.4.15 hms_1.1.1<br />
-[67] knitr_1.38 ps_1.7.1 pillar_1.8.0<br />
-[70] igraph_1.3.4 rjson_0.2.21 rngtools_1.5.2<br />
-[73] codetools_0.2-18 stats4_4.0.4 reprex_2.0.1<br />
-[76] glue_1.6.2 evaluate_0.16 getPass_0.2-2<br />
-[79] modelr_0.1.8 foreach_1.5.2 png_0.1-7<br />
-[82] vctrs_0.4.1 tzdb_0.3.0 httpuv_1.6.5<br />
-[85] cellranger_1.1.0 gtable_0.3.0 clue_0.3-60<br />
-[88] assertthat_0.2.1 xfun_0.30 broom_0.8.0<br />
-[91] later_1.3.0 viridisLite_0.4.0 iterators_1.0.14<br />
-[94] IRanges_2.24.1 cluster_2.1.3 ellipsis_0.3.2</p>
+<pre><code>R version 4.0.4 (2021-02-15)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] grid      stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] lattice_0.20-45      GSFA_0.2.8           WebGestaltR_0.4.4   
+ [4] kableExtra_1.3.4     ComplexHeatmap_2.6.2 gridExtra_2.3       
+ [7] forcats_0.5.1        stringr_1.4.0        dplyr_1.0.8         
+[10] purrr_0.3.4          readr_2.1.2          tidyr_1.2.0         
+[13] tibble_3.1.6         ggplot2_3.3.5        tidyverse_1.3.1     
+[16] Matrix_1.4-1         data.table_1.14.2    SeuratObject_4.0.4  
+[19] Seurat_4.1.0         workflowr_1.7.0     
+
+loaded via a namespace (and not attached):
+  [1] utf8_1.2.2            reticulate_1.25       tidyselect_1.1.2     
+  [4] htmlwidgets_1.5.4     Rtsne_0.15            munsell_0.5.0        
+  [7] codetools_0.2-18      ica_1.0-2             future_1.24.0        
+ [10] miniUI_0.1.1.1        withr_2.5.0           spatstat.random_2.1-0
+ [13] colorspace_2.0-3      highr_0.9             knitr_1.38           
+ [16] rstudioapi_0.13       stats4_4.0.4          ROCR_1.0-11          
+ [19] tensor_1.5            listenv_0.8.0         labeling_0.4.2       
+ [22] git2r_0.30.1          polyclip_1.10-0       farver_2.1.1         
+ [25] rprojroot_2.0.2       parallelly_1.32.1     vctrs_0.4.1          
+ [28] generics_0.1.3        xfun_0.30             R6_2.5.1             
+ [31] doParallel_1.0.17     clue_0.3-60           spatstat.utils_2.3-0 
+ [34] assertthat_0.2.1      promises_1.2.0.1      scales_1.2.0         
+ [37] gtable_0.3.0          Cairo_1.6-0           globals_0.16.0       
+ [40] processx_3.5.3        goftest_1.2-3         rlang_1.0.4          
+ [43] systemfonts_1.0.4     GlobalOptions_0.1.2   splines_4.0.4        
+ [46] lazyeval_0.2.2        spatstat.geom_2.3-2   broom_0.8.0          
+ [49] yaml_2.3.5            reshape2_1.4.4        abind_1.4-5          
+ [52] modelr_0.1.8          backports_1.4.1       httpuv_1.6.5         
+ [55] tools_4.0.4           ellipsis_0.3.2        spatstat.core_2.4-0  
+ [58] jquerylib_0.1.4       RColorBrewer_1.1-3    BiocGenerics_0.36.1  
+ [61] ggridges_0.5.3        Rcpp_1.0.9            plyr_1.8.6           
+ [64] ps_1.7.1              rpart_4.1-15          deldir_1.0-6         
+ [67] pbapply_1.5-0         GetoptLong_1.0.5      cowplot_1.1.1        
+ [70] S4Vectors_0.28.1      zoo_1.8-9             haven_2.5.0          
+ [73] ggrepel_0.9.1         cluster_2.1.3         fs_1.5.2             
+ [76] apcluster_1.4.10      magrittr_2.0.3        scattermore_0.7      
+ [79] circlize_0.4.15       lmtest_0.9-40         reprex_2.0.1         
+ [82] RANN_2.6.1            whisker_0.4           fitdistrplus_1.1-8   
+ [85] matrixStats_0.62.0    hms_1.1.1             patchwork_1.1.1      
+ [88] mime_0.12             evaluate_0.16         xtable_1.8-4         
+ [91] readxl_1.4.0          IRanges_2.24.1        shape_1.4.6          
+ [94] compiler_4.0.4        KernSmooth_2.23-20    crayon_1.5.1         
+ [97] htmltools_0.5.3       mgcv_1.8-39           later_1.3.0          
+[100] tzdb_0.3.0            lubridate_1.8.0       DBI_1.1.3            
+[103] dbplyr_2.1.1          MASS_7.3-58.1         cli_3.3.0            
+[106] parallel_4.0.4        igraph_1.3.4          pkgconfig_2.0.3      
+[109] getPass_0.2-2         plotly_4.10.0         spatstat.sparse_2.1-0
+[112] xml2_1.3.3            foreach_1.5.2         svglite_2.0.0        
+[115] bslib_0.3.1           rngtools_1.5.2        webshot_0.5.2        
+[118] rvest_1.0.2           doRNG_1.8.2           callr_3.7.0          
+[121] digest_0.6.29         sctransform_0.3.3     RcppAnnoy_0.0.19     
+[124] spatstat.data_2.1-2   rmarkdown_2.13        cellranger_1.1.0     
+[127] leiden_0.3.9          uwot_0.1.11           shiny_1.7.1          
+[130] rjson_0.2.21          lifecycle_1.0.1       nlme_3.1-159         
+[133] jsonlite_1.8.0        viridisLite_0.4.0     fansi_1.0.3          
+[136] pillar_1.8.0          fastmap_1.1.0         httr_1.4.2           
+[139] survival_3.3-1        glue_1.6.2            png_0.1-7            
+[142] iterators_1.0.14      stringi_1.7.6         sass_0.4.1           
+[145] irlba_2.3.5           future.apply_1.8.1   </code></pre>
 </div>
 </div>
 
@@ -880,6 +1114,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
