@@ -481,16 +481,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2aae326df19149488c4956af35a4d2c826bd67eetargetblank2aae326a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2aae326df19149488c4956af35a4d2c826bd67ee" target="_blank">2aae326</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreef255236cea0e3e6e6b6b046fdec6011beef98fbdtargetblankf255236a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/f255236cea0e3e6e6b6b046fdec6011beef98fbd" target="_blank">f255236</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2aae326df19149488c4956af35a4d2c826bd67eetargetblank2aae326a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreef255236cea0e3e6e6b6b046fdec6011beef98fbdtargetblankf255236a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/2aae326df19149488c4956af35a4d2c826bd67ee" target="_blank">2aae326</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/f255236cea0e3e6e6b6b046fdec6011beef98fbd" target="_blank">f255236</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -572,6 +572,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/f255236cea0e3e6e6b6b046fdec6011beef98fbd/analysis/check_gsfa_deg_exp.Rmd" target="_blank">f255236</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+added total number of DEGs
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/b60cbfde9ea1875edc1a2991edd794ae8091a6e8/docs/check_gsfa_deg_exp.html" target="_blank">b60cbfd</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -702,6 +736,9 @@ for(l in 1:5){
 }
 colnames(lfsr_signif_num_bins) &lt;- c(&quot;bin&quot;, colnames(lfsr_mat))
 
+cat(&quot;Total number of DEGs: \n&quot;)
+colSums(lfsr_signif_num_bins[,guides])
+
 lfsr_signif_num_bins.df &lt;- tidyr::gather(lfsr_signif_num_bins[,c(&quot;bin&quot;, guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
 lfsr_signif_num_bins.df$bin &lt;- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
                                       labels = c(&quot;[0-20%]&quot;, &quot;[20-40%]&quot;, &quot;[40-60%]&quot;, &quot;[60-80%]&quot;, &quot;[80-100%]&quot;))
@@ -741,6 +778,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/b60cbfde9ea1875edc1a2991edd794ae8091a6e8/docs/figure/check_gsfa_deg_exp.Rmd/LUHMES-num-deg-exp-levels-1.png" target="_blank">b60cbfd</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/cf9232cb0071ab928935139a66d179ab58d75f9b/docs/figure/check_gsfa_deg_exp.Rmd/LUHMES-num-deg-exp-levels-1.png" target="_blank">cf9232c</a>
 </td>
 <td>
@@ -762,7 +810,12 @@ kevinlkx
 1200 genes in bin 2 
 1200 genes in bin 3 
 1200 genes in bin 4 
-1200 genes in bin 5 </code></pre>
+1200 genes in bin 5 
+Total number of DEGs: 
+  ADNP ARID1B  ASH1L   CHD2   CHD8 CTNND2 DYRK1A  HDAC5  MECP2  MYT1L   POGZ 
+   795    310    322    756      0      0     23      0      0      0      0 
+  PTEN   RELN  SETD5 
+   895      0    466 </code></pre>
 </div>
 <div id="t-cells-data" class="section level1">
 <h1>T cells data</h1>
@@ -834,6 +887,9 @@ for(l in 1:5){
 }
 colnames(lfsr_signif_num_bins) &lt;- c(&quot;bin&quot;, colnames(lfsr_mat))
 
+cat(&quot;Total number of DEGs: \n&quot;)
+colSums(lfsr_signif_num_bins[,guides])
+ 
 lfsr_signif_num_bins.df &lt;- tidyr::gather(lfsr_signif_num_bins[,c(&quot;bin&quot;, guides)], guide, num_genes, all_of(guides), factor_key=TRUE)
 lfsr_signif_num_bins.df$bin &lt;- factor(lfsr_signif_num_bins.df$bin, levels = 1:5, 
                                       labels = c(&quot;[0-20%]&quot;, &quot;[20-40%]&quot;, &quot;[40-60%]&quot;, &quot;[60-80%]&quot;, &quot;[80-100%]&quot;))
@@ -874,6 +930,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/b60cbfde9ea1875edc1a2991edd794ae8091a6e8/docs/figure/check_gsfa_deg_exp.Rmd/Tcells-stimulated-num-deg-exp-levels-1.png" target="_blank">b60cbfd</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/cf9232cb0071ab928935139a66d179ab58d75f9b/docs/figure/check_gsfa_deg_exp.Rmd/Tcells-stimulated-num-deg-exp-levels-1.png" target="_blank">cf9232c</a>
 </td>
 <td>
@@ -895,7 +962,14 @@ kevinlkx
 1200 genes in bin 2 
 1200 genes in bin 3 
 1200 genes in bin 4 
-1200 genes in bin 5 </code></pre>
+1200 genes in bin 5 
+Total number of DEGs: 
+  ARID1A     BTLA C10orf54     CBLB     CD3D      CD5   CDKN1B     DGKA 
+     393      107       66      631        0      645      468       32 
+    DGKZ   HAVCR2     LAG3     LCP2    MEF2D    PDCD1    RASA2    SOCS1 
+     113       35        1      589       15        0      277      356 
+   STAT6    TCEB2  TMEM222  TNFRSF9 
+       1      300        4       14 </code></pre>
 </div>
 <div id="session-information" class="section level1">
 <h1>Session Information</h1>
