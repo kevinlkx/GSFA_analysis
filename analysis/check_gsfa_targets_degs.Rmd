@@ -22,13 +22,6 @@ library(data.table)
 library(Matrix)
 library(tidyverse)
 library(ggplot2)
-theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
-                             axis.title = element_text(size = 14),
-                             axis.text = element_text(size = 12),
-                             legend.title = element_text(size = 13),
-                             legend.text = element_text(size = 12),
-                             panel.grid.minor = element_blank())
-)
 library(gridExtra)
 library(ComplexHeatmap)
 library(kableExtra)
@@ -36,12 +29,6 @@ library(WebGestaltR)
 library(GSFA)
 library(DT)
 source("code/plotting_functions.R")
-```
-
-Set directories
-```{r dir}
-res_dir <- "/project2/xinhe/kevinluo/GSFA/DEGs_by_expression_level"
-dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)
 ```
 
 # LUHMES data
@@ -66,7 +53,6 @@ genes_df <- feature.names[match(rownames(lfsr_mat), feature.names$V1), ]
 names(genes_df) <- c("ID", "Name")
 ```
 
-
 Check the gene loadings to see if the targeted genes in any of the factors P(F) > 0.95?
 ```{r}
 F_pm <- gibbs_PM$F_pm
@@ -80,7 +66,6 @@ F_pm_guides_highpip <- ifelse(F_pm_guides > 0.95, 1, 0)
 F_pm_guides_highpip[is.na(F_pm_guides_highpip)] <- 0
 gsfa_num_highpip_factors <- rowSums(F_pm_guides_highpip)
 ```
-
 
 ## DEGs for targeted genes
 
@@ -103,10 +88,11 @@ for(guide in guides){
 }
 
 gsfa_deg_guides.df$sig_DE <- ifelse(gsfa_deg_guides.df$lfsr < 0.05, "DE", "")
+gsfa_de_guides <- gsfa_deg_guides.df$guide[which(gsfa_deg_guides.df$lfsr < 0.05)]
 ```
 
 
-MAST
+MAST result
 ```{r mast_LUHMES}
 mast_deg_guides.df <- data.frame()
 for (guide in guides){
@@ -126,15 +112,13 @@ for (guide in guides){
   }
 }
 
-mast_deg_guides.df$fdr <- round(mast_deg_guides.df$fdr, 2)
-mast_deg_guides.df$logFC <- round(mast_deg_guides.df$logFC, 2)
 mast_deg_guides.df$sig_DE <- ifelse(mast_deg_guides.df$fdr < 0.05, "DE", "")
+mast_de_guides <- mast_deg_guides.df$guide[which(mast_deg_guides.df$fdr < 0.05)]
 ```
 
 DESeq2
 ```{r deseq_LUHMES}
 deseq_deg_guides.df <- data.frame()
-
 for (guide in guides){
   fname <- paste0(data_folder, "processed_data/DESeq2/dev_top6k_negctrl/gRNA_", 
                   guide, ".dev_res_top6k.vs_negctrl.rds")
@@ -146,17 +130,16 @@ for (guide in guides){
   guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
   if(guide_geneID %in% rownames(deseq_df)){
     deseq_deg_guides.df <- rbind(deseq_deg_guides.df, 
-                 data.frame(guide = guide, fdr = deseq_df[guide_geneID, "FDR"], logFC = deseq_df[guide_geneID, "log2FoldChange"]))
+                 data.frame(guide = guide, 
+                            fdr = deseq_df[guide_geneID, "FDR"], logFC = deseq_df[guide_geneID, "log2FoldChange"]))
   }else{
     deseq_deg_guides.df <- rbind(deseq_deg_guides.df, 
                           data.frame(guide = guide, fdr = NA, logFC = NA))
   }
 }
 
-
-deseq_deg_guides.df$fdr <- round(deseq_deg_guides.df$fdr, 2)
-deseq_deg_guides.df$logFC <- round(deseq_deg_guides.df$logFC, 2)
 deseq_deg_guides.df$sig_DE <- ifelse(deseq_deg_guides.df$fdr < 0.05, "DE", "")
+deseq_de_guides <- deseq_deg_guides.df$guide[which(deseq_deg_guides.df$fdr < 0.05)]
 ```
 
 scMAGeCK
@@ -177,9 +160,8 @@ for (guide in guides){
   }
 }
 
-scmageck_deg_guides.df$fdr <- round(scmageck_deg_guides.df$fdr, 2)
-scmageck_deg_guides.df$score <- round(scmageck_deg_guides.df$score, 2)
 scmageck_deg_guides.df$sig_DE <- ifelse(scmageck_deg_guides.df$fdr < 0.05, "DE", "")
+scmageck_de_guides <- scmageck_deg_guides.df$guide[which(scmageck_deg_guides.df$fdr < 0.05)]
 ```
 
 SCEPTRE
@@ -196,7 +178,8 @@ for (guide in guides){
   guide_geneID <- feature.names[which(feature.names$V2 == guide),]$V1
   if(guide_geneID %in% curr_sceptre_res$gene_id){
     sceptre_deg_guides.df <- rbind(sceptre_deg_guides.df, 
-                 data.frame(guide = guide, fdr = curr_sceptre_res$fdr[curr_sceptre_res$gene_id == guide_geneID], 
+                 data.frame(guide = guide, 
+                            fdr = curr_sceptre_res$fdr[curr_sceptre_res$gene_id == guide_geneID], 
                             z_value = curr_sceptre_res$z_value[curr_sceptre_res$gene_id == guide_geneID]))
   }else{
     sceptre_deg_guides.df <- rbind(sceptre_deg_guides.df, 
@@ -204,10 +187,8 @@ for (guide in guides){
   }
 }
 
-sceptre_deg_guides.df$fdr <- round(sceptre_deg_guides.df$fdr, 2)
-sceptre_deg_guides.df$z_value <- round(sceptre_deg_guides.df$z_value, 2)
 sceptre_deg_guides.df$sig_DE <- ifelse(sceptre_deg_guides.df$fdr < 0.05, "DE", "")
-
+sceptre_de_guides <- sceptre_deg_guides.df$guide[which(sceptre_deg_guides.df$fdr < 0.05)]
 ```
 
 Compare across methods
@@ -224,6 +205,13 @@ DT::datatable(dge_guides_comparison_df,
               rownames = FALSE, 
               options = list(pageLength = length(guides), 
                              columnDefs = list(list(className = 'dt-center', targets = 0:4))))
+
+LUHMES_de_guides <- data.frame(method = c("GSFA", "scMAGeCK", "DESeq2", "MAST", "SCEPTRE"),
+                               DEGs = c(paste(gsfa_de_guides, collapse = ","),
+                                        paste(scmageck_de_guides, collapse = ","),
+                                        paste(deseq_de_guides, collapse = ","),
+                                        paste(mast_de_guides, collapse = ","),
+                                        paste(sceptre_de_guides, collapse = ",")))
 ```
 
 # T cells data
@@ -288,6 +276,7 @@ for(guide in guides){
 }
 
 gsfa_deg_guides.df$sig_DE <- ifelse(gsfa_deg_guides.df$lfsr < 0.05, "DE", "")
+gsfa_de_guides <- gsfa_deg_guides.df$guide[which(gsfa_deg_guides.df$lfsr < 0.05)]
 ```
 
 MAST
@@ -310,15 +299,13 @@ for (guide in guides){
   }
 }
 
-mast_deg_guides.df$fdr <- round(mast_deg_guides.df$fdr, 2)
-mast_deg_guides.df$logFC <- round(mast_deg_guides.df$logFC, 2)
 mast_deg_guides.df$sig_DE <- ifelse(mast_deg_guides.df$fdr < 0.05, "DE", "")
+mast_de_guides <- mast_deg_guides.df$guide[which(mast_deg_guides.df$fdr < 0.05)]
 ```
 
 DESeq2
 ```{r deseq_t_cells}
 deseq_deg_guides.df <- data.frame()
-
 for (guide in guides){
   fname <- paste0(data_folder, "processed_data/DESeq2/all_by_stim_negctrl/gRNA_", 
                   guide, ".dev_res_top6k.vs_negctrl.rds")
@@ -337,11 +324,8 @@ for (guide in guides){
   }
 }
 
-
-deseq_deg_guides.df$fdr <- round(deseq_deg_guides.df$fdr, 2)
-deseq_deg_guides.df$logFC <- round(deseq_deg_guides.df$logFC, 2)
 deseq_deg_guides.df$sig_DE <- ifelse(deseq_deg_guides.df$fdr < 0.05, "DE", "")
-
+deseq_de_guides <- deseq_deg_guides.df$guide[which(deseq_deg_guides.df$fdr < 0.05)]
 ```
 
 scMAGeCK
@@ -362,9 +346,8 @@ for (guide in guides){
   }
 }
 
-scmageck_deg_guides.df$fdr <- round(scmageck_deg_guides.df$fdr, 2)
-scmageck_deg_guides.df$score <- round(scmageck_deg_guides.df$score, 2)
 scmageck_deg_guides.df$sig_DE <- ifelse(scmageck_deg_guides.df$fdr < 0.05, "DE", "")
+scmageck_de_guides <- scmageck_deg_guides.df$guide[which(scmageck_deg_guides.df$fdr < 0.05)]
 ```
 
 SCEPTRE
@@ -389,10 +372,8 @@ for (guide in guides){
   }
 }
 
-sceptre_deg_guides.df$fdr <- round(sceptre_deg_guides.df$fdr, 2)
-sceptre_deg_guides.df$z_value <- round(sceptre_deg_guides.df$z_value, 2)
 sceptre_deg_guides.df$sig_DE <- ifelse(sceptre_deg_guides.df$fdr < 0.05, "DE", "")
-
+sceptre_de_guides <- sceptre_deg_guides.df$guide[which(sceptre_deg_guides.df$fdr < 0.05)]
 ```
 
 Compare across methods
@@ -405,9 +386,28 @@ dge_guides_comparison_df <- data.frame(Perturbation = guides,
                                        MAST = mast_deg_guides.df$sig_DE,
                                        SCEPTRE = sceptre_deg_guides.df$sig_DE)
 
-
 DT::datatable(dge_guides_comparison_df, 
               rownames = FALSE, 
               options = list(pageLength = length(guides), 
                              columnDefs = list(list(className = 'dt-center', targets = 0:4))))
+
+Tcells_de_guides <- data.frame(method = c("GSFA", "scMAGeCK", "DESeq2", "MAST", "SCEPTRE"),
+                               DEGs = c(paste(gsfa_de_guides, collapse = ","),
+                                        paste(scmageck_de_guides, collapse = ","),
+                                        paste(deseq_de_guides, collapse = ","),
+                                        paste(mast_de_guides, collapse = ","),
+                                        paste(sceptre_de_guides, collapse = ",")))
 ```
+
+```{r}
+de_guides_table <- data.frame(Method = LUHMES_de_guides$method, 
+                              LUHMES_DEGs = LUHMES_de_guides$DEGs, 
+                              Tcells_DEGs = Tcells_de_guides$DEGs)
+
+DT::datatable(de_guides_table, 
+              rownames = FALSE, 
+              options = list(pageLength = nrow(LUHMES_de_guides), 
+                             columnDefs = list(list(className = 'dt-center', targets = 0:4))))
+
+```
+
