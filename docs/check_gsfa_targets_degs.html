@@ -398,7 +398,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-01
+<strong>Last updated:</strong> 2022-09-02
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -489,16 +489,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree551050c0f392d78fc0976084368d5b95c8762b17targetblank551050ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/551050c0f392d78fc0976084368d5b95c8762b17" target="_blank">551050c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreefadd5df3e577127d2996915ddddad866a8593673targetblankfadd5dfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/fadd5df3e577127d2996915ddddad866a8593673" target="_blank">fadd5df</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree551050c0f392d78fc0976084368d5b95c8762b17targetblank551050ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreefadd5df3e577127d2996915ddddad866a8593673targetblankfadd5dfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/551050c0f392d78fc0976084368d5b95c8762b17" target="_blank">551050c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/fadd5df3e577127d2996915ddddad866a8593673" target="_blank">fadd5df</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -522,7 +522,6 @@ Untracked files:
     Untracked:  code/run_gsfa_negctrl.R
     Untracked:  code/run_music_LUHMES.R
     Untracked:  code/run_music_LUHMES_data.sbatch
-    Untracked:  code/run_sceptre_LUHMES_data.sbatch
     Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
     Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
     Untracked:  code/run_spca_LUHMES.R
@@ -540,6 +539,8 @@ Untracked files:
 Unstaged changes:
     Modified:   analysis/sceptre_LUHMES_data.Rmd
     Modified:   analysis/twostep_clustering_LUHMES_data.Rmd
+    Modified:   code/run_sceptre_LUHMES_data.R
+    Modified:   code/run_sceptre_LUHMES_data.sbatch
     Modified:   code/run_sceptre_cropseq_data.sbatch
     Modified:   code/sceptre_analysis.R
 
@@ -580,6 +581,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/fadd5df3e577127d2996915ddddad866a8593673/analysis/check_gsfa_targets_degs.Rmd" target="_blank">fadd5df</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-02
+</td>
+<td>
+added tables of DE guides
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/ffc019eb31fce95c593373e43f45c6a3ac30c681/docs/check_gsfa_targets_degs.html" target="_blank">ffc019e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -679,13 +714,6 @@ library(data.table)
 library(Matrix)
 library(tidyverse)
 library(ggplot2)
-theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
-                             axis.title = element_text(size = 14),
-                             axis.text = element_text(size = 12),
-                             legend.title = element_text(size = 13),
-                             legend.text = element_text(size = 12),
-                             panel.grid.minor = element_blank())
-)
 library(gridExtra)
 library(ComplexHeatmap)
 library(kableExtra)
@@ -693,9 +721,6 @@ library(WebGestaltR)
 library(GSFA)
 library(DT)
 source(&quot;code/plotting_functions.R&quot;)</code></pre>
-<p>Set directories</p>
-<pre class="r"><code>res_dir &lt;- &quot;/project2/xinhe/kevinluo/GSFA/DEGs_by_expression_level&quot;
-dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)</code></pre>
 </div>
 <div id="luhmes-data" class="section level1">
 <h1>LUHMES data</h1>
@@ -743,8 +768,9 @@ for(guide in guides){
   }
 }
 
-gsfa_deg_guides.df$sig_DE &lt;- ifelse(gsfa_deg_guides.df$lfsr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
-<p>MAST</p>
+gsfa_deg_guides.df$sig_DE &lt;- ifelse(gsfa_deg_guides.df$lfsr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+gsfa_de_guides &lt;- gsfa_deg_guides.df$guide[which(gsfa_deg_guides.df$lfsr &lt; 0.05)]</code></pre>
+<p>MAST result</p>
 <pre class="r"><code>mast_deg_guides.df &lt;- data.frame()
 for (guide in guides){
   fname &lt;- paste0(data_folder, &quot;processed_data/MAST/dev_top6k_negctrl/gRNA_&quot;, 
@@ -763,12 +789,10 @@ for (guide in guides){
   }
 }
 
-mast_deg_guides.df$fdr &lt;- round(mast_deg_guides.df$fdr, 2)
-mast_deg_guides.df$logFC &lt;- round(mast_deg_guides.df$logFC, 2)
-mast_deg_guides.df$sig_DE &lt;- ifelse(mast_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+mast_deg_guides.df$sig_DE &lt;- ifelse(mast_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+mast_de_guides &lt;- mast_deg_guides.df$guide[which(mast_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>DESeq2</p>
 <pre class="r"><code>deseq_deg_guides.df &lt;- data.frame()
-
 for (guide in guides){
   fname &lt;- paste0(data_folder, &quot;processed_data/DESeq2/dev_top6k_negctrl/gRNA_&quot;, 
                   guide, &quot;.dev_res_top6k.vs_negctrl.rds&quot;)
@@ -780,17 +804,16 @@ for (guide in guides){
   guide_geneID &lt;- feature.names[which(feature.names$V2 == guide),]$V1
   if(guide_geneID %in% rownames(deseq_df)){
     deseq_deg_guides.df &lt;- rbind(deseq_deg_guides.df, 
-                 data.frame(guide = guide, fdr = deseq_df[guide_geneID, &quot;FDR&quot;], logFC = deseq_df[guide_geneID, &quot;log2FoldChange&quot;]))
+                 data.frame(guide = guide, 
+                            fdr = deseq_df[guide_geneID, &quot;FDR&quot;], logFC = deseq_df[guide_geneID, &quot;log2FoldChange&quot;]))
   }else{
     deseq_deg_guides.df &lt;- rbind(deseq_deg_guides.df, 
                           data.frame(guide = guide, fdr = NA, logFC = NA))
   }
 }
 
-
-deseq_deg_guides.df$fdr &lt;- round(deseq_deg_guides.df$fdr, 2)
-deseq_deg_guides.df$logFC &lt;- round(deseq_deg_guides.df$logFC, 2)
-deseq_deg_guides.df$sig_DE &lt;- ifelse(deseq_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+deseq_deg_guides.df$sig_DE &lt;- ifelse(deseq_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+deseq_de_guides &lt;- deseq_deg_guides.df$guide[which(deseq_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>scMAGeCK</p>
 <pre class="r"><code>scmageck_res &lt;- readRDS(paste0(data_folder, &quot;scmageck/scmageck_lr.LUHMES.dev_res_top_6k.rds&quot;))
 colnames(scmageck_res$fdr)[colnames(scmageck_res$fdr) == &quot;NegCtrl&quot;] &lt;- &quot;Nontargeting&quot;
@@ -808,9 +831,8 @@ for (guide in guides){
   }
 }
 
-scmageck_deg_guides.df$fdr &lt;- round(scmageck_deg_guides.df$fdr, 2)
-scmageck_deg_guides.df$score &lt;- round(scmageck_deg_guides.df$score, 2)
-scmageck_deg_guides.df$sig_DE &lt;- ifelse(scmageck_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+scmageck_deg_guides.df$sig_DE &lt;- ifelse(scmageck_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+scmageck_de_guides &lt;- scmageck_deg_guides.df$guide[which(scmageck_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>SCEPTRE</p>
 <pre class="r"><code>sceptre_res &lt;- readRDS(&quot;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data/sceptre_output/sceptre.result.rds&quot;)
 sceptre_count_df &lt;- data.frame(matrix(nrow = length(guides), ncol = 2))
@@ -824,7 +846,8 @@ for (guide in guides){
   guide_geneID &lt;- feature.names[which(feature.names$V2 == guide),]$V1
   if(guide_geneID %in% curr_sceptre_res$gene_id){
     sceptre_deg_guides.df &lt;- rbind(sceptre_deg_guides.df, 
-                 data.frame(guide = guide, fdr = curr_sceptre_res$fdr[curr_sceptre_res$gene_id == guide_geneID], 
+                 data.frame(guide = guide, 
+                            fdr = curr_sceptre_res$fdr[curr_sceptre_res$gene_id == guide_geneID], 
                             z_value = curr_sceptre_res$z_value[curr_sceptre_res$gene_id == guide_geneID]))
   }else{
     sceptre_deg_guides.df &lt;- rbind(sceptre_deg_guides.df, 
@@ -832,9 +855,8 @@ for (guide in guides){
   }
 }
 
-sceptre_deg_guides.df$fdr &lt;- round(sceptre_deg_guides.df$fdr, 2)
-sceptre_deg_guides.df$z_value &lt;- round(sceptre_deg_guides.df$z_value, 2)
-sceptre_deg_guides.df$sig_DE &lt;- ifelse(sceptre_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+sceptre_deg_guides.df$sig_DE &lt;- ifelse(sceptre_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+sceptre_de_guides &lt;- sceptre_deg_guides.df$guide[which(sceptre_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>Compare across methods</p>
 <pre class="r"><code>dge_guides_comparison_df &lt;- data.frame(Perturbation = guides,
                                        num_GSFA_factors = gsfa_num_highpip_factors, 
@@ -847,7 +869,14 @@ sceptre_deg_guides.df$sig_DE &lt;- ifelse(sceptre_deg_guides.df$fdr &lt; 0.05, &
 DT::datatable(dge_guides_comparison_df, 
               rownames = FALSE, 
               options = list(pageLength = length(guides), 
-                             columnDefs = list(list(className = &#39;dt-center&#39;, targets = 0:4))))</code></pre>
+                             columnDefs = list(list(className = &#39;dt-center&#39;, targets = 0:4))))
+
+LUHMES_de_guides &lt;- data.frame(method = c(&quot;GSFA&quot;, &quot;scMAGeCK&quot;, &quot;DESeq2&quot;, &quot;MAST&quot;, &quot;SCEPTRE&quot;),
+                               DEGs = c(paste(gsfa_de_guides, collapse = &quot;,&quot;),
+                                        paste(scmageck_de_guides, collapse = &quot;,&quot;),
+                                        paste(deseq_de_guides, collapse = &quot;,&quot;),
+                                        paste(mast_de_guides, collapse = &quot;,&quot;),
+                                        paste(sceptre_de_guides, collapse = &quot;,&quot;)))</code></pre>
 <div id="htmlwidget-d9bc5f809383b89e1a7b" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-d9bc5f809383b89e1a7b">{"x":{"filter":"none","vertical":false,"data":[["ADNP","ARID1B","ASH1L","CHD2","CHD8","CTNND2","DYRK1A","HDAC5","MECP2","MYT1L","POGZ","PTEN","RELN","SETD5"],[1,1,0,0,0,0,0,0,0,0,0,0,0,1],["","","","","","",null,"","",null,"",null,null,""],["","","DE","DE","DE","",null,"DE","DE",null,"",null,null,"DE"],["","","","DE","","",null,"","DE",null,"",null,null,"DE"],["","","DE","DE","","",null,"DE","DE",null,"",null,null,"DE"],["","","DE","DE","DE","",null,"DE","DE",null,"",null,null,"DE"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Perturbation<\/th>\n      <th>num_GSFA_factors<\/th>\n      <th>GSFA<\/th>\n      <th>scMAGeCK<\/th>\n      <th>DESeq2<\/th>\n      <th>MAST<\/th>\n      <th>SCEPTRE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":14,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,14,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -901,7 +930,8 @@ for(guide in guides){
   }
 }
 
-gsfa_deg_guides.df$sig_DE &lt;- ifelse(gsfa_deg_guides.df$lfsr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+gsfa_deg_guides.df$sig_DE &lt;- ifelse(gsfa_deg_guides.df$lfsr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+gsfa_de_guides &lt;- gsfa_deg_guides.df$guide[which(gsfa_deg_guides.df$lfsr &lt; 0.05)]</code></pre>
 <p>MAST</p>
 <pre class="r"><code>mast_deg_guides.df &lt;- data.frame()
 for (guide in guides){
@@ -921,12 +951,10 @@ for (guide in guides){
   }
 }
 
-mast_deg_guides.df$fdr &lt;- round(mast_deg_guides.df$fdr, 2)
-mast_deg_guides.df$logFC &lt;- round(mast_deg_guides.df$logFC, 2)
-mast_deg_guides.df$sig_DE &lt;- ifelse(mast_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+mast_deg_guides.df$sig_DE &lt;- ifelse(mast_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+mast_de_guides &lt;- mast_deg_guides.df$guide[which(mast_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>DESeq2</p>
 <pre class="r"><code>deseq_deg_guides.df &lt;- data.frame()
-
 for (guide in guides){
   fname &lt;- paste0(data_folder, &quot;processed_data/DESeq2/all_by_stim_negctrl/gRNA_&quot;, 
                   guide, &quot;.dev_res_top6k.vs_negctrl.rds&quot;)
@@ -945,10 +973,8 @@ for (guide in guides){
   }
 }
 
-
-deseq_deg_guides.df$fdr &lt;- round(deseq_deg_guides.df$fdr, 2)
-deseq_deg_guides.df$logFC &lt;- round(deseq_deg_guides.df$logFC, 2)
-deseq_deg_guides.df$sig_DE &lt;- ifelse(deseq_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+deseq_deg_guides.df$sig_DE &lt;- ifelse(deseq_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+deseq_de_guides &lt;- deseq_deg_guides.df$guide[which(deseq_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>scMAGeCK</p>
 <pre class="r"><code>scmageck_res &lt;- readRDS(paste0(data_folder, &quot;scmageck/scmageck_lr.TCells_stim.dev_res_top_6k.rds&quot;))
 colnames(scmageck_res$fdr)[colnames(scmageck_res$fdr) == &quot;NegCtrl&quot;] &lt;- &quot;NonTarget&quot;
@@ -966,9 +992,8 @@ for (guide in guides){
   }
 }
 
-scmageck_deg_guides.df$fdr &lt;- round(scmageck_deg_guides.df$fdr, 2)
-scmageck_deg_guides.df$score &lt;- round(scmageck_deg_guides.df$score, 2)
-scmageck_deg_guides.df$sig_DE &lt;- ifelse(scmageck_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+scmageck_deg_guides.df$sig_DE &lt;- ifelse(scmageck_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+scmageck_de_guides &lt;- scmageck_deg_guides.df$guide[which(scmageck_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>SCEPTRE</p>
 <pre class="r"><code>sceptre_res &lt;- readRDS(&quot;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/TCells_cropseq_data/simulated_data/sceptre_output/sceptre.result.rds&quot;)
 sceptre_count_df &lt;- data.frame(matrix(nrow = length(guides), ncol = 2))
@@ -990,9 +1015,8 @@ for (guide in guides){
   }
 }
 
-sceptre_deg_guides.df$fdr &lt;- round(sceptre_deg_guides.df$fdr, 2)
-sceptre_deg_guides.df$z_value &lt;- round(sceptre_deg_guides.df$z_value, 2)
-sceptre_deg_guides.df$sig_DE &lt;- ifelse(sceptre_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)</code></pre>
+sceptre_deg_guides.df$sig_DE &lt;- ifelse(sceptre_deg_guides.df$fdr &lt; 0.05, &quot;DE&quot;, &quot;&quot;)
+sceptre_de_guides &lt;- sceptre_deg_guides.df$guide[which(sceptre_deg_guides.df$fdr &lt; 0.05)]</code></pre>
 <p>Compare across methods</p>
 <pre class="r"><code>dge_guides_comparison_df &lt;- data.frame(Perturbation = guides,
                                        num_GSFA_factors = gsfa_num_highpip_factors, 
@@ -1002,13 +1026,29 @@ sceptre_deg_guides.df$sig_DE &lt;- ifelse(sceptre_deg_guides.df$fdr &lt; 0.05, &
                                        MAST = mast_deg_guides.df$sig_DE,
                                        SCEPTRE = sceptre_deg_guides.df$sig_DE)
 
-
 DT::datatable(dge_guides_comparison_df, 
               rownames = FALSE, 
               options = list(pageLength = length(guides), 
-                             columnDefs = list(list(className = &#39;dt-center&#39;, targets = 0:4))))</code></pre>
+                             columnDefs = list(list(className = &#39;dt-center&#39;, targets = 0:4))))
+
+Tcells_de_guides &lt;- data.frame(method = c(&quot;GSFA&quot;, &quot;scMAGeCK&quot;, &quot;DESeq2&quot;, &quot;MAST&quot;, &quot;SCEPTRE&quot;),
+                               DEGs = c(paste(gsfa_de_guides, collapse = &quot;,&quot;),
+                                        paste(scmageck_de_guides, collapse = &quot;,&quot;),
+                                        paste(deseq_de_guides, collapse = &quot;,&quot;),
+                                        paste(mast_de_guides, collapse = &quot;,&quot;),
+                                        paste(sceptre_de_guides, collapse = &quot;,&quot;)))</code></pre>
 <div id="htmlwidget-dcb26fb9e1838ce3bc1c" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dcb26fb9e1838ce3bc1c">{"x":{"filter":"none","vertical":false,"data":[["ARID1A","BTLA","C10orf54","CBLB","CD3D","CD5","CDKN1B","DGKA","DGKZ","HAVCR2","LAG3","LCP2","MEF2D","PDCD1","RASA2","SOCS1","STAT6","TCEB2","TMEM222","TNFRSF9"],[0,0,2,1,7,1,0,1,0,3,5,0,0,0,0,4,0,3,0,0],["",null,"","","","","","","","","","DE",null,null,"","DE","","DE","",null],["",null,"","","","","","","","","","",null,null,"","","","DE","",null],["",null,"","","","","","","","","","",null,null,"","","","DE","",null],["",null,"","","","","","","","","","",null,null,"","","","DE","",null],["",null,"","","","","","","","","","",null,null,"","","","DE","",null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Perturbation<\/th>\n      <th>num_GSFA_factors<\/th>\n      <th>GSFA<\/th>\n      <th>scMAGeCK<\/th>\n      <th>DESeq2<\/th>\n      <th>MAST<\/th>\n      <th>SCEPTRE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":20,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,20,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-dcb26fb9e1838ce3bc1c">{"x":{"filter":"none","vertical":false,"data":[["ARID1A","BTLA","C10orf54","CBLB","CD3D","CD5","CDKN1B","DGKA","DGKZ","HAVCR2","LAG3","LCP2","MEF2D","PDCD1","RASA2","SOCS1","STAT6","TCEB2","TMEM222","TNFRSF9"],[0,0,2,1,7,1,0,1,0,3,5,0,0,0,0,4,0,3,0,0],["",null,"","","","","","","","","","DE",null,null,"","DE","","DE","",null],["",null,"","","","","","","","","","",null,null,"","","","DE","",null],["",null,"","","","","","","","","","",null,null,"","","","DE","",null],["",null,"","","","","","","","","","",null,null,"","","","DE","",null],["",null,"","","","","","","","","","DE",null,null,"","","","DE","",null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Perturbation<\/th>\n      <th>num_GSFA_factors<\/th>\n      <th>GSFA<\/th>\n      <th>scMAGeCK<\/th>\n      <th>DESeq2<\/th>\n      <th>MAST<\/th>\n      <th>SCEPTRE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":20,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,20,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>de_guides_table &lt;- data.frame(Method = LUHMES_de_guides$method, 
+                              LUHMES_DEGs = LUHMES_de_guides$DEGs, 
+                              Tcells_DEGs = Tcells_de_guides$DEGs)
+
+DT::datatable(de_guides_table, 
+              rownames = FALSE, 
+              options = list(pageLength = nrow(LUHMES_de_guides), 
+                             columnDefs = list(list(className = &#39;dt-center&#39;, targets = 0:4))))</code></pre>
+<div id="htmlwidget-211e58533155b07f8bae" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-211e58533155b07f8bae">{"x":{"filter":"none","vertical":false,"data":[["GSFA","scMAGeCK","DESeq2","MAST","SCEPTRE"],["","ASH1L,CHD2,CHD8,HDAC5,MECP2,SETD5","CHD2,MECP2,SETD5","ASH1L,CHD2,HDAC5,MECP2,SETD5","ASH1L,CHD2,CHD8,HDAC5,MECP2,SETD5"],["LCP2,SOCS1,TCEB2","TCEB2","TCEB2","TCEB2","LCP2,TCEB2"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Method<\/th>\n      <th>LUHMES_DEGs<\/th>\n      <th>Tcells_DEGs<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
