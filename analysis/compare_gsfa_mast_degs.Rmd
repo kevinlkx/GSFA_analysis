@@ -1,0 +1,398 @@
+---
+title: "Compare GSFA with MAST DEG results"
+author: "Kaixuan Luo"
+date: "2022-09-02"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+editor_options:
+  chunk_output_type: console
+---
+
+```{r knitr-opts, include=FALSE}
+knitr::opts_chunk$set(results = "hold", fig.align = "center", message=FALSE, warning=FALSE)
+```
+
+Load packages
+```{r load-packages, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(ggplot2))
+require(reshape2)
+require(dplyr)
+theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
+                             axis.title = element_text(size = 14),
+                             axis.text = element_text(size = 13),
+                             legend.title = element_text(size = 13),
+                             legend.text = element_text(size = 12),
+                             panel.grid.minor = element_blank())
+)
+library(ggvenn)
+source("code/plotting_functions.R")
+```
+
+
+Set directories
+```{r}
+res_dir <- "/project2/xinhe/kevinluo/GSFA/compare_with_mast/"
+dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)
+```
+
+## LUHMES data
+
+Load the output of GSFA `fit_gsfa_multivar()` run. 
+```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/LUHMES/"
+fit <- readRDS(paste0(data_folder,
+                      "gsfa_output_detect_01/use_negctrl/All.gibbs_obj_k20.svd_negctrl.seed_14314.light.rds"))
+gibbs_PM <- fit$posterior_means
+lfsr_mat <- fit$lfsr[, -ncol(fit$lfsr)]
+total_effect <- fit$total_effect[, -ncol(fit$total_effect)]
+KO_names <- colnames(lfsr_mat)
+guides <- KO_names[KO_names!="Nontargeting"]
+```
+
+DEGs detected by GSFA
+```{r}
+lfsr_mat <- lfsr_mat[, guides]
+gsfa_degs <- apply(lfsr_mat, 2, function(x){names(x)[x < 0.05]})
+sapply(gsfa_degs, length)
+```
+
+Load MAST single-gene DE result
+```{r}
+mast_list <- list()
+for (m in guides){
+  fname <- paste0(data_folder, "processed_data/MAST/dev_top6k_negctrl/gRNA_", m, ".dev_res_top6k.vs_negctrl.rds")
+  tmp_df <- readRDS(fname)
+  tmp_df$geneID <- rownames(tmp_df)
+  tmp_df <- tmp_df %>% dplyr::rename(FDR = fdr, PValue = pval)
+  mast_list[[m]] <- tmp_df
+}
+mast_signif_counts <- sapply(mast_list, function(x){filter(x, FDR < 0.05) %>% nrow()})
+```
+
+DEGs detected by MAST
+```{r}
+mast_degs <- lapply(mast_list, function(x){rownames(x)[x$FDR < 0.05]})
+sapply(mast_degs, length)
+```
+
+Compare DEGs from GSFA vs MAST
+```{r LUHMES_gsfa_mast_degs_venn_diagram}
+num_deg_guides.df <- data.frame()
+for (m in guides){
+  shared_degs <- intersect(mast_degs[[m]], gsfa_degs[[m]])
+  mast_only_degs <- setdiff(mast_degs[[m]], gsfa_degs[[m]])
+  gsfa_only_degs <- setdiff(gsfa_degs[[m]], mast_degs[[m]])
+  num_deg_guides.df <- rbind(num_deg_guides.df, 
+                             data.frame(guide = m, shared = length(shared_degs), mast_only = length(mast_only_degs), gsfa_only = length(gsfa_only_degs)))
+}
+
+all_mast_degs <- unique(unlist(mast_degs))
+all_gsfa_degs <- unique(unlist(gsfa_degs))
+
+length(all_gsfa_degs)
+length(all_mast_degs)
+length(setdiff(all_gsfa_degs, all_mast_degs))
+length(setdiff(all_mast_degs, all_gsfa_degs))
+length(intersect(all_gsfa_degs, all_mast_degs))
+
+deg_list <- list("GSFA DEGs" = all_gsfa_degs,
+                 "MAST DEGs" = all_mast_degs)
+
+# pdf(file.path(res_dir, "LUHMES_gsfa_mast_degs_venn_diagram.pdf"))
+ggvenn(deg_list, fill_color = c("#00BA38","#619CFF"), show_percentage = FALSE, set_name_size = 6, text_size = 6)
+# dev.off()
+```
+
+QQ plots comparing GSFA with MAST
+```{r LUHMES-qqplots-gsfa-mast-all-combined}
+combined_mast_res <- data.frame()
+for(i in 1:length(guides)){
+  guide <- guides[i]
+  mast_res <- mast_list[[guide]]
+  gsfa_de_genes <- gsfa_degs[[guide]]
+  gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
+  mast_res$gsfa_gene <- 0
+  if(length(gsfa_de_genes) >0){
+    mast_res[gsfa_de_genes, ]$gsfa_gene <- 1
+  }
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
+                    'all genes'=combined_mast_res$PValue)
+
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name="Method") + 
+      scale_color_manual(values=c("#00BA38","#619CFF"))
+```
+
+```{r LUHMES_gsfa_mast_degs_qqplot_v2}
+combined_mast_res <- data.frame()
+for(m in guides){
+  mast_res <- mast_list[[m]]
+  curr_gsfa_degs <- gsfa_degs[[m]]
+  curr_mast_degs <- mast_degs[[m]]
+  gsfa_only_degs <- setdiff(curr_gsfa_degs, curr_mast_degs)
+  mast_only_degs <- setdiff(curr_mast_degs, curr_gsfa_degs)
+
+  mast_res$guide <- m
+  mast_res$gsfa_gene <- 0
+  if(length(curr_gsfa_degs) >0){
+    mast_res[curr_gsfa_degs, ]$gsfa_gene <- 1
+  }
+  mast_res$gsfa_only_gene <- 0
+  if(length(gsfa_only_degs) >0){
+    mast_res[gsfa_only_degs, ]$gsfa_only_gene <- 1
+  }
+  mast_res$mast_only_gene <- 0
+  if(length(mast_only_degs) >0){
+    mast_res[mast_only_degs, ]$mast_only_gene <- 1
+  }
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
+                    'GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
+                    'MAST only'=dplyr::filter(combined_mast_res,mast_only_gene==1)$PValue,
+                    'all genes'=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, "LUHMES_gsfa_mast_degs_qqplot_v2.pdf"))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+  ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+  scale_colour_discrete(name="Method")
+# dev.off()
+```
+
+```{r LUHMES_gsfa_only_degs_qqplot}
+combined_mast_res <- data.frame()
+for(m in guides){
+  mast_res <- mast_list[[m]]
+  curr_gsfa_degs <- gsfa_degs[[m]]
+  curr_mast_degs <- mast_degs[[m]]
+  gsfa_only_degs <- setdiff(curr_gsfa_degs, curr_mast_degs)
+
+  mast_res$gsfa_only_gene <- 0
+  if(length(gsfa_only_degs) >0){
+    mast_res[gsfa_only_degs, ]$gsfa_only_gene <- 1
+  }
+  
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
+                    'all genes'=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_qqplot_v2.pdf"))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+  ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+  scale_colour_discrete(name="Method") + 
+  scale_color_manual(values=c("#00BA38","#619CFF"))
+# dev.off()
+```
+
+<!-- ```{r} -->
+<!-- m <- "SETD5" -->
+<!-- mast_res <- mast_list[[m]] -->
+<!-- curr_gsfa_degs <- gsfa_degs[[m]] -->
+<!-- curr_mast_degs <- mast_degs[[m]] -->
+<!-- gsfa_only_degs <- setdiff(curr_gsfa_degs, curr_mast_degs) -->
+<!-- mast_only_degs <- setdiff(curr_mast_degs, curr_gsfa_degs) -->
+
+<!-- length(gsfa_only_degs) -->
+<!-- length(mast_only_degs) -->
+
+<!-- mast_res$guide <- m -->
+<!-- mast_res$gsfa_gene <- 0 -->
+<!-- if(length(curr_gsfa_degs) >0){ -->
+<!--   mast_res[curr_gsfa_degs, ]$gsfa_gene <- 1 -->
+<!-- } -->
+<!-- mast_res$gsfa_only_gene <- 0 -->
+<!-- if(length(gsfa_only_degs) >0){ -->
+<!--   mast_res[gsfa_only_degs, ]$gsfa_only_gene <- 1 -->
+<!-- } -->
+<!-- mast_res$mast_only_gene <- 0 -->
+<!-- if(length(mast_only_degs) >0){ -->
+<!--   mast_res[mast_only_degs, ]$mast_only_gene <- 1 -->
+<!-- } -->
+
+<!-- mast_res[which(mast_res$mast_only_gene==1), ] %>% arrange(PValue) %>% head() -->
+
+<!-- mast_res[which(mast_res$gsfa_only_gene==1), ] %>% arrange(PValue) %>% head() -->
+
+<!-- pvalue_list <- list('GSFA'=dplyr::filter(mast_res,gsfa_gene==1)$PValue, -->
+<!--                     'GSFA [not MAST]'=dplyr::filter(mast_res,gsfa_only_gene==1)$PValue, -->
+<!--                     'MAST [not GSFA]'=dplyr::filter(mast_res,mast_only_gene==1)$PValue, -->
+<!--                     'MAST all tested genes'=mast_res$PValue) -->
+
+<!-- pdf(paste0(res_dir, "/LUHMES_", m, "_gsfa_mast_degs_qqplot_v2.pdf")) -->
+<!-- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +  -->
+<!--   ggtitle(m) + theme(plot.title = element_text(hjust = 0.5)) + -->
+<!--   scale_colour_discrete(name="Method") -->
+<!-- dev.off() -->
+
+<!-- ``` -->
+
+## T cell data
+
+Load the output of GSFA `fit_gsfa_multivar()` run. 
+```{r}
+data_folder <- "/project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/"
+fit <- readRDS(paste0(data_folder,
+                      "gsfa_output_detect_01/all_uncorrected_by_group.use_negctrl/All.gibbs_obj_k20.svd_negctrl.restart.light.rds"))
+gibbs_PM <- fit$posterior_means
+lfsr_mat1 <- fit$lfsr1[, -ncol(fit$lfsr1)]
+lfsr_mat0 <- fit$lfsr0[, -ncol(fit$lfsr0)]
+total_effect1 <- fit$total_effect1[, -ncol(fit$total_effect1)]
+total_effect0 <- fit$total_effect0[, -ncol(fit$total_effect0)]
+KO_names <- colnames(lfsr_mat1)
+guides <- KO_names[KO_names!="NonTarget"]
+```
+
+DEGs detected by GSFA
+```{r}
+lfsr_mat <- lfsr_mat1[, guides]
+gsfa_degs <- apply(lfsr_mat, 2, function(x){names(x)[x < 0.05]})
+sapply(gsfa_degs, length)
+```
+
+Load MAST single-gene DE result
+```{r}
+mast_list <- list()
+for (m in guides){
+  fname <- paste0(data_folder, "processed_data/MAST/all_by_stim_negctrl/gRNA_", 
+                  m, ".dev_res_top6k.vs_negctrl.rds")
+  tmp_df <- readRDS(fname)
+  tmp_df$geneID <- rownames(tmp_df)
+  tmp_df <- tmp_df %>% dplyr::rename(FDR = fdr, PValue = pval)
+  mast_list[[m]] <- tmp_df
+}
+mast_signif_counts <- sapply(mast_list, function(x){filter(x, FDR < 0.05) %>% nrow()})
+```
+
+DEGs detected by MAST
+```{r}
+mast_degs <- lapply(mast_list, function(x){rownames(x)[x$FDR < 0.05]})
+sapply(mast_degs, length)
+```
+
+Compare DEGs from GSFA vs MAST
+```{r Tcells_gsfa_mast_degs_venn_diagram}
+num_deg_guides.df <- data.frame()
+for (m in guides){
+  shared_degs <- intersect(mast_degs[[m]], gsfa_degs[[m]])
+  mast_only_degs <- setdiff(mast_degs[[m]], gsfa_degs[[m]])
+  gsfa_only_degs <- setdiff(gsfa_degs[[m]], mast_degs[[m]])
+  num_deg_guides.df <- rbind(num_deg_guides.df, 
+                             data.frame(guide = m, shared = length(shared_degs), mast_only = length(mast_only_degs), gsfa_only = length(gsfa_only_degs)))
+}
+
+all_mast_degs <- unique(unlist(mast_degs))
+all_gsfa_degs <- unique(unlist(gsfa_degs))
+
+length(all_gsfa_degs)
+length(all_mast_degs)
+length(setdiff(all_gsfa_degs, all_mast_degs))
+length(setdiff(all_mast_degs, all_gsfa_degs))
+length(intersect(all_gsfa_degs, all_mast_degs))
+
+deg_list <- list("GSFA DEGs" = all_gsfa_degs,
+                 "MAST DEGs" = all_mast_degs)
+
+# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_venn_diagram.pdf"))
+ggvenn(deg_list, fill_color = c("#00BA38","#619CFF"), show_percentage = FALSE, set_name_size = 6, text_size = 6)
+# dev.off()
+```
+
+
+QQ plots comparing GSFA with MAST
+```{r Tcells-qqplots-gsfa-mast-all-combined}
+combined_mast_res <- data.frame()
+for(i in 1:length(guides)){
+  guide <- guides[i]
+  mast_res <- mast_list[[guide]]
+  gsfa_de_genes <- gsfa_degs[[guide]]
+  gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
+  mast_res$gsfa_gene <- 0
+  if(length(gsfa_de_genes) >0){
+    mast_res[gsfa_de_genes, ]$gsfa_gene <- 1
+  }
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
+                    'all genes'=combined_mast_res$PValue)
+
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      scale_colour_discrete(name="Method") + 
+      scale_color_manual(values=c("#00BA38","#619CFF"))
+```
+
+```{r Tcells_gsfa_mast_degs_qqplot_v2}
+combined_mast_res <- data.frame()
+for(m in guides){
+  mast_res <- mast_list[[m]]
+  curr_gsfa_degs <- gsfa_degs[[m]]
+  curr_mast_degs <- mast_degs[[m]]
+  gsfa_only_degs <- setdiff(curr_gsfa_degs, curr_mast_degs)
+  mast_only_degs <- setdiff(curr_mast_degs, curr_gsfa_degs)
+
+  mast_res$guide <- m
+  mast_res$gsfa_gene <- 0
+  if(length(curr_gsfa_degs) >0){
+    mast_res[curr_gsfa_degs, ]$gsfa_gene <- 1
+  }
+  mast_res$gsfa_only_gene <- 0
+  if(length(gsfa_only_degs) >0){
+    mast_res[gsfa_only_degs, ]$gsfa_only_gene <- 1
+  }
+  mast_res$mast_only_gene <- 0
+  if(length(mast_only_degs) >0){
+    mast_res[mast_only_degs, ]$mast_only_gene <- 1
+  }
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
+                    'GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
+                    'MAST only'=dplyr::filter(combined_mast_res,mast_only_gene==1)$PValue,
+                    'all genes'=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_qqplot_v2.pdf"))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+  ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+  scale_colour_discrete(name="Method")
+# dev.off()
+```
+
+
+```{r Tcells_gsfa_only_degs_qqplot}
+combined_mast_res <- data.frame()
+for(m in guides){
+  mast_res <- mast_list[[m]]
+  curr_gsfa_degs <- gsfa_degs[[m]]
+  curr_mast_degs <- mast_degs[[m]]
+  gsfa_only_degs <- setdiff(curr_gsfa_degs, curr_mast_degs)
+
+  mast_res$gsfa_only_gene <- 0
+  if(length(gsfa_only_degs) >0){
+    mast_res[gsfa_only_degs, ]$gsfa_only_gene <- 1
+  }
+  
+  combined_mast_res <- rbind(combined_mast_res, mast_res)
+}
+
+pvalue_list <- list('GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
+                    'all genes'=combined_mast_res$PValue)
+
+# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_qqplot_v2.pdf"))
+qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
+  ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+  scale_colour_discrete(name="Method") + 
+  scale_color_manual(values=c("#00BA38","#619CFF"))
+# dev.off()
+```
