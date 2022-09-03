@@ -39,7 +39,7 @@ sbatch ~/projects/GSFA_analysis/code/run_unguided_gsfa_Tcells.sbatch
 Load packages
 ```{r load-packages, message=FALSE, warning=FALSE}
 suppressPackageStartupMessages(library(data.table))
-suppressPackageStartupMessages(library(Seurat))
+# suppressPackageStartupMessages(library(Seurat))
 suppressPackageStartupMessages(library(ComplexHeatmap))
 suppressPackageStartupMessages(library(ggplot2))
 require(reshape2)
@@ -369,7 +369,7 @@ for(i in 1:length(guides)){
     mast_res[gsfa_de_genes, ]$gsfa_gene <- 1
     pvalue_list <- list('Unguided GSFA'=dplyr::filter(mast_res,unguided_gsfa_gene==1)$PValue,
                         'GSFA'=dplyr::filter(mast_res,gsfa_gene==1)$PValue,
-                        'MAST'=mast_res$PValue)
+                        'all genes'=mast_res$PValue)
     qqplots[[guide]] <- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
       ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method")
@@ -402,11 +402,11 @@ for(i in 1:length(guides)){
 
 pvalue_list <- list('Unguided GSFA'=dplyr::filter(combined_mast_res,unguided_gsfa_gene==1)$PValue,
                     'GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
-                    'MAST'=combined_mast_res$PValue)
+                    'all genes'=combined_mast_res$PValue)
 
 # pdf(file.path(res_dir, "qqplot_all_combined.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method")
 
 # dev.off()
@@ -435,7 +435,7 @@ for(i in 1:length(guides)){
     
     pvalue_list <- list('Unguided GSFA only'=dplyr::filter(mast_res,unguided_gsfa_only_gene==1)$PValue,
                         'GSFA only'=dplyr::filter(mast_res,gsfa_only_gene==1)$PValue,
-                        'MAST'=mast_res$PValue)
+                        'all genes'=mast_res$PValue)
     qqplots[[guide]] <- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
       ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method")
@@ -469,37 +469,14 @@ for(i in 1:length(guides)){
 
 pvalue_list <- list('Unguided GSFA only'=dplyr::filter(combined_mast_res,unguided_gsfa_only_gene==1)$PValue,
                     'GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
-                    'MAST'=combined_mast_res$PValue)
+                    'all genes'=combined_mast_res$PValue)
 
 # pdf(file.path(res_dir, "qqplot_only_combined.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method") + 
       coord_cartesian(ylim = c(0, 30)) 
 # dev.off()
 ```
 
-QQ plots comparing GSFA with MAST
-```{r qqplots-gsfa-mast-all-combined}
-combined_mast_res <- data.frame()
-for(i in 1:length(guides)){
-  guide <- guides[i]
-  mast_res <- mast_list[[guide]]
-  gsfa_de_genes <- gsfa_sig_genes[[guide]]
-  gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
-  mast_res$gsfa_gene <- 0
-  if(length(gsfa_de_genes) >0){
-    mast_res[gsfa_de_genes, ]$gsfa_gene <- 1
-  }
-  combined_mast_res <- rbind(combined_mast_res, mast_res)
-}
-
-pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
-                    'MAST'=combined_mast_res$PValue)
-
-qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
-      scale_colour_discrete(name="Method") + 
-      scale_color_manual(values=c("#00BA38","#619CFF"))
-```
 
