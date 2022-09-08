@@ -1,21 +1,31 @@
+#!/usr/bin/env Rscript
+
+## Run two-step clustering analysis for T cells data
+
+library(optparse)
 suppressPackageStartupMessages(library(data.table))
+dyn.load('/software/geos-3.7.0-el7-x86_64/lib64/libgeos_c.so') # attach the geos lib for Seurat
 suppressPackageStartupMessages(library(Seurat))
-suppressPackageStartupMessages(library(ComplexHeatmap))
-suppressPackageStartupMessages(library(ggplot2))
 require(reshape2)
 require(dplyr)
-library(doParallel)
+# library(doParallel)
 library(foreach)
 
-data_dir <- "/project2/xinhe/kevinluo/GSFA/data/"
-res_dir <- "/project2/xinhe/kevinluo/GSFA/twostep_clustering/Stimulated_T_Cells/stimulated"
-dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)
-setwd(res_dir)
+# Process the command-line arguments --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+parser <- OptionParser()
+parser <- add_option(parser,c("--outdir","-o"),type="character",default=NULL)
+out    <- parse_args(parser)
+outdir <- out$outdir
 
-n_cores <- 8
+cat("outdir=", outdir, "\n")
+
+if(!dir.exists(outdir)){
+  dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
+}
 
 # 0. Load input data ####
 cat("Load input data ... \n")
+data_dir <- "/project2/xinhe/kevinluo/GSFA/data/"
 combined_obj <- readRDS(file.path(data_dir,"TCells_cropseq_data_seurat.rds"))
 feature.names <- data.frame(fread(file.path(data_dir, "Stimulated_T_Cells_GSE119450_RAW_D1N_genes.tsv.gz"),
                                   header = FALSE), stringsAsFactors = FALSE)
@@ -46,25 +56,36 @@ range(combined_obj$nCount_RNA)
 range(combined_obj$percent_mt)
 
 cat("Data filtering ... \n")
-# We filter cells that have more than 500 genes identified.
-combined_obj <- subset(combined_obj, subset = nFeature_RNA > 500)
+# Seurat is used to filter cells that contain < 500 expressed genes or more than 10% of total read counts from mitochondria genes.
+combined_obj <- subset(combined_obj,
+                       subset = percent_mt < 10 & nFeature_RNA > 500)
+
+paste0("Genes: ", dim(combined_obj)[1])
+paste0("Cells: ", dim(combined_obj)[2])
 
 # Normalizing the data
 combined_obj <- NormalizeData(combined_obj, normalization.method = "LogNormalize", scale.factor = 10000)
 
 # Identification of highly variable features (feature selection)
 combined_obj <- FindVariableFeatures(combined_obj, selection.method = "vst", nfeatures = 1000)
-combined_obj
 
-# Regress out total UMI counts per cell and percent of mitochondrial genes detected per cell and scaled to obtain gene level z-scores.
-combined_obj <- ScaleData(combined_obj, vars.to.regress = c("nCount_RNA", "percent_mt"))
+# Select the 6k genes used for GSFA
+scaled_gene_matrix_in_gsfa <- combined_obj@assays$RNA@scale.data
+dim(scaled_gene_matrix_in_gsfa)
+selected_gene_ids <- rownames(scaled_gene_matrix_in_gsfa)
+cat(length(selected_gene_ids), "genes selected. \n")
 
-saveRDS(combined_obj, file = file.path(res_dir, "TCells_stimulated_seurat_processed_data.rds"))
+all_gene_ids <- rownames(combined_obj)
+
+# Regress out the differences in unique UMI count, library size, and percentage of mitochondrial gene expression
+# As in the original study, we choose not to correct for donor batch or stimulation status as they contain genuine biological differences.
+covariates <- c('nCount_RNA', 'nFeature_RNA', 'percent_mt')
+combined_obj <- ScaleData(combined_obj, vars.to.regress = covariates, features = all_gene_ids)
+saveRDS(combined_obj, file = file.path(outdir, "TCells_stimulated_seurat_processed_data.rds"))
 
 # 2. Perform linear dimensional reduction
-combined_obj <- readRDS(file.path(res_dir, "TCells_stimulated_seurat_processed_data.rds"))
 combined_obj <- RunPCA(combined_obj, features = VariableFeatures(object = combined_obj))
-pdf(file.path(res_dir, "TCells_stimulated_seurat_pca.pdf"), width = 5, height = 5)
+pdf(file.path(outdir, "TCells_stimulated_seurat_pca.pdf"), width = 5, height = 5)
 ElbowPlot(combined_obj, ndims = 50)
 dev.off()
 
@@ -79,50 +100,16 @@ levels(combined_obj)
 
 # Look at cluster IDs of the first 5 cells
 head(cluster_labels, 5)
-saveRDS(combined_obj, file = file.path(res_dir, "TCells_stimulated_seurat_clustered.rds"))
+saveRDS(combined_obj, file = file.path(outdir, "TCells_stimulated_seurat_clustered.rds"))
 
 # 5. Finding differentially expressed features (cluster biomarkers) ####
-combined_obj <- readRDS(file.path(res_dir, "TCells_stimulated_seurat_clustered.rds"))
+combined_obj <- readRDS(file.path(outdir, "TCells_stimulated_seurat_clustered.rds"))
 cat("Run DE test using MAST...\n")
 cat(length(levels(combined_obj)), "clusters.\n")
-registerDoParallel(cores=n_cores)
-ptm <- proc.time()
-de.markers <- foreach(i=levels(combined_obj), .packages="Seurat") %dopar% {
-  FindMarkers(combined_obj, ident.1 = i, test.use = "MAST")
+de.markers <- foreach(i=levels(combined_obj), .packages="Seurat") %do% {
+  FindMarkers(combined_obj, ident.1 = i, test.use = "MAST", features = selected_gene_ids)
 }
-proc.time() - ptm
-stopImplicitCluster()
-saveRDS(de.markers, file = file.path(res_dir, "TCells_stimulated_seurat_MAST_DEGs.rds"))
+saveRDS(de.markers, file = file.path(outdir, "TCells_stimulated_seurat_MAST_DEGs.rds"))
 
-# cat("Run DE test using MAST...\n")
-# de.markers <- vector("list", length = length(levels(combined_obj)))
-# names(de.markers) <- levels(combined_obj)
-# for(i in levels(combined_obj)){
-#   cat("cluster", i, "\n")
-#   system.time(
-#     de.markers[[i]] <- FindMarkers(combined_obj, ident.1 = i, test.use = "MAST"))
-# }
-# saveRDS(de.markers, file = file.path(res_dir, "TCells_stimulated_seurat_MAST_DEGs.rds"))
-
-# cat("Run DE test using DESeq2...\n")
-# registerDoParallel(cores=n_cores)
-# ptm <- proc.time()
-# de.markers <- foreach(i=levels(combined_obj), .packages="Seurat") %dopar% {
-#   FindMarkers(combined_obj, ident.1 = i, test.use = "DESeq2")
-# }
-# names(de.markers) <- levels(combined_obj)
-# proc.time() - ptm
-# stopImplicitCluster()
-# saveRDS(de.markers, file = file.path(res_dir, "TCells_stimulated_seurat_DESeq2_DEGs.rds"))
-
-
-# cat("Run DE test using DESeq2...\n")
-# de.markers <- vector("list", length = length(levels(combined_obj)))
-# names(de.markers) <- levels(combined_obj)
-# for(i in levels(combined_obj)){
-#   cat("cluster", i, "\n")
-#   system.time(
-#     de.markers[[i]] <- FindMarkers(combined_obj, ident.1 = i, test.use = "DESeq2"))
-# }
-# saveRDS(de.markers, file = file.path(res_dir, "TCells_stimulated_seurat_DESeq2_DEGs.rds"))
-
+# session info
+sessionInfo()
