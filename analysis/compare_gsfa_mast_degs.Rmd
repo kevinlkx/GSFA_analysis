@@ -101,9 +101,7 @@ length(intersect(all_gsfa_degs, all_mast_degs))
 deg_list <- list("GSFA DEGs" = all_gsfa_degs,
                  "MAST DEGs" = all_mast_degs)
 
-# pdf(file.path(res_dir, "LUHMES_gsfa_mast_degs_venn_diagram.pdf"))
 ggvenn(deg_list, fill_color = c("#00BA38","#619CFF"), show_percentage = FALSE, set_name_size = 6, text_size = 6)
-# dev.off()
 ```
 
 QQ plots comparing GSFA with MAST
@@ -160,11 +158,9 @@ pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
                     'MAST only'=dplyr::filter(combined_mast_res,mast_only_gene==1)$PValue,
                     'all genes'=combined_mast_res$PValue)
 
-# pdf(file.path(res_dir, "LUHMES_gsfa_mast_degs_qqplot_v2.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
   ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
   scale_colour_discrete(name="Method")
-# dev.off()
 ```
 
 ```{r LUHMES_gsfa_degs_qqplot}
@@ -208,55 +204,11 @@ for(m in guides){
 
 pvalue_list <- list('GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue)
 
-# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_qqplot_v2.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
   ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
-  guides(color=guide_legend(title="Method")) +
-  scale_color_manual(values=c("#00BA38"))
-# dev.off()
+  scale_color_manual(values=c("#00BA38")) +
+  theme(legend.position="none")
 ```
-
-<!-- ```{r} -->
-<!-- m <- "SETD5" -->
-<!-- mast_res <- mast_list[[m]] -->
-<!-- curr_gsfa_degs <- gsfa_degs[[m]] -->
-<!-- curr_mast_degs <- mast_degs[[m]] -->
-<!-- gsfa_only_degs <- setdiff(curr_gsfa_degs, curr_mast_degs) -->
-<!-- mast_only_degs <- setdiff(curr_mast_degs, curr_gsfa_degs) -->
-
-<!-- length(gsfa_only_degs) -->
-<!-- length(mast_only_degs) -->
-
-<!-- mast_res$guide <- m -->
-<!-- mast_res$gsfa_gene <- 0 -->
-<!-- if(length(curr_gsfa_degs) >0){ -->
-<!--   mast_res[curr_gsfa_degs, ]$gsfa_gene <- 1 -->
-<!-- } -->
-<!-- mast_res$gsfa_only_gene <- 0 -->
-<!-- if(length(gsfa_only_degs) >0){ -->
-<!--   mast_res[gsfa_only_degs, ]$gsfa_only_gene <- 1 -->
-<!-- } -->
-<!-- mast_res$mast_only_gene <- 0 -->
-<!-- if(length(mast_only_degs) >0){ -->
-<!--   mast_res[mast_only_degs, ]$mast_only_gene <- 1 -->
-<!-- } -->
-
-<!-- mast_res[which(mast_res$mast_only_gene==1), ] %>% arrange(PValue) %>% head() -->
-
-<!-- mast_res[which(mast_res$gsfa_only_gene==1), ] %>% arrange(PValue) %>% head() -->
-
-<!-- pvalue_list <- list('GSFA'=dplyr::filter(mast_res,gsfa_gene==1)$PValue, -->
-<!--                     'GSFA [not MAST]'=dplyr::filter(mast_res,gsfa_only_gene==1)$PValue, -->
-<!--                     'MAST [not GSFA]'=dplyr::filter(mast_res,mast_only_gene==1)$PValue, -->
-<!--                     'MAST all tested genes'=mast_res$PValue) -->
-
-<!-- pdf(paste0(res_dir, "/LUHMES_", m, "_gsfa_mast_degs_qqplot_v2.pdf")) -->
-<!-- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +  -->
-<!--   ggtitle(m) + theme(plot.title = element_text(hjust = 0.5)) + -->
-<!--   scale_colour_discrete(name="Method") -->
-<!-- dev.off() -->
-
-<!-- ``` -->
 
 ## T cell data
 
@@ -324,9 +276,7 @@ length(intersect(all_gsfa_degs, all_mast_degs))
 deg_list <- list("GSFA DEGs" = all_gsfa_degs,
                  "MAST DEGs" = all_mast_degs)
 
-# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_venn_diagram.pdf"))
 ggvenn(deg_list, fill_color = c("#00BA38","#619CFF"), show_percentage = FALSE, set_name_size = 6, text_size = 6)
-# dev.off()
 ```
 
 
@@ -384,11 +334,9 @@ pvalue_list <- list('GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
                     'MAST only'=dplyr::filter(combined_mast_res,mast_only_gene==1)$PValue,
                     'all genes'=combined_mast_res$PValue)
 
-# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_qqplot_v2.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
   ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
   scale_colour_discrete(name="Method")
-# dev.off()
 ```
 
 ```{r Tcells_gsfa_degs_qqplot}
@@ -431,10 +379,9 @@ for(m in guides){
 
 pvalue_list <- list('GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue)
 
-# pdf(file.path(res_dir, "Tcells_gsfa_mast_degs_qqplot_v2.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
   ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
-  guides(color=guide_legend(title="Method")) +
-  scale_color_manual(values=c("#00BA38"))
-# dev.off()
+  scale_color_manual(values=c("#00BA38")) +
+  theme(legend.position="none")
+
 ```
