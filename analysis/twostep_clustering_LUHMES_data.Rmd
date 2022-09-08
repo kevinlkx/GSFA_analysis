@@ -24,6 +24,18 @@ cp /project2/xinhe/yifan/Factor_analysis/LUHMES/GSE142078_raw/GSM4219575_Run1_ge
   /project2/xinhe/kevinluo/GSFA/data/LUHMES_GSM4219575_Run1_genes.tsv.gz
 ```
 
+Scripts for running the analysis:
+
+* [R script](https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_twostep_clustering_LUHMES_data.R).
+
+```{bash, eval=FALSE}
+mkdir -p /project2/xinhe/kevinluo/GSFA/twostep_clustering/log
+cd /project2/xinhe/kevinluo/GSFA/twostep_clustering/log
+
+sbatch --mem=40G ~/projects/GSFA_analysis/code/run_twostep_clustering_LUHMES_data.sbatch
+```
+
+
 ## Load the data sets
 
 CROP-seq datasets: `/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds`
@@ -36,6 +48,7 @@ the rownames of which are the 6k genes used for GSFA.
 Load packages
 ```{r load-packages, message=FALSE, warning=FALSE}
 suppressPackageStartupMessages(library(data.table))
+dyn.load('/software/geos-3.7.0-el7-x86_64/lib64/libgeos_c.so') # attach the geos lib for Seurat
 suppressPackageStartupMessages(library(Seurat))
 suppressPackageStartupMessages(library(ComplexHeatmap))
 suppressPackageStartupMessages(library(ggplot2))
@@ -56,128 +69,19 @@ source("code/plotting_functions.R")
 Set directories
 ```{r dir}
 data_dir <- "/project2/xinhe/kevinluo/GSFA/data/"
-res_dir <- "/project2/xinhe/kevinluo/GSFA/twostep_clustering/LUHMES"
+res_dir <- "/project2/xinhe/kevinluo/GSFA/twostep_clustering/LUHMES/"
 dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)
 ```
 
-Load input data
-```{r load-data}
-combined_obj <- readRDS(file.path(data_dir,"LUHMES_cropseq_data_seurat.rds"))
-```
+## Load two-step clustering analysis result
 
-## Pre-processing
-The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat.
-
-These represent the selection and filtration of cells based on QC metrics, data normalization and scaling, 
-and the detection of highly variable features.
-```{r qc-1}
-# The number of unique genes detected in each cell.
-cat("The number of unique genes detected in each cell:\n")
-range(combined_obj$nFeature_RNA)
-
-# The total number of molecules detected within a cell
-cat("The total number of molecules detected within a cell:\n")
-range(combined_obj$nCount_RNA)
-
-# The percentage of reads that map to the mitochondrial genome
-cat("The percentage of reads that map to the mitochondrial genome:\n")
-range(combined_obj$percent_mt)
-```
-
-```{r qc-2, eval=FALSE}
-# Visualize QC metrics as a violin plot
-VlnPlot(combined_obj, features = c("nFeature_RNA", "nCount_RNA", "percent_mt"), ncol = 3)
-```
-
-We filter cells that have more than 500 genes identified, as in the Shifrut et al. paper. 
-```{r qc-filter-cells, eval=FALSE}
-combined_obj <- subset(combined_obj, subset = nFeature_RNA > 500)
-```
-
-Normalizing the data
-
-```{r normalize-data, eval=FALSE}
-combined_obj <- NormalizeData(combined_obj, normalization.method = "LogNormalize", scale.factor = 10000)
-```
-
-Identification of highly variable features (feature selection)
-
-Select a subset of features that exhibit high cell-to-cell variation in the dataset, by modeling the mean-variance relationship inherent in single-cell data.
-
-Select the 1,000 most variable genes across cells, as in the Shifrut et al. paper. 
-```{r select-variable-genes, eval=FALSE}
-combined_obj <- FindVariableFeatures(combined_obj, selection.method = "vst", nfeatures = 1000)
-```
-
-<!-- Select the 6k genes used for GSFA in this analysis -->
-<!-- ```{r select-genes} -->
-<!-- # Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA -->
-<!-- scaled_gene_matrix_in_gsfa <- combined_obj@assays$RNA@scale.data -->
-<!-- dim(scaled_gene_matrix_in_gsfa) -->
-<!-- selected_gene_id <- rownames(scaled_gene_matrix_in_gsfa) -->
-<!-- all(selected_gene_id %in% rownames(combined_obj@assays$RNA@counts)) -->
-<!-- ``` -->
-
-Regress out total UMI counts per cell and percent of mitochondrial genes detected per cell and scaled to obtain gene level z-scores, as in the Shifrut et al. paper. 
-```{r regress-out-totalcounts-mt-percent, eval=FALSE}
-combined_obj <- ScaleData(combined_obj, vars.to.regress = c("nCount_RNA", "percent_mt"))
-# combined_obj <- ScaleData(combined_obj, vars.to.regress = c("nCount_RNA", "percent_mt"), features = selected_gene_id)
-
-saveRDS(combined_obj, file = file.path(res_dir, "LUHMES_seurat_processed_data.rds"))
-```
-
-## Perform dimensional reduction
-
-Perform PCA on the scaled data. 
-```{r pca}
-combined_obj <- readRDS(file.path(res_dir, "LUHMES_seurat_processed_data.rds"))
-combined_obj <- RunPCA(combined_obj, features = VariableFeatures(object = combined_obj))
-ElbowPlot(combined_obj, ndims = 50)
-```
-
-## Cluster the cells
-
-Embed cells in K-nearest neighbor (KNN) graph using `FindNeighbors()` using the first 30 PCs. 
-Then apply the Louvain algorithm to find clusters using `FindClusters() function` with default resolution (0.8).
-
-```{r clustering, eval=FALSE}
-combined_obj <- FindNeighbors(combined_obj, dims = 1:30)
-combined_obj <- FindClusters(combined_obj)
-
-saveRDS(combined_obj, file = file.path(res_dir, "LUHMES_seurat_clustered.rds"))
-```
-
-Visualize the clusters using UMAP
-```{r umap, message=FALSE}
+```{r}
 combined_obj <- readRDS(file.path(res_dir, "LUHMES_seurat_clustered.rds"))
-
-cluster_labels <- Idents(combined_obj)
-cluster_labels <- as.factor(as.numeric(as.character(cluster_labels))+1)
-new_cluster_labels <- paste0("k", levels(cluster_labels))
-names(new_cluster_labels) <- levels(combined_obj)
-combined_obj <- RenameIdents(combined_obj, new_cluster_labels)
-
-combined_obj <- RunUMAP(combined_obj, dims = 1:30)
-DimPlot(combined_obj, reduction = "umap", label = TRUE)
-```
-
-## Finding differentially expressed genes using MAST
-
-```{r de-markers, eval=FALSE}
-combined_obj <- readRDS(file.path(res_dir, "LUHMES_seurat_clustered.rds"))
-cat(length(levels(combined_obj)), "clusters.\n")
-registerDoParallel(cores=n_cores)
-de.markers <- foreach(i=levels(combined_obj), .packages="Seurat") %dopar% {
-  FindMarkers(combined_obj, ident.1 = i, test.use = "MAST")
-}
-stopImplicitCluster()
-saveRDS(de.markers, file = file.path(res_dir, "LUHMES_seurat_MAST_DEGs.rds"))
 ```
 
 ## Associate perturbations with clusters
 
 ```{r associate-perturbs-clusters}
-combined_obj <- readRDS(file.path(res_dir, "LUHMES_seurat_clustered.rds"))
 perturb_matrix <- combined_obj@meta.data[, 4:18]
 
 cluster_labels <- Idents(combined_obj)
@@ -211,7 +115,7 @@ for(i in 1:nrow(summary_df)){
 summary_df$fdr <- p.adjust(summary_df$pval, method = "BH")
 summary_df$bonferroni_adj <- p.adjust(summary_df$pval, method = "bonferroni")
 
-saveRDS(summary_df, file = file.path(res_dir, "LUHMES_seurat_guide_cluster_chisq_summary_df.rds"))
+# saveRDS(summary_df, file = file.path(res_dir, "LUHMES_seurat_guide_cluster_chisq_summary_df.rds"))
 
 stdres_mat <- reshape2::dcast(summary_df %>% dplyr::select(perturb, cluster, stdres), perturb ~ cluster, value.var = "stdres")
 rownames(stdres_mat) <- stdres_mat$perturb
@@ -406,7 +310,7 @@ for(i in 1:length(guides)){
     mast_res[gsfa_de_genes, ]$gsfa_gene <- 1
     pvalue_list <- list('Two-step clustering'=dplyr::filter(mast_res,tsc_gene==1)$PValue,
                         'GSFA'=dplyr::filter(mast_res,gsfa_gene==1)$PValue,
-                        'MAST'=mast_res$PValue)
+                        'all genes'=mast_res$PValue)
     qqplots[[guide]] <- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
       ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method")
@@ -439,14 +343,11 @@ for(i in 1:length(guides)){
 
 pvalue_list <- list('Two-step clustering'=dplyr::filter(combined_mast_res,tsc_gene==1)$PValue,
                     'GSFA'=dplyr::filter(combined_mast_res,gsfa_gene==1)$PValue,
-                    'MAST'=combined_mast_res$PValue)
+                    'all genes'=combined_mast_res$PValue)
 
-# pdf(file.path(res_dir, "qqplot_all_combined.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method")
-
-# dev.off()
 ```
 
 QQ-plots of MAST DE p-values for the GSFA only genes vs two-step only genes.
@@ -469,7 +370,7 @@ for(i in 1:length(guides)){
     
     pvalue_list <- list('Two-step clustering only'=dplyr::filter(mast_res,tsc_only_gene==1)$PValue,
                         'GSFA only'=dplyr::filter(mast_res,gsfa_only_gene==1)$PValue,
-                        'MAST'=mast_res$PValue)
+                        'all genes'=mast_res$PValue)
     qqplots[[guide]] <- qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
       ggtitle(guide) + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method")
@@ -503,11 +404,10 @@ for(i in 1:length(guides)){
 
 pvalue_list <- list('Two-step clustering only'=dplyr::filter(combined_mast_res,tsc_only_gene==1)$PValue,
                     'GSFA only'=dplyr::filter(combined_mast_res,gsfa_only_gene==1)$PValue,
-                    'MAST'=combined_mast_res$PValue)
+                    'all genes'=combined_mast_res$PValue)
 
-# pdf(file.path(res_dir, "qqplot_only_combined.pdf"))
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
-      ggtitle("All perturbations") + theme(plot.title = element_text(hjust = 0.5)) +
+      ggtitle("") + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name="Method")
-# dev.off()
 ```
+
