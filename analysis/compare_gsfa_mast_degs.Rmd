@@ -163,6 +163,8 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
   scale_colour_discrete(name="Method")
 ```
 
+QQ plots for GSFA p-values
+
 ```{r LUHMES_gsfa_degs_qqplot}
 combined_mast_res <- data.frame()
 for(m in guides){
@@ -185,6 +187,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
   theme(legend.position="none")
 ```
 
+QQ plots for GSFA only p-values
 
 ```{r LUHMES_gsfa_only_degs_qqplot}
 combined_mast_res <- data.frame()
@@ -339,6 +342,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
   scale_colour_discrete(name="Method")
 ```
 
+QQ plots for GSFA p-values
 ```{r Tcells_gsfa_degs_qqplot}
 combined_mast_res <- data.frame()
 for(m in guides){
@@ -360,6 +364,8 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
   scale_color_manual(values=c("#00BA38")) +
   theme(legend.position="none")
 ```
+
+QQ plots for GSFA only p-values
 
 ```{r Tcells_gsfa_only_degs_qqplot}
 combined_mast_res <- data.frame()
