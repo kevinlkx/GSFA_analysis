@@ -15,6 +15,7 @@
 
 <title>SCEPTRE analysis on LUHMES CROP-seq data</title>
 
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -44,6 +45,8 @@ div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -351,7 +354,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">SCEPTRE analysis on LUHMES CROP-seq data</h1>
+<h1 class="title toc-ignore">SCEPTRE analysis on LUHMES CROP-seq
+data</h1>
 <h4 class="author">Kaixuan Luo</h4>
 <h4 class="date">2022-05-25</h4>
 
@@ -360,7 +364,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -369,7 +375,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -378,17 +386,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-05-26
+<strong>Last updated:</strong> 2022-09-16
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -397,91 +415,138 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it's best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220524)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220524)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220524code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220524code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220524)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220524)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree4b70cfd55bbfe76abaff21652a4d7fb5fc6e14e0targetblank4b70cfda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/4b70cfd55bbfe76abaff21652a4d7fb5fc6e14e0" target="_blank">4b70cfd</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreee5f4b4a0565745cd89f31f1ec64d83ffcfb1d24etargetblanke5f4b4aa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/e5f4b4a0565745cd89f31f1ec64d83ffcfb1d24e" target="_blank">e5f4b4a</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree4b70cfd55bbfe76abaff21652a4d7fb5fc6e14e0targetblank4b70cfda" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistreee5f4b4a0565745cd89f31f1ec64d83ffcfb1d24etargetblanke5f4b4aa"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/4b70cfd55bbfe76abaff21652a4d7fb5fc6e14e0" target="_blank">4b70cfd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/e5f4b4a0565745cd89f31f1ec64d83ffcfb1d24e" target="_blank">e5f4b4a</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
@@ -489,19 +554,60 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:  code/run_sceptre_LUHMES_data.sbatch
+    Untracked:  Rplots.pdf
+    Untracked:  analysis/check_Tcells_datasets.Rmd
+    Untracked:  analysis/fscLVM_analysis.Rmd
+    Untracked:  analysis/spca_LUHMES_data.Rmd
+    Untracked:  analysis/test_seurat.Rmd
+    Untracked:  code/gsfa_negctrl_job.sbatch
+    Untracked:  code/music_LUHMES_Yifan.R
+    Untracked:  code/plotting_functions.R
+    Untracked:  code/run_fscLVM_LUHMES_data.R
+    Untracked:  code/run_gsfa_2groups_negctrl.R
+    Untracked:  code/run_gsfa_negctrl.R
+    Untracked:  code/run_music_LUHMES.R
+    Untracked:  code/run_music_LUHMES_data.sbatch
+    Untracked:  code/run_music_LUHMES_data_20topics.R
+    Untracked:  code/run_music_LUHMES_data_20topics.sbatch
+    Untracked:  code/run_sceptre_Tcells_data.sbatch
     Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_test_data.sbatch
     Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
+    Untracked:  code/run_sceptre_permuted_data.sbatch
+    Untracked:  code/run_spca_LUHMES.R
+    Untracked:  code/run_spca_TCells.R
+    Untracked:  code/run_twostep_clustering_LUHMES_data.sbatch
+    Untracked:  code/run_twostep_clustering_Tcells_data.sbatch
+    Untracked:  code/run_unguided_gsfa_LUHMES.R
+    Untracked:  code/run_unguided_gsfa_LUHMES.sbatch
+    Untracked:  code/run_unguided_gsfa_Tcells.R
+    Untracked:  code/run_unguided_gsfa_Tcells.sbatch
     Untracked:  code/sceptre_LUHMES_data.R
     Untracked:  code/sceptre_Tcells_stimulated_data.R
     Untracked:  code/sceptre_Tcells_unstimulated_data.R
+    Untracked:  code/sceptre_permutation_analysis.R
+    Untracked:  code/sceptre_permute_analysis.R
+    Untracked:  code/seurat_sim_fpr_tpr.R
+    Untracked:  code/unguided_GFSA_mixture_normal_prior.cpp
 
 Unstaged changes:
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/music_LUHMES_data.Rmd
     Modified:   analysis/sceptre_TCells_data.Rmd
+    Modified:   analysis/twostep_clustering_LUHMES_data.Rmd
+    Modified:   code/run_sceptre_LUHMES_data.R
+    Modified:   code/run_sceptre_LUHMES_data.sbatch
+    Modified:   code/run_sceptre_LUHMES_permuted_data.R
+    Modified:   code/run_sceptre_Tcells_permuted_data.R
+    Modified:   code/run_sceptre_cropseq_data.sbatch
+    Modified:   code/run_twostep_clustering_LUHMES_data.R
+    Modified:   code/sceptre_analysis.R
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -512,7 +618,12 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in th
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/sceptre_LUHMES_data.Rmd</code>) and HTML (<code>docs/sceptre_LUHMES_data.html</code>) files. If you've configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/sceptre_LUHMES_data.Rmd</code>)
+and HTML (<code>docs/sceptre_LUHMES_data.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -536,6 +647,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/e5f4b4a0565745cd89f31f1ec64d83ffcfb1d24e/analysis/sceptre_LUHMES_data.Rmd" target="_blank">e5f4b4a</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-16
+</td>
+<td>
+updated results with new version and added permutation result
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/0b325fb6090b54ffa296674f4097df62bb5fc34f/docs/sceptre_LUHMES_data.html" target="_blank">0b325fb</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-05-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -630,32 +775,60 @@ SCEPTRE analysis on LUHMES data
 </div>
 <div id="about-the-data-sets" class="section level2">
 <h2>About the data sets</h2>
-<p>CROP-seq datasets: <code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code> The data are Seurat objects, with raw gene counts stored in <a href="mailto:obj@assays$RNA@counts">obj@assays$RNA@counts</a>, and cell meta data stored in <a href="mailto:obj@meta.data">obj@meta.data</a>. Normalized and scaled data used for GSFA are stored in <a href="mailto:obj@assays$RNA@scale.data">obj@assays$RNA@scale.data</a> , the rownames of which are the 6k genes used for GSFA.</p>
+<p>CROP-seq datasets:
+<code>/project2/xinhe/yifan/Factor_analysis/shared_data/</code> The data
+are Seurat objects, with raw gene counts stored in <a
+href="mailto:obj@assays" class="email">obj@assays</a><span
+class="math inline">\(RNA@counts, and cell meta data stored in
+obj@meta.data. Normalized and scaled data used for GSFA are stored in
+obj@assays\)</span><a href="mailto:RNA@scale.data"
+class="email">RNA@scale.data</a> , the rownames of which are the 6k
+genes used for GSFA.</p>
 </div>
 <div id="analysis" class="section level2">
 <h2>Analysis</h2>
-<p>Scripts for running the analysis:</p>
+<p>Scripts for running SCEPTRE:</p>
 <ul>
-<li><a href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/sceptre_analysis.R">R script</a>.</li>
-<li><a href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_sceptre_cropseq_data.sbatch">sbatch script</a>.</li>
+<li><a
+href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_sceptre_LUHMES_data.R">R
+script</a>.</li>
+<li><a
+href="https://github.com/kevinlkx/GSFA_analysis/tree/main/code/run_sceptre_LUHMES_data.sbatch">sbatch
+script</a>.</li>
 </ul>
-<pre class="bash"><code>cd /project2/xinhe/kevinluo/GSFA/log
+<pre class="bash"><code>mkdir -p /project2/xinhe/kevinluo/GSFA/sceptre_analysis/log
+cd /project2/xinhe/kevinluo/GSFA/sceptre_analysis/log
 
-sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_sceptre_cropseq_data.sbatch /project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data</code></pre>
+sbatch --mem=50G --cpus-per-task=10 --partition=xinhe ~/projects/GSFA_analysis/code/run_sceptre_LUHMES_data.sbatch</code></pre>
+<p>Permutation analysis</p>
+<pre class="bash"><code>mkdir -p /project2/xinhe/kevinluo/GSFA/sceptre_analysis/log
+cd /project2/xinhe/kevinluo/GSFA/sceptre_analysis/log
+
+for i in {1..10}
+do
+  sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_sceptre_LUHMES_permuted_data.sbatch $i
+done
+
+# run_sceptre_LUHMES_permuted_data.sbatch runs run_sceptre_LUHMES_permuted_data.R</code></pre>
 <p>Load packages</p>
-<pre class="r"><code>suppressPackageStartupMessages(library(tidyverse))
+<pre class="r"><code>dyn.load(&#39;/software/geos-3.7.0-el7-x86_64/lib64/libgeos_c.so&#39;) # attach the geos lib for Seurat
+suppressPackageStartupMessages(library(tidyverse))
 library(cowplot)
 library(Matrix)
 library(sceptre)
-library(Seurat)</code></pre>
+library(Seurat)
+source(&quot;code/plotting_functions.R&quot;)</code></pre>
 <div id="prepare-input-data-for-sceptre" class="section level3">
 <h3>Prepare input data for SCEPTRE</h3>
-<p>Load the LUHMES data</p>
+<p>Load the Seurat object of LUHMES data</p>
 <pre class="r"><code>LUHMES_data &lt;- readRDS(&#39;/project2/xinhe/yifan/Factor_analysis/shared_data/LUHMES_cropseq_data_seurat.rds&#39;)
 datadir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data&#39;</code></pre>
-<p>We first prepare three separate data objects required to run SCEPTRE: the gene expression matrix, the perturbation matrix, and the covariate matrix.</p>
+<p>We first prepare three separate data objects required to run SCEPTRE:
+the gene expression matrix, the perturbation matrix, and the covariate
+matrix.</p>
 <ol style="list-style-type: decimal">
-<li>Gene expression matrices Gene expression (gene-by-cell) raw count matrix</li>
+<li>Gene expression matrices Gene expression (gene-by-cell) raw count
+matrix</li>
 </ol>
 <pre class="r"><code>gene_matrix &lt;- LUHMES_data@assays$RNA@counts
 # gene-by-cell expression matrix
@@ -719,14 +892,12 @@ dim(covariate_matrix)
 # Run1_AAACCTGGTTCCGTCT LUHMES_Run1      10182         3052   3.142801
 # [1] 8708    4</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li>Perturbation matrix (a binary matrix of perturbations, rows are gRNA groups and columns are cell barcodes)</li>
+<li>Perturbation matrix (a binary matrix of perturbations, rows are gRNA
+groups and columns are cell barcodes)</li>
 </ol>
 <pre class="r"><code>combined_perturbation_matrix &lt;- t(metadata[,4:18])
-
 dim(combined_perturbation_matrix)
-
 combined_perturbation_matrix[1:10,1:3]
-
 range(combined_perturbation_matrix)
 # [1]   15 8708
 #        Run1_AAACCTGAGATCGATA Run1_AAACCTGCAGCTCGAC Run1_AAACCTGCATTAGCCA
@@ -741,8 +912,10 @@ range(combined_perturbation_matrix)
 # MECP2                      0                     0                     0
 # MYT1L                      0                     0                     0
 # [1] 0 1</code></pre>
-<p>Specify the gene-gRNA group pairs to test for association</p>
-<p>We include the 6k genes used for GSFA in this analysis</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Specify the gene-gRNA group pairs to test for association</li>
+</ol>
+<p>Include the 6k genes used for GSFA as candidates</p>
 <pre class="r"><code># Normalized and scaled data used for GSFA, the rownames of which are the 6k genes used for GSFA
 scaled_gene_matrix &lt;- LUHMES_data@assays$RNA@scale.data
 dim(scaled_gene_matrix)
@@ -756,208 +929,199 @@ gene_gRNA_group_pairs &lt;- data.frame(gene_id = pairs$Var1, gRNA_group = pairs$
 gene_gRNA_group_pairs[gene_gRNA_group_pairs$gRNA_group == &quot;Nontargeting&quot;, &quot;pair_type&quot;] &lt;- &quot;negative_control&quot;
 table(gene_gRNA_group_pairs$pair_type)
 table(gene_gRNA_group_pairs$gRNA_group)
-dim(gene_gRNA_group_pairs)</code></pre>
+dim(gene_gRNA_group_pairs)
+# 
+#        candidate negative_control 
+#            84000             6000 
+# 
+#         ADNP       ARID1B        ASH1L         CHD2         CHD8       CTNND2 
+#         6000         6000         6000         6000         6000         6000 
+#       DYRK1A        HDAC5        MECP2        MYT1L Nontargeting         POGZ 
+#         6000         6000         6000         6000         6000         6000 
+#         PTEN         RELN        SETD5 
+#         6000         6000         6000 
+# [1] 90000     3</code></pre>
 <pre class="r"><code>save(list = c(&quot;gene_matrix&quot;, &quot;combined_perturbation_matrix&quot;, &quot;covariate_matrix&quot;),
      file = file.path(datadir, &#39;data.matrices.RData&#39;))
 saveRDS(gene_gRNA_group_pairs, file.path(datadir, &quot;gene.gRNA.group.pairs.rds&quot;))</code></pre>
 </div>
-<div id="run-sceptre" class="section level3">
-<h3>Run SCEPTRE</h3>
-<pre class="r"><code>load(file.path(datadir, &quot;data.matrices.RData&quot;))
-gene_gRNA_group_pairs &lt;- readRDS(file.path(datadir, &quot;gene.gRNA.group.pairs.rds&quot;))
-
-cat(sprintf(&#39;Dimenstion of gene expression matrix: %d rows %d columns.\n&#39;, nrow(gene_matrix), ncol(gene_matrix)))
-cat(sprintf(&#39;Dimenstion of combined perturbation matrix: %d rows %d columns.\n&#39;, nrow(combined_perturbation_matrix), ncol(combined_perturbation_matrix)))
-cat(sprintf(&#39;Dimenstion of covariate matrix: %d rows %d columns.\n&#39;, nrow(covariate_matrix), ncol(covariate_matrix)))
-cat(sprintf(&#39;Dimenstion of gene gRNA-group pairs: %d rows %d columns.\n&#39;, nrow(gene_gRNA_group_pairs), ncol(gene_gRNA_group_pairs)))
-
-table(gene_gRNA_group_pairs$pair_type)
-# Dimenstion of gene expression matrix: 33694 rows 8708 columns.
-# Dimenstion of combined perturbation matrix: 15 rows 8708 columns.
-# Dimenstion of covariate matrix: 8708 rows 4 columns.
-# Dimenstion of gene gRNA-group pairs: 90000 rows 3 columns.
-# 
-#        candidate negative_control 
-#            84000             6000</code></pre>
-<pre class="r"><code>result &lt;- run_sceptre_high_moi(gene_matrix = gene_matrix,
-                               combined_perturbation_matrix = combined_perturbation_matrix,
-                               covariate_matrix = covariate_matrix,
-                               gene_gRNA_group_pairs = gene_gRNA_group_pairs,
-                               side = &quot;both&quot;,
-                               storage_dir = outdir, 
-                               full_output = TRUE)
-
-outdir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data/sceptre_output&#39;
-saveRDS(result, file.path(outdir, &#39;sceptre.result.rds&#39;))</code></pre>
-</div>
-<div id="analyze-the-results" class="section level3">
-<h3>Analyze the results</h3>
-<pre class="r"><code>outdir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_cropseq_data/sceptre_output&#39;
+<div id="analyze-the-sceptre-results" class="section level3">
+<h3>Analyze the SCEPTRE results</h3>
+<pre class="r"><code>outdir &lt;- &#39;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_data_updated/sceptre_output&#39;
 result &lt;- readRDS(file.path(outdir, &#39;sceptre.result.rds&#39;))
 head(result, 10)
-#            gene_id gRNA_id pair_type      p_value     z_value
-# 1  ENSG00000251562    ADNP candidate 8.276198e-04  -2.7128544
-# 2  ENSG00000167552    ADNP candidate 5.699734e-05   5.6529476
-# 3  ENSG00000205542    ADNP candidate 1.175300e-03  -3.2572089
-# 4  ENSG00000104722    ADNP candidate 5.498633e-07 -11.9722455
-# 5  ENSG00000156508    ADNP candidate 6.863815e-01  -0.4263849
-# 6  ENSG00000034510    ADNP candidate 5.594500e-02   2.2087809
-# 7  ENSG00000198712    ADNP candidate 8.261282e-01   0.1660938
-# 8  ENSG00000213190    ADNP candidate 1.769592e-01   1.4053725
-# 9  ENSG00000184009    ADNP candidate 5.329976e-01   0.7832493
-# 10 ENSG00000198668    ADNP candidate 7.860573e-03   4.6174578</code></pre>
+#            gene_id gRNA_id pair_type      p_value     z_value log_fold_change
+# 1  ENSG00000251562    ADNP candidate 8.276198e-04  -2.7128544    -0.042399626
+# 2  ENSG00000167552    ADNP candidate 5.699734e-05   5.6529476     0.090952484
+# 3  ENSG00000205542    ADNP candidate 1.175300e-03  -3.2572089    -0.077037279
+# 4  ENSG00000104722    ADNP candidate 5.498633e-07 -11.9722455    -0.218557354
+# 5  ENSG00000156508    ADNP candidate 6.863815e-01  -0.4263849    -0.040725865
+# 6  ENSG00000034510    ADNP candidate 5.594500e-02   2.2087809     0.025101774
+# 7  ENSG00000198712    ADNP candidate 8.261282e-01   0.1660938    -0.005275184
+# 8  ENSG00000213190    ADNP candidate 1.769592e-01   1.4053725     0.012649649
+# 9  ENSG00000184009    ADNP candidate 5.329976e-01   0.7832493    -0.007898580
+# 10 ENSG00000198668    ADNP candidate 7.860573e-03   4.6174578     0.042193477</code></pre>
 <p>Negative control pairs</p>
 <pre class="r"><code>neg_control_p_vals &lt;- result %&gt;% filter(pair_type == &quot;negative_control&quot;) %&gt;% pull(p_value)
-qq_plot &lt;- make_qq_plot(neg_control_p_vals)
-plot(qq_plot)</code></pre>
-<p><img src="figure/sceptre_LUHMES_data.Rmd/neg-control-1.png" width="840" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-neg-control-1">
-Past versions of neg-control-1.png
-</button>
-</p>
-<div id="fig-neg-control-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/kevinlkx/GSFA-analysis/blob/a38de80af621969cd22f8872c5be68effa614f35/docs/figure/sceptre_LUHMES_data.Rmd/neg-control-1.png" target="_blank">a38de80</a>
-</td>
-<td>
-kevinlkx
-</td>
-<td>
-2022-05-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/kevinlkx/GSFA-analysis/blob/dab64ad6af4892b649e2c4b4e5d36b3d23346298/docs/figure/sceptre_LUHMES_data.Rmd/neg-control-1.png" target="_blank">dab64ad</a>
-</td>
-<td>
-kevinlkx
-</td>
-<td>
-2022-05-26
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Candidate pairs We extract the p-values corresponding to the candidate pairs and apply a Benjamini-Hochberg (BH) correction to adjust for multiple testing.</p>
-<pre class="r"><code>candidate_pair_results &lt;- result %&gt;% filter(pair_type == &quot;candidate&quot;)
-candidate_pair_results_p_adj &lt;- candidate_pair_results %&gt;%
+make_qq_plot(neg_control_p_vals)</code></pre>
+<p><img src="figure/sceptre_LUHMES_data.Rmd/unnamed-chunk-5-1.png" width="840" style="display: block; margin: auto;" /></p>
+<p>Candidate pairs We extract the p-values corresponding to the
+candidate pairs and apply a Benjamini-Hochberg (BH) correction to adjust
+for multiple testing.</p>
+<pre class="r"><code>candidate_pair_results &lt;- result %&gt;% filter(pair_type == &quot;candidate&quot;) %&gt;%
   mutate(p_val_adj = p.adjust(p_value, method = &quot;BH&quot;))
-head(candidate_pair_results_p_adj)
-#           gene_id gRNA_id pair_type      p_value     z_value    p_val_adj
-# 1 ENSG00000251562    ADNP candidate 8.276198e-04  -2.7128544 0.1020852591
-# 2 ENSG00000167552    ADNP candidate 5.699734e-05   5.6529476 0.0134866957
-# 3 ENSG00000205542    ADNP candidate 1.175300e-03  -3.2572089 0.1254449612
-# 4 ENSG00000104722    ADNP candidate 5.498633e-07 -11.9722455 0.0002851143
-# 5 ENSG00000156508    ADNP candidate 6.863815e-01  -0.4263849 0.9624904235
-# 6 ENSG00000034510    ADNP candidate 5.594500e-02   2.2087809 0.6100669357</code></pre>
-<p>We call pairs with an adjusted p-value of less or equal than 0.1 significant; the discovery set (i.e., the set of significant pairs) has a false discovery rate (FDR) of 10%.</p>
-<pre class="r"><code>discovery_set &lt;- candidate_pair_results_p_adj %&gt;% filter(p_val_adj &lt;= 0.1)
+head(candidate_pair_results)
+
+candidate_pvals &lt;- candidate_pair_results %&gt;% pull(p_value)
+make_qq_plot(candidate_pvals)</code></pre>
+<p><img src="figure/sceptre_LUHMES_data.Rmd/fdr-1.png" width="840" style="display: block; margin: auto;" /></p>
+<pre><code>#           gene_id gRNA_id pair_type      p_value     z_value log_fold_change
+# 1 ENSG00000251562    ADNP candidate 8.276198e-04  -2.7128544     -0.04239963
+# 2 ENSG00000167552    ADNP candidate 5.699734e-05   5.6529476      0.09095248
+# 3 ENSG00000205542    ADNP candidate 1.175300e-03  -3.2572089     -0.07703728
+# 4 ENSG00000104722    ADNP candidate 5.498633e-07 -11.9722455     -0.21855735
+# 5 ENSG00000156508    ADNP candidate 6.863815e-01  -0.4263849     -0.04072587
+# 6 ENSG00000034510    ADNP candidate 5.594500e-02   2.2087809      0.02510177
+#      p_val_adj
+# 1 0.1089391252
+# 2 0.0160663656
+# 3 0.1220336025
+# 4 0.0003446905
+# 5 0.9638421091
+# 6 0.6058244221</code></pre>
+<p>We call pairs with an adjusted p-value of less or equal than 0.1
+significant; the discovery set (i.e., the set of significant pairs) has
+a false discovery rate (FDR) of 10%.</p>
+<pre class="r"><code>discovery_set &lt;- candidate_pair_results %&gt;% filter(p_val_adj &lt;= 0.1)
 head(discovery_set)
-#           gene_id gRNA_id pair_type      p_value    z_value    p_val_adj
-# 1 ENSG00000167552    ADNP candidate 5.699734e-05   5.652948 1.348670e-02
-# 2 ENSG00000104722    ADNP candidate 5.498633e-07 -11.972246 2.851143e-04
-# 3 ENSG00000124766    ADNP candidate 2.428708e-06  -5.419528 1.004982e-03
-# 4 ENSG00000173267    ADNP candidate 2.220446e-16  12.720042 1.243450e-12
-# 5 ENSG00000131711    ADNP candidate 1.852806e-05   4.984110 5.441809e-03
-# 6 ENSG00000277586    ADNP candidate 6.380460e-05  -6.488863 1.480549e-02</code></pre>
-<pre class="r"><code>saveRDS(candidate_pair_results_p_adj, file.path(outdir, &#39;sceptre.candidate.pair.results.rds&#39;))
-saveRDS(discovery_set, file.path(outdir, &#39;sceptre.discovery.set.results.rds&#39;))</code></pre>
+#           gene_id gRNA_id pair_type      p_value    z_value log_fold_change
+# 1 ENSG00000167552    ADNP candidate 5.699734e-05   5.652948      0.09095248
+# 2 ENSG00000104722    ADNP candidate 5.498633e-07 -11.972246     -0.21855735
+# 3 ENSG00000124766    ADNP candidate 2.428708e-06  -5.419528     -0.08567983
+# 4 ENSG00000173267    ADNP candidate 2.220446e-16  12.720042      0.17604320
+# 5 ENSG00000131711    ADNP candidate 1.852806e-05   4.984110      0.08523870
+# 6 ENSG00000277586    ADNP candidate 6.380460e-05  -6.488863     -0.15174885
+#      p_val_adj
+# 1 1.606637e-02
+# 2 3.446905e-04
+# 3 1.214354e-03
+# 4 1.434750e-12
+# 5 6.539316e-03
+# 6 1.763022e-02</code></pre>
+</div>
+<div id="permutation-analysis" class="section level3">
+<h3>Permutation analysis</h3>
+<p>Pool results from 10 permuted data sets</p>
+<pre class="r"><code>outdir &lt;- &quot;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_data_updated/sceptre_output/permutation&quot;
+
+sceptre_res &lt;- data.frame()
+for(permute_num in 1:10){
+  cat(&quot;permutation set: &quot;,permute_num, &quot;\n&quot;)
+  res_dir &lt;- paste0(outdir, &quot;/perm_&quot;, permute_num)
+  res &lt;- readRDS(file.path(res_dir, &#39;sceptre.result.rds&#39;))
+  sceptre_res &lt;- rbind(sceptre_res, data.frame(permute_num = permute_num, res))
+}
+
+nrow(sceptre_res)
+anyNA(sceptre_res$p_value)
+# permutation set:  1 
+# permutation set:  2 
+# permutation set:  3 
+# permutation set:  4 
+# permutation set:  5 
+# permutation set:  6 
+# permutation set:  7 
+# permutation set:  8 
+# permutation set:  9 
+# permutation set:  10 
+# [1] 900000
+# [1] FALSE</code></pre>
+<p>QQ-plot for candidate pairs</p>
+<pre class="r"><code>candidate_pair_results &lt;- sceptre_res %&gt;% filter(pair_type == &quot;candidate&quot;) %&gt;%
+  mutate(p_val_adj = p.adjust(p_value, method = &quot;BH&quot;))
+
+candidate_p_vals &lt;- candidate_pair_results %&gt;% pull(p_value)</code></pre>
+<pre class="r"><code># pdf(file.path(outdir, &quot;LUHMES_permutation_qqplot.pdf&quot;), width = 5, height = 5)
+qqunif.plot(candidate_p_vals, main = &quot;SCEPTRE&quot;)
+# Loading required package: grid</code></pre>
+<p><img src="figure/sceptre_LUHMES_data.Rmd/qqplot_permutation-1.png" width="600" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># dev.off()</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()
-# R version 4.0.4 (2021-02-15)
+# R version 4.2.0 (2022-04-22)
 # Platform: x86_64-pc-linux-gnu (64-bit)
-# Running under: Scientific Linux 7.4 (Nitrogen)
+# Running under: CentOS Linux 7 (Core)
 # 
 # Matrix products: default
 # BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
 # 
 # locale:
-#  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-#  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-#  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-#  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-#  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-# [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+#  [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C         LC_TIME=C           
+#  [4] LC_COLLATE=C         LC_MONETARY=C        LC_MESSAGES=C       
+#  [7] LC_PAPER=C           LC_NAME=C            LC_ADDRESS=C        
+# [10] LC_TELEPHONE=C       LC_MEASUREMENT=C     LC_IDENTIFICATION=C 
 # 
 # attached base packages:
-# [1] stats     graphics  grDevices utils     datasets  methods   base     
+# [1] grid      stats     graphics  grDevices utils     datasets  methods  
+# [8] base     
 # 
 # other attached packages:
-#  [1] SeuratObject_4.0.4 Seurat_4.1.0       sceptre_0.1.0      Matrix_1.4-1      
-#  [5] cowplot_1.1.1      forcats_0.5.1      stringr_1.4.0      dplyr_1.0.8       
-#  [9] purrr_0.3.4        readr_2.1.2        tidyr_1.2.0        tibble_3.1.6      
-# [13] ggplot2_3.3.5      tidyverse_1.3.1    workflowr_1.7.0   
+#  [1] lattice_0.20-45    sp_1.4-7           SeuratObject_4.1.0 Seurat_4.1.1      
+#  [5] sceptre_0.1.0      Matrix_1.4-1       cowplot_1.1.1      forcats_0.5.1     
+#  [9] stringr_1.4.0      dplyr_1.0.9        purrr_0.3.4        readr_2.1.2       
+# [13] tidyr_1.2.0        tibble_3.1.7       ggplot2_3.3.6      tidyverse_1.3.1   
+# [17] workflowr_1.7.0   
 # 
 # loaded via a namespace (and not attached):
-#   [1] readxl_1.4.0          backports_1.4.1       plyr_1.8.6           
-#   [4] igraph_1.2.11         lazyeval_0.2.2        splines_4.0.4        
-#   [7] listenv_0.8.0         scattermore_0.7       digest_0.6.29        
+#   [1] readxl_1.4.0          backports_1.4.1       plyr_1.8.7           
+#   [4] igraph_1.3.4          lazyeval_0.2.2        splines_4.2.0        
+#   [7] listenv_0.8.0         scattermore_0.8       digest_0.6.29        
 #  [10] htmltools_0.5.2       fansi_1.0.3           magrittr_2.0.3       
-#  [13] tensor_1.5            cluster_2.1.2         ROCR_1.0-11          
-#  [16] tzdb_0.3.0            globals_0.14.0        modelr_0.1.8         
-#  [19] matrixStats_0.61.0    spatstat.sparse_2.1-0 colorspace_2.0-3     
+#  [13] tensor_1.5            cluster_2.1.3         ROCR_1.0-11          
+#  [16] tzdb_0.3.0            globals_0.15.0        modelr_0.1.8         
+#  [19] matrixStats_0.62.0    spatstat.sparse_2.1-1 colorspace_2.0-3     
 #  [22] rvest_1.0.2           ggrepel_0.9.1         haven_2.5.0          
 #  [25] xfun_0.30             callr_3.7.0           crayon_1.5.1         
-#  [28] jsonlite_1.8.0        spatstat.data_2.1-2   survival_3.3-1       
-#  [31] zoo_1.8-9             glue_1.6.2            polyclip_1.10-0      
-#  [34] gtable_0.3.0          leiden_0.3.9          future.apply_1.8.1   
-#  [37] abind_1.4-5           scales_1.2.0          DBI_1.1.2            
-#  [40] spatstat.random_2.1-0 miniUI_0.1.1.1        Rcpp_1.0.8.3         
-#  [43] viridisLite_0.4.0     xtable_1.8-4          reticulate_1.24      
-#  [46] spatstat.core_2.4-0   htmlwidgets_1.5.4     httr_1.4.2           
-#  [49] RColorBrewer_1.1-3    ellipsis_0.3.2        ica_1.0-2            
-#  [52] farver_2.1.0          pkgconfig_2.0.3       sass_0.4.1           
-#  [55] uwot_0.1.11           dbplyr_2.1.1          deldir_1.0-6         
-#  [58] utf8_1.2.2            tidyselect_1.1.2      rlang_1.0.2          
-#  [61] reshape2_1.4.4        later_1.3.0           munsell_0.5.0        
-#  [64] cellranger_1.1.0      tools_4.0.4           cli_3.2.0            
-#  [67] generics_0.1.2        broom_0.8.0           ggridges_0.5.3       
-#  [70] evaluate_0.15         fastmap_1.1.0         yaml_2.3.5           
-#  [73] goftest_1.2-3         processx_3.5.3        knitr_1.38           
-#  [76] fs_1.5.2              fitdistrplus_1.1-8    RANN_2.6.1           
-#  [79] pbapply_1.5-0         future_1.24.0         nlme_3.1-155         
-#  [82] whisker_0.4           mime_0.12             xml2_1.3.3           
-#  [85] compiler_4.0.4        rstudioapi_0.13       plotly_4.10.0        
-#  [88] png_0.1-7             spatstat.utils_2.3-0  reprex_2.0.1         
-#  [91] bslib_0.3.1           stringi_1.7.6         highr_0.9            
-#  [94] ps_1.6.0              lattice_0.20-45       vctrs_0.4.1          
-#  [97] pillar_1.7.0          lifecycle_1.0.1       spatstat.geom_2.3-2  
-# [100] lmtest_0.9-40         jquerylib_0.1.4       RcppAnnoy_0.0.19     
-# [103] data.table_1.14.2     irlba_2.3.5           httpuv_1.6.5         
-# [106] patchwork_1.1.1       R6_2.5.1              promises_1.2.0.1     
-# [109] KernSmooth_2.23-20    gridExtra_2.3         parallelly_1.31.0    
-# [112] codetools_0.2-18      MASS_7.3-56           assertthat_0.2.1     
-# [115] rprojroot_2.0.2       withr_2.5.0           sctransform_0.3.3    
-# [118] mgcv_1.8-39           parallel_4.0.4        hms_1.1.1            
-# [121] grid_4.0.4            rpart_4.1-15          rmarkdown_2.13       
-# [124] Rtsne_0.15            git2r_0.30.1          getPass_0.2-2        
+#  [28] jsonlite_1.8.0        progressr_0.10.0      spatstat.data_2.2-0  
+#  [31] survival_3.3-1        zoo_1.8-10            glue_1.6.2           
+#  [34] polyclip_1.10-0       gtable_0.3.0          leiden_0.4.2         
+#  [37] future.apply_1.9.0    abind_1.4-5           scales_1.2.0         
+#  [40] DBI_1.1.3             spatstat.random_2.2-0 miniUI_0.1.1.1       
+#  [43] Rcpp_1.0.8.3          viridisLite_0.4.0     xtable_1.8-4         
+#  [46] reticulate_1.24       spatstat.core_2.4-2   htmlwidgets_1.5.4    
+#  [49] httr_1.4.3            RColorBrewer_1.1-3    ellipsis_0.3.2       
+#  [52] ica_1.0-2             farver_2.1.0          pkgconfig_2.0.3      
+#  [55] uwot_0.1.11           sass_0.4.1            dbplyr_2.1.1         
+#  [58] deldir_1.0-6          utf8_1.2.2            tidyselect_1.1.2     
+#  [61] rlang_1.0.2           reshape2_1.4.4        later_1.3.0          
+#  [64] munsell_0.5.0         cellranger_1.1.0      tools_4.2.0          
+#  [67] cli_3.3.0             generics_0.1.2        broom_0.8.0          
+#  [70] ggridges_0.5.3        evaluate_0.15         fastmap_1.1.0        
+#  [73] yaml_2.3.5            goftest_1.2-3         processx_3.5.3       
+#  [76] knitr_1.39            fs_1.5.2              fitdistrplus_1.1-8   
+#  [79] RANN_2.6.1            pbapply_1.5-0         future_1.25.0        
+#  [82] nlme_3.1-157          whisker_0.4           mime_0.12            
+#  [85] xml2_1.3.3            compiler_4.2.0        rstudioapi_0.13      
+#  [88] plotly_4.10.0         png_0.1-7             spatstat.utils_2.3-1 
+#  [91] reprex_2.0.1          bslib_0.3.1           stringi_1.7.6        
+#  [94] highr_0.9             ps_1.7.0              rgeos_0.5-9          
+#  [97] vctrs_0.4.1           pillar_1.7.0          lifecycle_1.0.1      
+# [100] spatstat.geom_2.4-0   lmtest_0.9-40         jquerylib_0.1.4      
+# [103] RcppAnnoy_0.0.19      data.table_1.14.2     irlba_2.3.5          
+# [106] httpuv_1.6.5          patchwork_1.1.1       R6_2.5.1             
+# [109] promises_1.2.0.1      KernSmooth_2.23-20    gridExtra_2.3        
+# [112] parallelly_1.31.1     codetools_0.2-18      MASS_7.3-56          
+# [115] assertthat_0.2.1      rprojroot_2.0.3       withr_2.5.0          
+# [118] sctransform_0.3.3     mgcv_1.8-40           parallel_4.2.0       
+# [121] hms_1.1.1             rpart_4.1.16          rmarkdown_2.14       
+# [124] Rtsne_0.16            git2r_0.30.1          getPass_0.2-2        
 # [127] shiny_1.7.1           lubridate_1.8.0</code></pre>
 </div>
 </div>
@@ -975,6 +1139,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
