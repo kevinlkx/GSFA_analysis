@@ -11,7 +11,9 @@ editor_options:
 GSFA analysis
 
 * [GSFA analysis on LUHMES CROP-seq data](gsfa_LUHMES_data.html)
+* [Full analysis on LUHMES CROP-seq data](interpret_gsfa_LUHMES.html)
 * [GSFA analysis on CD8+ T Cell (stimulated and unstimulated) CROP-seq data](gsfa_TCells_data.html)
+* [Full analysis on T Cell (stimulated and unstimulated) CROP-seq data](interpret_gsfa_TCells.html)
 
 SCEPTRE analysis
 
