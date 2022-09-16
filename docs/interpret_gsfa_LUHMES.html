@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Yifan Zhou and Kaixuan Luo" />
+
+
+<title>Interpretation of GSFA Results on LUHMES CROP-seq Data</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">GSFA_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Interpretation of GSFA Results on LUHMES
+CROP-seq Data</h1>
+<h3 class="subtitle">– In-house scripts</h3>
+<h4 class="author">Yifan Zhou and Kaixuan Luo</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-09-16
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220524)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220524code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220524)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2108dae34d9bc1a90419e7f7bacadd15bece392atargetblank2108daea">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/2108dae34d9bc1a90419e7f7bacadd15bece392a" target="_blank">2108dae</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree2108dae34d9bc1a90419e7f7bacadd15bece392atargetblank2108daea"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/2108dae34d9bc1a90419e7f7bacadd15bece392a" target="_blank">2108dae</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  Rplots.pdf
+    Untracked:  analysis/check_Tcells_datasets.Rmd
+    Untracked:  analysis/fscLVM_analysis.Rmd
+    Untracked:  analysis/interpret_gsfa_TCells.Rmd
+    Untracked:  analysis/spca_LUHMES_data.Rmd
+    Untracked:  analysis/test_seurat.Rmd
+    Untracked:  code/gsfa_negctrl_job.sbatch
+    Untracked:  code/music_LUHMES_Yifan.R
+    Untracked:  code/plotting_functions.R
+    Untracked:  code/run_fscLVM_LUHMES_data.R
+    Untracked:  code/run_gsfa_2groups_negctrl.R
+    Untracked:  code/run_gsfa_negctrl.R
+    Untracked:  code/run_music_LUHMES.R
+    Untracked:  code/run_music_LUHMES_data.sbatch
+    Untracked:  code/run_music_LUHMES_data_20topics.R
+    Untracked:  code/run_music_LUHMES_data_20topics.sbatch
+    Untracked:  code/run_sceptre_Tcells_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_test_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
+    Untracked:  code/run_sceptre_permuted_data.sbatch
+    Untracked:  code/run_spca_LUHMES.R
+    Untracked:  code/run_spca_TCells.R
+    Untracked:  code/run_twostep_clustering_LUHMES_data.sbatch
+    Untracked:  code/run_twostep_clustering_Tcells_data.sbatch
+    Untracked:  code/run_unguided_gsfa_LUHMES.R
+    Untracked:  code/run_unguided_gsfa_LUHMES.sbatch
+    Untracked:  code/run_unguided_gsfa_Tcells.R
+    Untracked:  code/run_unguided_gsfa_Tcells.sbatch
+    Untracked:  code/sceptre_LUHMES_data.R
+    Untracked:  code/sceptre_Tcells_stimulated_data.R
+    Untracked:  code/sceptre_Tcells_unstimulated_data.R
+    Untracked:  code/sceptre_permutation_analysis.R
+    Untracked:  code/sceptre_permute_analysis.R
+    Untracked:  code/seurat_sim_fpr_tpr.R
+    Untracked:  code/unguided_GFSA_mixture_normal_prior.cpp
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/music_LUHMES_data.Rmd
+    Modified:   analysis/sceptre_LUHMES_data.Rmd
+    Modified:   analysis/sceptre_TCells_data.Rmd
+    Modified:   analysis/twostep_clustering_LUHMES_data.Rmd
+    Modified:   code/run_sceptre_LUHMES_data.R
+    Modified:   code/run_sceptre_LUHMES_data.sbatch
+    Modified:   code/run_sceptre_LUHMES_permuted_data.R
+    Modified:   code/run_sceptre_Tcells_permuted_data.R
+    Modified:   code/run_sceptre_cropseq_data.sbatch
+    Modified:   code/run_twostep_clustering_LUHMES_data.R
+    Modified:   code/sceptre_analysis.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/interpret_gsfa_LUHMES.Rmd</code>)
+and HTML (<code>docs/interpret_gsfa_LUHMES.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/2108dae34d9bc1a90419e7f7bacadd15bece392a/analysis/interpret_gsfa_LUHMES.Rmd" target="_blank">2108dae</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-16
+</td>
+<td>
+updated sceptre result
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This tutorial demonstrates how to visualize and interpret the results
+from a GSFA run.</p>
+<p>The results are a bit different from what was reported in the biorxiv
+version of GSFA manuscript due to slight changes in random sampling and
+calibration of negative control effects.</p>
+<p>We have described how to run GSFA on LUHMES CROP-seq data <a
+href="run_gsfa_LUHMES.html">here</a>.</p>
+<p>To recapitulate, the processed dataset consists of 8708 neural
+progenitor cells that belong to one of the 15 perturbation conditions
+(CRISPR knock-down of 14 neurodevelopmental genes, and negative
+control). Top 6000 genes ranked by deviance statistics were kept. And
+GSFA was performed on the data with 20 factors specified.</p>
+<div id="load-necessary-packages-and-data" class="section level2">
+<h2>Load necessary packages and data</h2>
+<pre class="r"><code>library(data.table)
+library(Matrix)
+library(tidyverse)
+library(ggplot2)
+theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
+                             axis.title = element_text(size = 14),
+                             axis.text = element_text(size = 12),
+                             legend.title = element_text(size = 13),
+                             legend.text = element_text(size = 12),
+                             panel.grid.minor = element_blank())
+)
+library(gridExtra)
+library(ComplexHeatmap)
+library(kableExtra)
+library(WebGestaltR)
+
+source(&quot;/project2/xinhe/yifan/Factor_analysis/analysis_website_for_Kevin/scripts/plotting_functions.R&quot;)
+data_folder &lt;- &quot;/project2/xinhe/yifan/Factor_analysis/LUHMES/&quot;</code></pre>
+<p>The first thing we need is the output of GSFA
+<code>fit_gsfa_multivar()</code> run. The lighter version containing
+just the posterior mean estimates and LFSR of perturbation-gene effects
+is enough.</p>
+<pre class="r"><code>fit &lt;- readRDS(paste0(data_folder,
+                      &quot;gsfa_output_detect_01/use_negctrl/All.gibbs_obj_k20.svd_negctrl.seed_14314.light.rds&quot;))
+gibbs_PM &lt;- fit$posterior_means
+lfsr_mat &lt;- fit$lfsr[, -ncol(fit$lfsr)]
+total_effect &lt;- fit$total_effect[, -ncol(fit$total_effect)]
+KO_names &lt;- colnames(lfsr_mat)</code></pre>
+<p>We also need the cell by perturbation matrix which was used as input
+<span class="math inline">\(G\)</span> for GSFA.</p>
+<pre class="r"><code>metadata &lt;- readRDS(paste0(data_folder, &quot;processed_data/merged_metadata.rds&quot;))
+G_mat &lt;- metadata[, 4:18]</code></pre>
+<p>Finally, we load the mapping from gene name to ENSEMBL ID for all 6k
+genes used in GSFA, as well as selected neuronal marker genes. This is
+specific to this study and analysis.</p>
+<pre class="r"><code>feature.names &lt;- data.frame(fread(paste0(data_folder, &quot;GSE142078_raw/GSM4219576_Run2_genes.tsv.gz&quot;),
+                                  header = FALSE), stringsAsFactors = FALSE)
+genes_df &lt;- feature.names[match(rownames(lfsr_mat), feature.names$V1), ]
+names(genes_df) &lt;- c(&quot;ID&quot;, &quot;Name&quot;)
+interest_df &lt;- readRDS(paste0(data_folder, &quot;processed_data/selected_neuronal_markers.rds&quot;))</code></pre>
+</div>
+</div>
+<div id="factor-perturbation-association" class="section level1">
+<h1>Factor ~ Perturbation Association</h1>
+<div id="perturbation-effects-on-factors" class="section level2">
+<h2>Perturbation effects on factors</h2>
+<p>Fisrt of all, we look at the estimated effects of gene perturbations
+on factors inferred by GSFA.</p>
+<p>We found that targeting of 7 genes, ADNP, ARID1B, ASH1L, CHD2,
+DYRK1A, PTEN, and SETD5, has significant effects (PIP &gt; 0.95) on at
+least 1 of the 20 inferred factors.</p>
+<p>All targets and factors (Figure S6A):</p>
+<pre class="r"><code>dotplot_beta_PIP(t(gibbs_PM$Gamma_pm), t(gibbs_PM$beta_pm),
+                 marker_names = KO_names,
+                 reorder_markers = c(KO_names[KO_names!=&quot;Nontargeting&quot;], &quot;Nontargeting&quot;),
+                 inverse_factors = F) +
+  coord_flip()</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_S6A-1.png" width="864" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## Similar visualization using GSFA built-in functions:
+GSFA::dotplot_beta_PIP(fit,
+                       target_names = KO_names,
+                       reorder_targets = c(KO_names[KO_names!=&quot;Nontargeting&quot;], &quot;Nontargeting&quot;))</code></pre>
+<p>Here is a closer look at the estimated effects of selected
+perturbations on selected factors (Figure 5A):</p>
+<pre class="r"><code>targets &lt;- c(&quot;ADNP&quot;, &quot;ARID1B&quot;, &quot;ASH1L&quot;, &quot;CHD2&quot;, &quot;DYRK1A&quot;, &quot;PTEN&quot;, &quot;SETD5&quot;)
+complexplot_perturbation_factor(gibbs_PM$Gamma_pm[-nrow(gibbs_PM$Gamma_pm), ],
+                                gibbs_PM$beta_pm[-nrow(gibbs_PM$beta_pm), ],
+                                marker_names = KO_names,
+                                reorder_markers = targets,
+                                reorder_factors = c(6, 9, 15))</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5A-1.png" width="384" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## Similar visualization using GSFA built-in functions:
+GSFA::dotplot_beta_PIP(fit,
+                       target_names = KO_names,
+                       reorder_targets = targets, reorder_factors = c(6, 9, 15))</code></pre>
+</div>
+<div id="factor-perturbation-association-p-values"
+class="section level2">
+<h2>Factor-perturbation association p values</h2>
+<p>We can also assess the correlations between each pair of perturbation
+and inferred factor.<br />
+The distribution of correlation p values show significant signals.</p>
+<pre class="r"><code>gibbs_res_tb &lt;- make_gibbs_res_tb(gibbs_PM, G_mat, compute_pve = F)
+heatmap_matrix &lt;- gibbs_res_tb %&gt;% select(starts_with(&quot;pval&quot;))
+rownames(heatmap_matrix) &lt;- 1:nrow(heatmap_matrix)
+colnames(heatmap_matrix) &lt;- colnames(G_mat)
+
+summ_pvalues(unlist(heatmap_matrix),
+             title_text = &quot;GSFA\n(15 Targets x 20 Factors)&quot;)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="factor-interpretation" class="section level1">
+<h1>Factor Interpretation</h1>
+<div id="correlation-within-factors" class="section level2">
+<h2>Correlation within factors</h2>
+<p>Since the GSFA model does not enforce orthogonality among factors, we
+first inspect the pairwise correlation within them to see if there is
+any redundancy. As we can see below, the inferred factors are mostly
+independent of each other.</p>
+<pre class="r"><code>plot_pairwise.corr_heatmap(input_mat_1 = gibbs_PM$Z_pm,
+                           corr_type = &quot;pearson&quot;,
+                           name_1 = &quot;Pairwise correlation within factors (Z)&quot;,
+                           label_size = 10)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_pairwise.corr_heatmap(input_mat_1 = (gibbs_PM$F_pm &gt; 0.95) * 1,
+                           corr_type = &quot;jaccard&quot;,
+                           name_1 = &quot;Pairwise correlation within \nbinarized gene loadings (F_pm &gt; 0.95)&quot;,
+                           label_size = 10)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="gene-loading-in-factors" class="section level2">
+<h2>Gene loading in factors</h2>
+<p>To understand these latent factors, we inspect the loadings (weights)
+of several marker genes for neuron maturation and differentiation in
+them.</p>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+protein_name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+gene_name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+type
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+gene_ID
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+TP53
+</td>
+<td style="text-align:left;">
+TP53
+</td>
+<td style="text-align:left;">
+Cell proliferation
+</td>
+<td style="text-align:left;">
+ENSG00000141510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CDK4
+</td>
+<td style="text-align:left;">
+CDK4
+</td>
+<td style="text-align:left;">
+Cell proliferation
+</td>
+<td style="text-align:left;">
+ENSG00000135446
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nestin
+</td>
+<td style="text-align:left;">
+NES
+</td>
+<td style="text-align:left;">
+Neural progenitor cell
+</td>
+<td style="text-align:left;">
+ENSG00000132688
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STMN2
+</td>
+<td style="text-align:left;">
+STMN2
+</td>
+<td style="text-align:left;">
+Mature neuron
+</td>
+<td style="text-align:left;">
+ENSG00000104435
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MAP2
+</td>
+<td style="text-align:left;">
+MAP2
+</td>
+<td style="text-align:left;">
+Mature neuron
+</td>
+<td style="text-align:left;">
+ENSG00000078018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DPYSL3
+</td>
+<td style="text-align:left;">
+DPYSL3
+</td>
+<td style="text-align:left;">
+Mature neuron
+</td>
+<td style="text-align:left;">
+ENSG00000113657
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MAP1B
+</td>
+<td style="text-align:left;">
+MAP1B
+</td>
+<td style="text-align:left;">
+Mature neuron
+</td>
+<td style="text-align:left;">
+ENSG00000131711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CRABP2
+</td>
+<td style="text-align:left;">
+CRABP2
+</td>
+<td style="text-align:left;">
+Mature neuron
+</td>
+<td style="text-align:left;">
+ENSG00000143320
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NEFL
+</td>
+<td style="text-align:left;">
+NEFL
+</td>
+<td style="text-align:left;">
+Mature neuron
+</td>
+<td style="text-align:left;">
+ENSG00000277586
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ZEB2
+</td>
+<td style="text-align:left;">
+ZEB2
+</td>
+<td style="text-align:left;">
+Mature neuron
+</td>
+<td style="text-align:left;">
+ENSG00000169554
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ITM2C
+</td>
+<td style="text-align:left;">
+ITM2C
+</td>
+<td style="text-align:left;">
+Negative regulation of neuron projection
+</td>
+<td style="text-align:left;">
+ENSG00000135916
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CNTN2
+</td>
+<td style="text-align:left;">
+CNTN2
+</td>
+<td style="text-align:left;">
+Negative regulation of neuron projection
+</td>
+<td style="text-align:left;">
+ENSG00000184144
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DRAXIN
+</td>
+<td style="text-align:left;">
+DRAXIN
+</td>
+<td style="text-align:left;">
+Negative regulation of neuron projection
+</td>
+<td style="text-align:left;">
+ENSG00000162490
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HDAC2
+</td>
+<td style="text-align:left;">
+HDAC2
+</td>
+<td style="text-align:left;">
+Negative regulation of neuron projection
+</td>
+<td style="text-align:left;">
+ENSG00000196591
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We visualize both the gene PIPs (dot size) and gene weights (dot
+color) in all factors (Figure S6B):</p>
+<pre class="r"><code>complexplot_gene_factor(genes_df, interest_df, gibbs_PM$F_pm, gibbs_PM$W_pm)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_S6B-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>A closer look at some factors that are associated with perturbations
+(Figure 5C):</p>
+<pre class="r"><code>complexplot_gene_factor(genes_df, interest_df, gibbs_PM$F_pm, gibbs_PM$W_pm,
+                        reorder_factors = c(6, 9, 15))</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5C-1.png" width="624" style="display: block; margin: auto;" /></p>
+</div>
+<div id="go-enrichment-analysis-in-factors" class="section level2">
+<h2>GO enrichment analysis in factors</h2>
+<p>To further characterize these latent factors, we perform GO (gene
+ontology) enrichment analysis of genes loaded on the factors using
+<code>WebGestalt</code>.</p>
+<p>Foreground genes: genes w/ non-zero loadings in each factor (gene PIP
+&gt; 0.95);<br />
+Background genes: all 6000 genes used in GSFA;<br />
+Statistical test: hypergeometric test (over-representation test);<br />
+Gene sets: GO Slim “Biological Process” (non-redundant).</p>
+<pre class="r"><code>## The &quot;WebGestaltR&quot; tool needs Internet connection.
+enrich_db &lt;- &quot;geneontology_Biological_Process_noRedundant&quot;
+PIP_mat &lt;- gibbs_PM$F_pm
+enrich_res_by_factor &lt;- list()
+for (i in 1:ncol(PIP_mat)){
+  enrich_res_by_factor[[i]] &lt;- 
+    WebGestaltR::WebGestaltR(enrichMethod = &quot;ORA&quot;,
+                             organism = &quot;hsapiens&quot;,
+                             enrichDatabase = enrich_db,
+                             interestGene = genes_df[PIP_mat[, i] &gt; 0.95, ]$ID,
+                             interestGeneType = &quot;ensembl_gene_id&quot;,
+                             referenceGene = genes_df$ID,
+                             referenceGeneType = &quot;ensembl_gene_id&quot;,
+                             isOutput = F)
+}</code></pre>
+<p>Several GO “biological process” terms related to neuronal development
+are enriched in factors 4, 9, and 16 (Figure 5D):</p>
+<pre class="r"><code>factor_indx &lt;- 6
+terms_of_interest &lt;- c(&quot;regulation of ion transmembrane transport&quot;,
+                       &quot;regulation of trans-synaptic signaling&quot;,
+                       &quot;axon development&quot;,
+                       &quot;regulation of neuron projection development&quot;)
+barplot_top_enrich_terms(enrich_res_by_factor[[factor_indx]],
+                         terms_of_interest = terms_of_interest,
+                         str_wrap_length = 35, pval_max = 8, FC_max = 6) +
+  labs(title = paste0(&quot;Factor &quot;, factor_indx),
+       x = &quot;Fold of enrichment&quot;)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5D_1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>factor_indx &lt;- 9
+terms_of_interest &lt;- c(&quot;actin filament organization&quot;,
+                       &quot;cell fate commitment&quot;,
+                       &quot;axon development&quot;,
+                       &quot;regulation of cell morphogenesis&quot;)
+barplot_top_enrich_terms(enrich_res_by_factor[[factor_indx]],
+                         terms_of_interest = terms_of_interest,
+                         str_wrap_length = 35, pval_max = 8, FC_max = 6) +
+  labs(title = paste0(&quot;Factor &quot;, factor_indx),
+       x = &quot;Fold of enrichment&quot;)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5D_2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>factor_indx &lt;- 15
+terms_of_interest &lt;- c(&quot;developmental growth involved in morphogenesis&quot;,
+                       &quot;axon development&quot;)
+barplot_top_enrich_terms(enrich_res_by_factor[[factor_indx]],
+                         terms_of_interest = terms_of_interest, 
+                         str_wrap_length = 35, pval_max = 8, FC_max = 6) +
+  labs(title = paste0(&quot;Factor &quot;, factor_indx),
+       x = &quot;Fold of enrichment&quot;)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5D_3-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="deg-interpretation" class="section level1">
+<h1>DEG Interpretation</h1>
+<p>In GSFA, differential expression analysis can be performed based on
+the LFSR method. Here we evaluate the specific downstream genes affected
+by the perturbations detected by GSFA.</p>
+<p>We also performed several other differential expression methods for
+comparison, including scMAGeCK-LR, MAST, and DESeq.</p>
+<div id="number-of-degs-detected-by-different-methods"
+class="section level2">
+<h2>Number of DEGs detected by different methods</h2>
+<pre class="r"><code>fdr_cutoff &lt;- 0.05
+lfsr_cutoff &lt;- 0.05</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Number of DEGs detected by GSFA under each perturbation:
+</caption>
+<tbody>
+<tr>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+ADNP
+</td>
+<td style="text-align:left;">
+ARID1B
+</td>
+<td style="text-align:left;">
+ASH1L
+</td>
+<td style="text-align:left;">
+CHD2
+</td>
+<td style="text-align:left;">
+CHD8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num_genes
+</td>
+<td style="text-align:left;">
+795
+</td>
+<td style="text-align:left;">
+310
+</td>
+<td style="text-align:left;">
+322
+</td>
+<td style="text-align:left;">
+756
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+CTNND2
+</td>
+<td style="text-align:left;">
+DYRK1A
+</td>
+<td style="text-align:left;">
+HDAC5
+</td>
+<td style="text-align:left;">
+MECP2
+</td>
+<td style="text-align:left;">
+MYT1L
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num_genes
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:left;">
+Nontargeting
+</td>
+<td style="text-align:left;">
+POGZ
+</td>
+<td style="text-align:left;">
+PTEN
+</td>
+<td style="text-align:left;">
+RELN
+</td>
+<td style="text-align:left;">
+SETD5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num_genes
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+895
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+466
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>guides &lt;- KO_names[KO_names!=&quot;Nontargeting&quot;]</code></pre>
+<pre class="r"><code>deseq_list &lt;- list()
+for (m in guides){
+  fname &lt;- paste0(data_folder, &quot;processed_data/DESeq2/dev_top6k_negctrl/gRNA_&quot;, 
+                  m, &quot;.dev_res_top6k.vs_negctrl.rds&quot;)
+  res &lt;- readRDS(fname)
+  res &lt;- as.data.frame(res@listData, row.names = res@rownames)
+  res$geneID &lt;- rownames(res)
+  res &lt;- res %&gt;% dplyr::rename(FDR = padj, PValue = pvalue)
+  deseq_list[[m]] &lt;- res
+}
+deseq_signif_counts &lt;- sapply(deseq_list, function(x){filter(x, FDR &lt; fdr_cutoff) %&gt;% nrow()})</code></pre>
+<pre class="r"><code>mast_list &lt;- list()
+for (m in guides){
+  fname &lt;- paste0(data_folder, &quot;processed_data/MAST/dev_top6k_negctrl/gRNA_&quot;, 
+                  m, &quot;.dev_res_top6k.vs_negctrl.rds&quot;)
+  tmp_df &lt;- readRDS(fname)
+  tmp_df$geneID &lt;- rownames(tmp_df)
+  tmp_df &lt;- tmp_df %&gt;% dplyr::rename(FDR = fdr, PValue = pval)
+  mast_list[[m]] &lt;- tmp_df
+}
+mast_signif_counts &lt;- sapply(mast_list, function(x){filter(x, FDR &lt; fdr_cutoff) %&gt;% nrow()})</code></pre>
+<pre class="r"><code>scmageck_res &lt;- readRDS(paste0(data_folder, &quot;scmageck/scmageck_lr.LUHMES.dev_res_top_6k.rds&quot;))
+colnames(scmageck_res$fdr)[colnames(scmageck_res$fdr) == &quot;NegCtrl&quot;] &lt;- &quot;Nontargeting&quot;
+scmageck_signif_counts &lt;- colSums(scmageck_res$fdr[, KO_names] &lt; fdr_cutoff)
+scmageck_signif_counts &lt;- scmageck_signif_counts[names(scmageck_signif_counts) != &quot;Nontargeting&quot;]</code></pre>
+<pre class="r"><code>sceptre_res &lt;- readRDS(&quot;/project2/xinhe/kevinluo/GSFA/sceptre_analysis/LUHMES_data_updated/sceptre_output/sceptre.result.rds&quot;)
+sceptre_count_df &lt;- data.frame(matrix(nrow = length(guides), ncol = 2))
+colnames(sceptre_count_df) &lt;- c(&quot;target&quot;, &quot;num_DEG&quot;)
+for (i in 1:length(guides)){
+  sceptre_count_df$target[i] &lt;- guides[i]
+  tmp_pval &lt;- sceptre_res %&gt;% filter(gRNA_id == guides[i]) %&gt;% pull(p_value)
+  tmp_fdr &lt;- p.adjust(tmp_pval, method = &quot;fdr&quot;)
+  sceptre_count_df$num_DEG[i] &lt;- sum(tmp_fdr &lt; 0.05)
+}</code></pre>
+<pre class="r"><code>dge_comparison_df &lt;- data.frame(Perturbation = guides,
+                                GSFA = lfsr_signif_num[guides],
+                                scMAGeCK = scmageck_signif_counts,
+                                DESeq2 = deseq_signif_counts,
+                                MAST = mast_signif_counts,
+                                SCEPTRE = sceptre_count_df$num_DEG)
+# dge_comparison_df$Perturbation[dge_comparison_df$Perturbation == &quot;Nontargeting&quot;] &lt;- &quot;NegCtrl&quot;</code></pre>
+<p>Number of DEGs detected under each perturbation using 4 different
+methods (Figure 5E):</p>
+<p>Compared with other differential expression analysis methods, GSFA
+detected the most DEGs for all 7 gene targets that have significant
+effects.</p>
+<pre class="r"><code>dge_plot_df &lt;- reshape2::melt(dge_comparison_df, id.var = &quot;Perturbation&quot;,
+                              variable.name = &quot;Method&quot;, value.name = &quot;Num_DEGs&quot;)
+dge_plot_df$Perturbation &lt;- factor(dge_plot_df$Perturbation,
+                                   levels = guides)
+                                   # levels = c(&quot;NegCtrl&quot;, KO_names[KO_names!=&quot;Nontargeting&quot;]))
+ggplot(dge_plot_df, aes(x = Perturbation, y = Num_DEGs+1, fill = Method)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+  geom_text(aes(label = Num_DEGs), position=position_dodge(width=0.9), vjust=-0.25) +
+  scale_y_log10() +
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  labs(x = &quot;Target gene&quot;,
+       y = &quot;Number of DEGs&quot;,
+       title = &quot;Number of DEGs detected by different methods&quot;) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        legend.position = &quot;bottom&quot;,
+        legend.text = element_text(size = 13))</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5E-1.png" width="1248" style="display: block; margin: auto;" /></p>
+</div>
+<div id="perturbation-effects-on-marker-genes" class="section level2">
+<h2>Perturbation effects on marker genes</h2>
+<p>To better understand the functions of these 7 target genes, we
+examined their effects on marker genes for neuron maturation and
+differentiation.</p>
+<div id="gsfa" class="section level3">
+<h3>GSFA</h3>
+<p>Here are the summarized effects of perturbations on marker genes
+estimated by GSFA (Figure 5G).</p>
+<p>As we can see, knockdown of ADNP, ASH1L, CHD2, and DYRK1A has mostly
+negative effects on mature neuronal markers, and positive effects on
+negative regulators of neuron projection, indicating delayed neuron
+maturation.</p>
+<p>Knockdown of PTEN and SETD5 has the opposite pattern, which indicates
+accelerated neuron maturation.</p>
+<pre class="r"><code>targets &lt;- c(&quot;ADNP&quot;, &quot;ARID1B&quot;, &quot;ASH1L&quot;, &quot;CHD2&quot;, &quot;DYRK1A&quot;, &quot;PTEN&quot;, &quot;SETD5&quot;)
+complexplot_gene_perturbation(genes_df, interest_df,
+                              targets = targets,
+                              lfsr_mat = lfsr_mat,
+                              effect_mat = total_effect)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5G-1.png" width="624" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## Similar visualization using GSFA built-in functions:
+GSFA::dotplot_total_effect(fit,
+                           gene_indices = match(interest_df$gene_ID, rownames(lfsr_mat)),
+                           gene_names = interest_df$gene_name,
+                           reorder_targets = targets, 
+                           plot_max_score = 0.2)</code></pre>
+</div>
+<div id="scmageck" class="section level3">
+<h3>scMAGeCK</h3>
+<p>Here are scMAGeCK estimated effects of perturbations on marker genes
+(Figure 5H):</p>
+<pre class="r"><code>score_mat &lt;- scmageck_res$score
+fdr_mat &lt;- scmageck_res$fdr
+complexplot_gene_perturbation(genes_df, interest_df,
+                              targets = targets,
+                              lfsr_mat = fdr_mat, lfsr_name = &quot;FDR&quot;,
+                              effect_mat = score_mat, effect_name = &quot;scMAGeCK\nselection score&quot;, 
+                              score_break = c(-0.2, 0, 0.2),
+                              color_break = c(&quot;blue3&quot;, &quot;grey90&quot;, &quot;red3&quot;))</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_5H-1.png" width="624" style="display: block; margin: auto;" /></p>
+</div>
+<div id="deseq2" class="section level3">
+<h3>DESeq2</h3>
+<pre class="r"><code>FC_mat &lt;- matrix(nrow = nrow(interest_df), ncol = length(targets))
+rownames(FC_mat) &lt;- interest_df$gene_name
+colnames(FC_mat) &lt;- targets
+fdr_mat &lt;- FC_mat
+for (m in targets){
+  FC_mat[, m] &lt;- deseq_list[[m]]$log2FoldChange[match(interest_df$gene_ID,
+                                                      deseq_list[[m]]$geneID)]
+  fdr_mat[, m] &lt;- deseq_list[[m]]$FDR[match(interest_df$gene_ID, deseq_list[[m]]$geneID)]
+}</code></pre>
+<p>Here are DESeq2 estimated effects of perturbations on marker genes
+(Figure S5C):</p>
+<pre class="r"><code>complexplot_gene_perturbation(genes_df, interest_df,
+                              targets = targets,
+                              lfsr_mat = fdr_mat, lfsr_name = &quot;FDR&quot;,
+                              effect_mat = FC_mat, effect_name = &quot;DESeq2 log2FC&quot;,
+                              score_break = c(-0.4, 0, 0.4),
+                              color_break = c(&quot;blue3&quot;, &quot;grey90&quot;, &quot;red3&quot;))</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_S5C-1.png" width="624" style="display: block; margin: auto;" /></p>
+</div>
+<div id="mast" class="section level3">
+<h3>MAST</h3>
+<pre class="r"><code>FC_mat &lt;- matrix(nrow = nrow(interest_df), ncol = length(targets))
+rownames(FC_mat) &lt;- interest_df$gene_name
+colnames(FC_mat) &lt;- targets
+fdr_mat &lt;- FC_mat
+for (m in targets){
+  FC_mat[, m] &lt;- mast_list[[m]]$logFC[match(interest_df$gene_ID, mast_list[[m]]$geneID)]
+  fdr_mat[, m] &lt;- mast_list[[m]]$FDR[match(interest_df$gene_ID, mast_list[[m]]$geneID)]
+}</code></pre>
+<p>MAST estimated effects of perturbations on marker genes (Figure
+S5D):</p>
+<pre class="r"><code>complexplot_gene_perturbation(genes_df, interest_df,
+                              targets = targets,
+                              lfsr_mat = fdr_mat, lfsr_name = &quot;FDR&quot;,
+                              effect_mat = FC_mat, effect_name = &quot;MAST logFC&quot;,
+                              score_break = c(-0.4, 0, 0.4),
+                              color_break = c(&quot;blue3&quot;, &quot;grey90&quot;, &quot;red3&quot;))</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_S5D-1.png" width="624" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sceptre" class="section level3">
+<h3>SCEPTRE</h3>
+<pre class="r"><code>FC_mat &lt;- matrix(nrow = nrow(interest_df), ncol = length(targets))
+rownames(FC_mat) &lt;- interest_df$gene_name
+colnames(FC_mat) &lt;- targets
+fdr_mat &lt;- FC_mat
+for (m in targets){
+  sceptre_tmp_res &lt;- sceptre_res %&gt;% filter(gRNA_id == m)
+  tmp_pval &lt;- sceptre_tmp_res %&gt;% pull(p_value)
+  sceptre_tmp_res$FDR &lt;- p.adjust(tmp_pval, method = &quot;fdr&quot;)
+  FC_mat[, m] &lt;- sceptre_tmp_res$log_fold_change[match(interest_df$gene_ID, 
+                                                       sceptre_tmp_res$gene_id)]
+  fdr_mat[, m] &lt;- sceptre_tmp_res$FDR[match(interest_df$gene_ID, 
+                                            sceptre_tmp_res$gene_id)]
+}</code></pre>
+<p>SCEPTRE estimated effects of perturbations on marker genes (Figure
+S5):</p>
+<pre class="r"><code>complexplot_gene_perturbation(genes_df, interest_df,
+                              targets = targets,
+                              lfsr_mat = fdr_mat, lfsr_name = &quot;FDR&quot;,
+                              effect_mat = FC_mat, effect_name = &quot;SCEPTRE logFC&quot;,
+                              score_break = c(-0.4, 0, 0.4),
+                              color_break = c(&quot;blue3&quot;, &quot;grey90&quot;, &quot;red3&quot;))</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/unnamed-chunk-22-1.png" width="624" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="go-enrichment-in-degs" class="section level2">
+<h2>GO enrichment in DEGs</h2>
+<p>We further examine these DEGs for enrichment of relevant biological
+processes through GO enrichment analysis.</p>
+<p>Foreground genes: Genes w/ GSFA LFSR &lt; 0.05 under each
+perturbation;<br />
+Background genes: all 6000 genes used in GSFA;<br />
+Statistical test: hypergeometric test (over-representation test);<br />
+Gene sets: Gene ontology “Biological Process” (non-redundant).</p>
+<pre class="r"><code>## The &quot;WebGestaltR&quot; tool needs Internet connection.
+targets &lt;- names(lfsr_signif_num)[lfsr_signif_num &gt; 0]
+enrich_db &lt;- &quot;geneontology_Biological_Process_noRedundant&quot;
+enrich_res &lt;- list()
+for (i in targets){
+  print(i)
+  interest_genes &lt;- genes_df %&gt;% mutate(lfsr = lfsr_mat[, i]) %&gt;%
+    filter(lfsr &lt; lfsr_cutoff) %&gt;% pull(ID)
+  enrich_res[[i]] &lt;- 
+    WebGestaltR::WebGestaltR(enrichMethod = &quot;ORA&quot;,
+                             organism = &quot;hsapiens&quot;,
+                             enrichDatabase = enrich_db,
+                             interestGene = interest_genes,
+                             interestGeneType = &quot;ensembl_gene_id&quot;,
+                             referenceGene = genes_df$ID,
+                             referenceGeneType = &quot;ensembl_gene_id&quot;,
+                             isOutput = F)
+}</code></pre>
+<pre class="r"><code>signif_GO_list &lt;- list()
+for (i in names(enrich_res)) {
+  signif_GO_list[[i]] &lt;- enrich_res[[i]] %&gt;%
+    dplyr::filter(FDR &lt; 0.05) %&gt;%
+    dplyr::select(geneSet, description, size, enrichmentRatio, pValue) %&gt;%
+    mutate(target = i)
+}
+signif_term_df &lt;- do.call(rbind, signif_GO_list) %&gt;%
+  group_by(geneSet, description, size) %&gt;%
+  summarise(pValue = min(pValue)) %&gt;%
+  ungroup()
+
+abs_FC_colormap &lt;- circlize::colorRamp2(breaks = c(0, 3, 6),
+                                        colors = c(&quot;grey95&quot;, &quot;#77d183&quot;, &quot;#255566&quot;))</code></pre>
+<pre class="r"><code>targets &lt;- names(enrich_res)
+enrich_table &lt;- data.frame(matrix(nrow = nrow(signif_term_df),
+                                  ncol = length(targets)),
+                           row.names = signif_term_df$geneSet)
+colnames(enrich_table) &lt;- targets
+for (i in 1:ncol(enrich_table)){
+  m &lt;- colnames(enrich_table)[i]
+  enrich_df &lt;- enrich_res[[m]] %&gt;% dplyr::filter(FDR &lt; 0.05)
+  enrich_table[enrich_df$geneSet, i] &lt;- enrich_df$enrichmentRatio
+}
+rownames(enrich_table) &lt;- signif_term_df$description</code></pre>
+<p>Here are selected GO “biological process” terms and their folds of
+enrichment in DEGs detected by GSFA (Figure S5E):<br />
+(In the code below, we omitted the content in
+<code>terms_of_interest_df</code> as one can subset the
+<code>enrich_table</code> with any terms of their choice.)</p>
+<pre class="r"><code>interest_enrich_table &lt;- enrich_table[terms_of_interest_df$description,
+                                      colnames(enrich_table) != &quot;DYRK1A&quot;]
+interest_enrich_table[is.na(interest_enrich_table)] &lt;- 0
+
+map &lt;- Heatmap(abs(interest_enrich_table),
+               name = &quot;Fold of enrichment&quot;,
+               col = abs_FC_colormap,
+               na_col = &quot;grey90&quot;,
+               row_title = NULL, column_title = NULL,
+               cluster_rows = F, cluster_columns = F,
+               show_row_dend = F, show_column_dend = F,
+               show_heatmap_legend = T,
+               row_names_gp = gpar(fontsize = 10.5),
+               column_names_rot = 45,
+               column_names_side = &quot;top&quot;,
+               width = unit(6, &quot;cm&quot;))
+draw(map, heatmap_legend_side = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/interpret_gsfa_LUHMES.Rmd/Fig_S5E-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="session-information" class="section level1">
+<h1>Session Information</h1>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C         LC_TIME=C           
+ [4] LC_COLLATE=C         LC_MONETARY=C        LC_MESSAGES=C       
+ [7] LC_PAPER=C           LC_NAME=C            LC_ADDRESS=C        
+[10] LC_TELEPHONE=C       LC_MEASUREMENT=C     LC_IDENTIFICATION=C 
+
+attached base packages:
+[1] grid      stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] lattice_0.20-45       WebGestaltR_0.4.4     kableExtra_1.3.4     
+ [4] ComplexHeatmap_2.12.0 gridExtra_2.3         forcats_0.5.1        
+ [7] stringr_1.4.0         dplyr_1.0.9           purrr_0.3.4          
+[10] readr_2.1.2           tidyr_1.2.0           tibble_3.1.7         
+[13] ggplot2_3.3.6         tidyverse_1.3.1       Matrix_1.4-1         
+[16] data.table_1.14.2     workflowr_1.7.0      
+
+loaded via a namespace (and not attached):
+  [1] colorspace_2.0-3    rjson_0.2.21        ellipsis_0.3.2     
+  [4] rprojroot_2.0.3     circlize_0.4.15     GlobalOptions_0.1.2
+  [7] fs_1.5.2            clue_0.3-61         rstudioapi_0.13    
+ [10] farver_2.1.0        fansi_1.0.3         lubridate_1.8.0    
+ [13] xml2_1.3.3          codetools_0.2-18    R.methodsS3_1.8.1  
+ [16] doParallel_1.0.17   knitr_1.39          jsonlite_1.8.0     
+ [19] apcluster_1.4.10    Cairo_1.6-0         broom_0.8.0        
+ [22] cluster_2.1.3       dbplyr_2.1.1        png_0.1-7          
+ [25] R.oo_1.24.0         compiler_4.2.0      httr_1.4.3         
+ [28] backports_1.4.1     assertthat_0.2.1    fastmap_1.1.0      
+ [31] cli_3.3.0           later_1.3.0         htmltools_0.5.2    
+ [34] tools_4.2.0         igraph_1.3.4        gtable_0.3.0       
+ [37] glue_1.6.2          reshape2_1.4.4      doRNG_1.8.2        
+ [40] Rcpp_1.0.8.3        cellranger_1.1.0    jquerylib_0.1.4    
+ [43] vctrs_0.4.1         svglite_2.1.0       iterators_1.0.14   
+ [46] xfun_0.30           ps_1.7.0            rvest_1.0.2        
+ [49] lifecycle_1.0.1     rngtools_1.5.2      getPass_0.2-2      
+ [52] scales_1.2.0        hms_1.1.1           promises_1.2.0.1   
+ [55] parallel_4.2.0      RColorBrewer_1.1-3  yaml_2.3.5         
+ [58] pander_0.6.5        sass_0.4.1          stringi_1.7.6      
+ [61] highr_0.9           S4Vectors_0.34.0    foreach_1.5.2      
+ [64] BiocGenerics_0.42.0 shape_1.4.6         rlang_1.0.2        
+ [67] pkgconfig_2.0.3     systemfonts_1.0.4   matrixStats_0.62.0 
+ [70] evaluate_0.15       labeling_0.4.2      processx_3.5.3     
+ [73] tidyselect_1.1.2    plyr_1.8.7          magrittr_2.0.3     
+ [76] R6_2.5.1            IRanges_2.30.0      generics_0.1.2     
+ [79] DBI_1.1.3           pillar_1.7.0        haven_2.5.0        
+ [82] whisker_0.4         withr_2.5.0         modelr_0.1.8       
+ [85] crayon_1.5.1        utf8_1.2.2          tzdb_0.3.0         
+ [88] rmarkdown_2.14      GetoptLong_1.0.5    readxl_1.4.0       
+ [91] callr_3.7.0         git2r_0.30.1        reprex_2.0.1       
+ [94] digest_0.6.29       webshot_0.5.3       httpuv_1.6.5       
+ [97] R.utils_2.11.0      stats4_4.2.0        munsell_0.5.0      
+[100] viridisLite_0.4.0   bslib_0.3.1        </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<p>R version 4.2.0 (2022-04-22) Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)</p>
+<p>Matrix products: default BLAS/LAPACK:
+/software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so</p>
+<p>locale: [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C LC_TIME=C<br />
+[4] LC_COLLATE=C LC_MONETARY=C LC_MESSAGES=C<br />
+[7] LC_PAPER=C LC_NAME=C LC_ADDRESS=C<br />
+[10] LC_TELEPHONE=C LC_MEASUREMENT=C LC_IDENTIFICATION=C</p>
+<p>attached base packages: [1] grid stats graphics grDevices utils
+datasets methods<br />
+[8] base</p>
+<p>other attached packages: [1] lattice_0.20-45 WebGestaltR_0.4.4
+kableExtra_1.3.4<br />
+[4] ComplexHeatmap_2.12.0 gridExtra_2.3 forcats_0.5.1<br />
+[7] stringr_1.4.0 dplyr_1.0.9 purrr_0.3.4<br />
+[10] readr_2.1.2 tidyr_1.2.0 tibble_3.1.7<br />
+[13] ggplot2_3.3.6 tidyverse_1.3.1 Matrix_1.4-1<br />
+[16] data.table_1.14.2 workflowr_1.7.0</p>
+<p>loaded via a namespace (and not attached): [1] colorspace_2.0-3
+rjson_0.2.21 ellipsis_0.3.2<br />
+[4] rprojroot_2.0.3 circlize_0.4.15 GlobalOptions_0.1.2 [7] fs_1.5.2
+clue_0.3-61 rstudioapi_0.13<br />
+[10] farver_2.1.0 fansi_1.0.3 lubridate_1.8.0<br />
+[13] xml2_1.3.3 codetools_0.2-18 R.methodsS3_1.8.1<br />
+[16] doParallel_1.0.17 knitr_1.39 jsonlite_1.8.0<br />
+[19] apcluster_1.4.10 Cairo_1.6-0 broom_0.8.0<br />
+[22] cluster_2.1.3 dbplyr_2.1.1 png_0.1-7<br />
+[25] R.oo_1.24.0 compiler_4.2.0 httr_1.4.3<br />
+[28] backports_1.4.1 assertthat_0.2.1 fastmap_1.1.0<br />
+[31] cli_3.3.0 later_1.3.0 htmltools_0.5.2<br />
+[34] tools_4.2.0 igraph_1.3.4 gtable_0.3.0<br />
+[37] glue_1.6.2 reshape2_1.4.4 doRNG_1.8.2<br />
+[40] Rcpp_1.0.8.3 cellranger_1.1.0 jquerylib_0.1.4<br />
+[43] vctrs_0.4.1 svglite_2.1.0 iterators_1.0.14<br />
+[46] xfun_0.30 ps_1.7.0 rvest_1.0.2<br />
+[49] lifecycle_1.0.1 rngtools_1.5.2 getPass_0.2-2<br />
+[52] scales_1.2.0 hms_1.1.1 promises_1.2.0.1<br />
+[55] parallel_4.2.0 RColorBrewer_1.1-3 yaml_2.3.5<br />
+[58] pander_0.6.5 sass_0.4.1 stringi_1.7.6<br />
+[61] highr_0.9 S4Vectors_0.34.0 foreach_1.5.2<br />
+[64] BiocGenerics_0.42.0 shape_1.4.6 rlang_1.0.2<br />
+[67] pkgconfig_2.0.3 systemfonts_1.0.4 matrixStats_0.62.0 [70]
+evaluate_0.15 labeling_0.4.2 processx_3.5.3<br />
+[73] tidyselect_1.1.2 plyr_1.8.7 magrittr_2.0.3<br />
+[76] R6_2.5.1 IRanges_2.30.0 generics_0.1.2<br />
+[79] DBI_1.1.3 pillar_1.7.0 haven_2.5.0<br />
+[82] whisker_0.4 withr_2.5.0 modelr_0.1.8<br />
+[85] crayon_1.5.1 utf8_1.2.2 tzdb_0.3.0<br />
+[88] rmarkdown_2.14 GetoptLong_1.0.5 readxl_1.4.0<br />
+[91] callr_3.7.0 git2r_0.30.1 reprex_2.0.1<br />
+[94] digest_0.6.29 webshot_0.5.3 httpuv_1.6.5<br />
+[97] R.utils_2.11.0 stats4_4.2.0 munsell_0.5.0<br />
+[100] viridisLite_0.4.0 bslib_0.3.1</p>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
