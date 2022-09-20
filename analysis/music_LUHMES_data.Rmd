@@ -33,6 +33,12 @@ cd /project2/xinhe/kevinluo/GSFA/music_analysis/log
 sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_music_LUHMES_data.sbatch
 ```
 
+Running time check
+```{bash, eval=FALSE}
+cd /project2/xinhe/kevinluo/GSFA/music_analysis/log
+
+sbatch --mem=50G --cpus-per-task=10 ~/projects/GSFA_analysis/code/run_music_LUHMES_data_20topics.sbatch
+```
 
 ## About the data sets
 
@@ -42,6 +48,7 @@ Normalized and scaled data used for GSFA are stored in `obj@assays$RNA@scale.dat
 
 Load packages
 ```{r load-packages, message=FALSE, warning=FALSE}
+dyn.load('/software/geos-3.7.0-el7-x86_64/lib64/libgeos_c.so') # attach the geos lib for Seurat
 suppressPackageStartupMessages(library(data.table))
 suppressPackageStartupMessages(library(Seurat))
 suppressPackageStartupMessages(library(MUSIC))
@@ -371,7 +378,7 @@ head(rank_topic_specific_result, 10)
 # saveRDS(rank_topic_specific_result, "music_output/rank_topic_specific_result.rds")
 ```
 
-perturbation correlation.
+Perturbation correlation.
 ```{r Correlation_perturbation_20topics}
 perturb_cor <- Correlation_perturbation(distri_diff,
                                         cutoff = 0.5, gene = "all", plot = T,
@@ -391,10 +398,8 @@ saveRDS(summary_df, "music_output/music_merged_20_topics_ttest_summary.rds")
 
 ```{r load_summary_df_20topics, message = FALSE, warning=FALSE}
 summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_20_topics_ttest_summary.rds"))
-
-summary_df <- summary_df %>%
-  mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
-
+summary_df$topic <- gsub("_", " ", summary_df$topic)
+summary_df$topic <- factor(summary_df$topic, levels = paste("Topic", 1:length(unique(summary_df$topic))))
 
 summary_df$fdr <- p.adjust(summary_df$empirical_pval, method = "BH")
 summary_df$bonferroni_adj <- p.adjust(summary_df$empirical_pval, method = "bonferroni")
@@ -431,7 +436,7 @@ draw(ht)
 # dev.off()
 ```
 
-```{r effect_fdr_dotplot_20topics, eval=TRUE, fig.width=9, fig.height=5.5}
+```{r effect_fdr_dotplot_20topics, dev=c('png', 'pdf'), fig.width=9, fig.height=5.5}
 # pdf("music_output/music_merged_20_topics_empirical_tstats_fdr_dotplot.pdf",
 #     width = 12, height = 8)
 KO_names <- rownames(fdr_mat)
@@ -441,12 +446,14 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + 
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))
 # dev.off()
 ```
 
 
-```{r effect_bonferroni_dotplot_20topics, eval=TRUE, fig.width=9, fig.height=5.5}
+```{r effect_bonferroni_dotplot_20topics, dev=c('png', 'pdf'), fig.width=9, fig.height=5.5}
 KO_names <- rownames(bonferroni_mat)
 dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
@@ -454,7 +461,9 @@ dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    size_lgd_title = "Bonferroni\nadjusted p-value",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + 
+  coord_flip() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))
 ```
 
 ### Summarize the results using the optimal number of topics selected by the score
@@ -563,9 +572,8 @@ saveRDS(summary_df, "music_output/music_merged_4_topics_ttest_summary.rds")
 
 ```{r load_summary_df_4topics, warning=FALSE, message=FALSE}
 summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_4_topics_ttest_summary.rds"))
-
-summary_df <- summary_df %>%
-  mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
+summary_df$topic <- gsub("_", " ", summary_df$topic)
+summary_df$topic <- factor(summary_df$topic, levels = paste("Topic", 1:length(unique(summary_df$topic))))
 
 summary_df$fdr <- p.adjust(summary_df$empirical_pval, method = "BH")
 summary_df$bonferroni_adj <- p.adjust(summary_df$empirical_pval, method = "bonferroni")
@@ -588,7 +596,7 @@ rownames(bonferroni_mat) <- bonferroni_mat$knockout
 bonferroni_mat$knockout <- NULL
 ```
 
-```{r empirical_tstats_heatmap_4topics, eval=TRUE, fig.width=12, fig.height=8}
+```{r empirical_tstats_heatmap_4topics, fig.width=12, fig.height=8}
 # pdf("music_output/music_merged_4_topics_empirical_tstats_heatmap.pdf",
 #     width = 12, height = 8)
 ht <- Heatmap(log10_pval_mat,
@@ -602,7 +610,7 @@ draw(ht)
 # dev.off()
 ```
 
-```{r effect_fdr_dotplot_4topics, eval=TRUE, fig.width=4, fig.height=5.5}
+```{r effect_fdr_dotplot_4topics, dev=c('png', 'pdf'), fig.width=4, fig.height=5.5}
 # pdf("music_output/music_merged_4_topics_empirical_tstats_fdr_dotplot.pdf",
 #     width = 12, height = 8)
 KO_names <- rownames(fdr_mat)
@@ -612,12 +620,13 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + coord_flip() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1))
 # dev.off()
 ```
 
 
-```{r effect_bonferroni_dotplot_4topics, eval=TRUE, fig.width=4, fig.height=5.5}
+```{r effect_bonferroni_dotplot_4topics, dev=c('png', 'pdf'), fig.width=4, fig.height=5.5}
 KO_names <- rownames(bonferroni_mat)
 dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
@@ -625,37 +634,8 @@ dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    size_lgd_title = "Bonferroni\nadjusted p-value",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + 
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))
 ```
-
-<!-- ```{r test, eval=FALSE, include=FALSE} -->
-<!-- optimalModel <- readRDS("music_output/optimalModel_4_topics.rds") -->
-
-<!-- distri_diff <- readRDS(file.path(res_dir, "music_output/distri_diff_4_topics.rds")) -->
-
-<!-- topic_func <- readRDS("music_output/topic_func_4_topics.rds") -->
-
-<!-- model <- optimalModel -->
-<!-- my_beta <- exp(model@beta) -->
-<!-- topic_num <- nrow(my_beta) -->
-<!-- my_geneName <- model@terms -->
-<!-- colnames(my_beta) <- my_geneName -->
-<!-- rownames(my_beta) <- paste0('Topic_',1:nrow(my_beta)) -->
-
-<!-- my_beta[3, ] -->
-
-<!-- head(sort(my_beta[3, ], decreasing = T)) -->
-
-<!-- head(my_beta[3, ][order(my_beta[3, ], decreasing=T)]) -->
-
-<!-- length(perturb_information) -->
-<!-- table(perturb_information) -->
-
-<!-- target_cells_idx <- which(perturb_information == "ADNP") -->
-<!-- ctrl_cells_idx <- which(perturb_information == "CTRL") -->
-
-<!-- head(expression_profile[, target_cells_idx]) -->
-
-<!-- head(expression_profile[, ctrl_cells_idx]) -->
-<!-- ``` -->
 
