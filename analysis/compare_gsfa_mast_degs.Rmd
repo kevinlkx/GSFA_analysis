@@ -79,7 +79,7 @@ sapply(mast_degs, length)
 ```
 
 Compare DEGs from GSFA vs MAST
-```{r LUHMES_gsfa_mast_degs_venn_diagram}
+```{r LUHMES_gsfa_mast_degs_venn_diagram, dev=c('png', 'pdf'), fig.width=6, fig.height=6}
 num_deg_guides.df <- data.frame()
 for (m in guides){
   shared_degs <- intersect(mast_degs[[m]], gsfa_degs[[m]])
@@ -105,7 +105,7 @@ ggvenn(deg_list, fill_color = c("#00BA38","#619CFF"), show_percentage = FALSE, s
 ```
 
 QQ plots comparing GSFA with MAST
-```{r LUHMES-qqplots-gsfa-mast-all-combined}
+```{r LUHMES-qqplots-gsfa-mast-all-combined, fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(i in 1:length(guides)){
   guide <- guides[i]
@@ -128,7 +128,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
       scale_color_manual(values=c("#00BA38","#619CFF"))
 ```
 
-```{r LUHMES_gsfa_mast_degs_qqplot_v2}
+```{r LUHMES_gsfa_mast_degs_qqplot_v2, fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(m in guides){
   mast_res <- mast_list[[m]]
@@ -165,7 +165,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
 
 QQ plots for GSFA p-values
 
-```{r LUHMES_gsfa_degs_qqplot}
+```{r LUHMES_gsfa_degs_qqplot, dev=c('png', 'pdf'), fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(m in guides){
   mast_res <- mast_list[[m]]
@@ -189,7 +189,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
 
 QQ plots for GSFA only p-values
 
-```{r LUHMES_gsfa_only_degs_qqplot}
+```{r LUHMES_gsfa_only_degs_qqplot, fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(m in guides){
   mast_res <- mast_list[[m]]
@@ -257,7 +257,7 @@ sapply(mast_degs, length)
 ```
 
 Compare DEGs from GSFA vs MAST
-```{r Tcells_gsfa_mast_degs_venn_diagram}
+```{r Tcells_gsfa_mast_degs_venn_diagram, dev=c('png', 'pdf'), fig.width=6, fig.height=6}
 num_deg_guides.df <- data.frame()
 for (m in guides){
   shared_degs <- intersect(mast_degs[[m]], gsfa_degs[[m]])
@@ -284,7 +284,7 @@ ggvenn(deg_list, fill_color = c("#00BA38","#619CFF"), show_percentage = FALSE, s
 
 
 QQ plots comparing GSFA with MAST
-```{r Tcells-qqplots-gsfa-mast-all-combined}
+```{r Tcells-qqplots-gsfa-mast-all-combined, fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(i in 1:length(guides)){
   guide <- guides[i]
@@ -307,7 +307,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
       scale_color_manual(values=c("#00BA38","#619CFF"))
 ```
 
-```{r Tcells_gsfa_mast_degs_qqplot_v2}
+```{r Tcells_gsfa_mast_degs_qqplot_v2, fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(m in guides){
   mast_res <- mast_list[[m]]
@@ -343,7 +343,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
 ```
 
 QQ plots for GSFA p-values
-```{r Tcells_gsfa_degs_qqplot}
+```{r Tcells_gsfa_degs_qqplot, dev=c('png', 'pdf'), fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(m in guides){
   mast_res <- mast_list[[m]]
@@ -367,7 +367,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
 
 QQ plots for GSFA only p-values
 
-```{r Tcells_gsfa_only_degs_qqplot}
+```{r Tcells_gsfa_only_degs_qqplot, fig.width=6, fig.height=6}
 combined_mast_res <- data.frame()
 for(m in guides){
   mast_res <- mast_list[[m]]
