@@ -436,7 +436,7 @@ draw(ht)
 # dev.off()
 ```
 
-```{r effect_fdr_dotplot_20topics, dev=c('png', 'pdf'), fig.width=9, fig.height=5.5}
+```{r effect_fdr_dotplot_20topics, dev=c('png', 'pdf'), fig.width=10, fig.height=6}
 # pdf("music_output/music_merged_20_topics_empirical_tstats_fdr_dotplot.pdf",
 #     width = 12, height = 8)
 KO_names <- rownames(fdr_mat)
@@ -453,7 +453,7 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
 ```
 
 
-```{r effect_bonferroni_dotplot_20topics, dev=c('png', 'pdf'), fig.width=9, fig.height=5.5}
+```{r effect_bonferroni_dotplot_20topics, dev=c('png', 'pdf'), fig.width=10, fig.height=6}
 KO_names <- rownames(bonferroni_mat)
 dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
