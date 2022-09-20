@@ -321,7 +321,7 @@ grid.arrange(grobs = qqplots, nrow = 3, ncol = 2)
 
 
 Pooling p-values from all perturbations
-```{r qqplots-gsfa-tsc-all-combined}
+```{r qqplots-gsfa-tsc-all-combined, dev=c('png', 'pdf'), fig.width=8, fig.height=6}
 combined_mast_res <- data.frame()
 for(i in 1:length(guides)){
   guide <- guides[i]
@@ -381,7 +381,7 @@ grid.arrange(grobs = qqplots, nrow = 3, ncol = 2)
 
 
 Pooling p-values from all perturbations
-```{r qqplots-gsfa-tsc-only-combined}
+```{r qqplots-gsfa-tsc-only-combined, dev=c('png', 'pdf'), fig.width=8, fig.height=6}
 combined_mast_res <- data.frame()
 for(i in 1:length(guides)){
   guide <- guides[i]
