@@ -15,6 +15,7 @@
 
 <title>Unguided GSFA analysis on T cells CROP-seq data</title>
 
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -45,6 +46,8 @@ div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -154,15 +157,11 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -367,7 +366,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Unguided GSFA analysis on T cells CROP-seq data</h1>
+<h1 class="title toc-ignore">Unguided GSFA analysis on T cells CROP-seq
+data</h1>
 <h4 class="author">Kaixuan Luo</h4>
 <h4 class="date">2022-08-20</h4>
 
@@ -376,7 +376,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -385,7 +387,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -394,17 +398,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-03
+<strong>Last updated:</strong> 2022-09-20
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>GSFA_analysis/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -413,116 +427,170 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220524)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220524code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220524)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220524code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220524code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220524)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220524)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree3b187bb81999126f689215408b88721f9ad7193dtargetblank3b187bba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/kevinlkx/GSFA-analysis/tree/3b187bb81999126f689215408b88721f9ad7193d" target="_blank">3b187bb</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree06a9657dca714eb075ffa4a06cdd086f9e0325b2targetblank06a9657a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/06a9657dca714eb075ffa4a06cdd086f9e0325b2" target="_blank">06a9657</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree3b187bb81999126f689215408b88721f9ad7193dtargetblank3b187bba" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomkevinlkxGSFAanalysistree06a9657dca714eb075ffa4a06cdd086f9e0325b2targetblank06a9657a"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/kevinlkx/GSFA-analysis/tree/3b187bb81999126f689215408b88721f9ad7193d" target="_blank">3b187bb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/kevinlkx/GSFA-analysis/tree/06a9657dca714eb075ffa4a06cdd086f9e0325b2" target="_blank">06a9657</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
 Untracked files:
     Untracked:  Rplots.pdf
     Untracked:  analysis/check_Tcells_datasets.Rmd
-    Untracked:  analysis/interpret_gsfa_LUHMES.Rmd
-    Untracked:  analysis/interpret_gsfa_TCells.Rmd
+    Untracked:  analysis/fscLVM_analysis.Rmd
     Untracked:  analysis/spca_LUHMES_data.Rmd
     Untracked:  analysis/test_seurat.Rmd
     Untracked:  code/gsfa_negctrl_job.sbatch
     Untracked:  code/music_LUHMES_Yifan.R
     Untracked:  code/plotting_functions.R
+    Untracked:  code/run_fscLVM_LUHMES_data.R
     Untracked:  code/run_gsfa_2groups_negctrl.R
     Untracked:  code/run_gsfa_negctrl.R
     Untracked:  code/run_music_LUHMES.R
     Untracked:  code/run_music_LUHMES_data.sbatch
     Untracked:  code/run_music_LUHMES_data_20topics.R
+    Untracked:  code/run_music_LUHMES_data_20topics.sbatch
+    Untracked:  code/run_sceptre_Tcells_data.sbatch
     Untracked:  code/run_sceptre_Tcells_stimulated_data.sbatch
+    Untracked:  code/run_sceptre_Tcells_test_data.sbatch
     Untracked:  code/run_sceptre_Tcells_unstimulated_data.sbatch
+    Untracked:  code/run_sceptre_permuted_data.sbatch
     Untracked:  code/run_spca_LUHMES.R
     Untracked:  code/run_spca_TCells.R
+    Untracked:  code/run_twostep_clustering_LUHMES_data.sbatch
+    Untracked:  code/run_twostep_clustering_Tcells_data.sbatch
     Untracked:  code/run_unguided_gsfa_LUHMES.R
     Untracked:  code/run_unguided_gsfa_LUHMES.sbatch
     Untracked:  code/run_unguided_gsfa_Tcells.R
@@ -530,21 +598,27 @@ Untracked files:
     Untracked:  code/sceptre_LUHMES_data.R
     Untracked:  code/sceptre_Tcells_stimulated_data.R
     Untracked:  code/sceptre_Tcells_unstimulated_data.R
+    Untracked:  code/sceptre_permutation_analysis.R
+    Untracked:  code/sceptre_permute_analysis.R
     Untracked:  code/seurat_sim_fpr_tpr.R
     Untracked:  code/unguided_GFSA_mixture_normal_prior.cpp
 
 Unstaged changes:
-    Modified:   analysis/sceptre_LUHMES_data.Rmd
-    Modified:   analysis/twostep_clustering_LUHMES_data.Rmd
+    Modified:   analysis/sceptre_TCells_data.Rmd
     Modified:   analysis/unguided_gsfa_LUHMES_data.Rmd
     Modified:   code/run_sceptre_LUHMES_data.R
     Modified:   code/run_sceptre_LUHMES_data.sbatch
+    Modified:   code/run_sceptre_LUHMES_permuted_data.R
+    Modified:   code/run_sceptre_Tcells_permuted_data.R
     Modified:   code/run_sceptre_cropseq_data.sbatch
+    Modified:   code/run_twostep_clustering_LUHMES_data.R
     Modified:   code/sceptre_analysis.R
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -555,7 +629,13 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/unguided_gsfa_Tcells_data.Rmd</code>) and HTML (<code>docs/unguided_gsfa_Tcells_data.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/unguided_gsfa_Tcells_data.Rmd</code>) and HTML
+(<code>docs/unguided_gsfa_Tcells_data.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -579,6 +659,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/06a9657dca714eb075ffa4a06cdd086f9e0325b2/analysis/unguided_gsfa_Tcells_data.Rmd" target="_blank">06a9657</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-20
+</td>
+<td>
+updated the size of qq plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kevinlkx/GSFA-analysis/d712d7eff77be9634e772967954745bfdaded535/docs/unguided_gsfa_Tcells_data.html" target="_blank">d712d7e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -749,9 +863,11 @@ cp /project2/xinhe/yifan/Factor_analysis/Stimulated_T_Cells/processed_data/metad
 <div id="analysis-scripts" class="section level2">
 <h2>Analysis scripts</h2>
 <ul>
-<li>R script: <code>/home/kaixuan/projects/GSFA_analysis/code/run_unguided_gsfa_Tcells.R</code><br />
+<li>R script:
+<code>/home/kaixuan/projects/GSFA_analysis/code/run_unguided_gsfa_Tcells.R</code><br />
 </li>
-<li>sbatch script: <code>/home/kaixuan/projects/GSFA_analysis/code/run_unguided_gsfa_Tcells.sbatch</code></li>
+<li>sbatch script:
+<code>/home/kaixuan/projects/GSFA_analysis/code/run_unguided_gsfa_Tcells.sbatch</code></li>
 </ul>
 <pre class="bash"><code>mkdir -p /project2/xinhe/kevinluo/GSFA/unguided_GSFA/log
 cd /project2/xinhe/kevinluo/GSFA/unguided_GSFA/log
@@ -790,7 +906,8 @@ G_mat &lt;- metadata[, 4:24]
 G_mat &lt;- as.matrix(G_mat)
 KO_names &lt;- colnames(G_mat)
 negctrl_index &lt;- which(KO_names == &quot;NonTarget&quot;)</code></pre>
-<p>Use linear regression to test for the association between perturbations and factors</p>
+<p>Use linear regression to test for the association between
+perturbations and factors</p>
 <pre class="r"><code>Z_pm &lt;- fit$posterior_means$Z_pm
 if(!all.equal(rownames(G_mat), rownames(Z_pm))){
   stop(&quot;Rownames of G_mat do not match with Z_pm!&quot;)
@@ -886,7 +1003,8 @@ kevinlkx
 </div>
 </div>
 <pre class="r"><code># dev.off()</code></pre>
-<p>Plot perturbation ~ cluster associations (show Bonferroni adjusted p-values)</p>
+<p>Plot perturbation ~ cluster associations (show Bonferroni adjusted
+p-values)</p>
 <pre class="r"><code># pdf(file.path(res_dir, &quot;stat-bonferroni-dotplot.pdf&quot;), width = 9, height = 5.5)
 KO_names &lt;- rownames(bonferroni_mat)
 dotplot_effectsize(t(beta_mat), t(bonferroni_mat),
@@ -936,23 +1054,15 @@ kevinlkx
 </div>
 <pre class="r"><code># dev.off()</code></pre>
 </div>
-<div id="find-de-genes-for-each-factor-and-assign-de-genes-to-associated-perturbations" class="section level2">
-<h2>Find DE genes for each factor and assign DE genes to associated perturbations</h2>
-<p>First, find DE genes for each factor using F matrix (PIP&gt;0.95).</p>
-<p>Then, for each perturbation, find the associated factors, and pull the DE genes for those factors.</p>
-<!-- ```{r, include=FALSE, eval=FALSE} -->
-<!-- F_pm <- fit$posterior_means$F_pm -->
-<!-- dim(F_pm) -->
-<!-- DEGs.factors <- foreach(i=1:ncol(F_pm)) %do% { -->
-<!--   rownames(F_pm)[which(F_pm[,i]>0.95)] -->
-<!-- } -->
-<!-- names(DEGs.factors) <- colnames(F_pm) -->
-<!-- associated.factors <- foreach(i=1:nrow(fdr.mat)) %do% which(fdr.mat[i,]<0.05) -->
-<!-- guide.DEGs <- foreach(i=1:nrow(fdr.mat)) %do% unique(unlist(DEGs.factors[ associated.factors[[i]] ])) -->
-<!-- names(guide.DEGs) <- rownames(fdr.mat) -->
-<!-- num.guide.DEGs <- sapply(guide.DEGs, length) -->
-<!-- num.guide.DEGs -->
-<!-- ``` -->
+<div
+id="find-de-genes-for-each-factor-and-assign-de-genes-to-associated-perturbations"
+class="section level2">
+<h2>Find DE genes for each factor and assign DE genes to associated
+perturbations</h2>
+<p>First, find DE genes for each factor using F matrix
+(PIP&gt;0.95).</p>
+<p>Then, for each perturbation, find the associated factors, and pull
+the DE genes for those factors.</p>
 <pre class="r"><code>F_pm &lt;- fit$posterior_means$F_pm
 # dim(F_pm)
 # feature.names &lt;- data.frame(fread(file.path(data_dir, &quot;LUHMES_GSM4219575_Run1_genes.tsv.gz&quot;),
@@ -1038,7 +1148,8 @@ kevinlkx
 </div>
 </div>
 <pre class="r"><code># dev.off()</code></pre>
-<p>Number of DE genes for each perturbation (Bonferroni adjusted p-value &lt; 0.05)</p>
+<p>Number of DE genes for each perturbation (Bonferroni adjusted p-value
+&lt; 0.05)</p>
 <pre class="r"><code>perturb_names &lt;- colnames(perturb_matrix)
 perturb_names &lt;- c(&quot;NonTarget&quot;, perturb_names[perturb_names!=&quot;NonTarget&quot;])
 
@@ -1109,8 +1220,11 @@ kevinlkx
 </div>
 </div>
 </div>
-<div id="compare-single-gene-de-p-value-distributions-between-gsfa-and-unguided-gsfa" class="section level2">
-<h2>Compare single-gene DE p-value distributions between GSFA and unguided GSFA</h2>
+<div
+id="compare-single-gene-de-p-value-distributions-between-gsfa-and-unguided-gsfa"
+class="section level2">
+<h2>Compare single-gene DE p-value distributions between GSFA and
+unguided GSFA</h2>
 <pre class="r"><code>fdr_cutoff &lt;- 0.05
 lfsr_cutoff &lt;- 0.05</code></pre>
 <p>Load the output of GSFA <code>fit_gsfa_multivar()</code> run.</p>
@@ -1143,7 +1257,8 @@ for (m in guides){
   mast_list[[m]] &lt;- tmp_df
 }
 mast_signif_counts &lt;- sapply(mast_list, function(x){filter(x, FDR &lt; fdr_cutoff) %&gt;% nrow()})</code></pre>
-<p>QQ-plots of MAST DE p-values for the GSFA genes vs unguided GSFA genes.</p>
+<p>QQ-plots of MAST DE p-values for the GSFA genes vs unguided GSFA
+genes.</p>
 <pre class="r"><code>qqplots &lt;- list()
 for(i in 1:length(guides)){
   guide &lt;- guides[i]
@@ -1192,6 +1307,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/d712d7eff77be9634e772967954745bfdaded535/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-all-1.png" target="_blank">d712d7e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/7337ae00a93825b0e3a48e86ff88910da9a3e0d2/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-all-1.png" target="_blank">7337ae0</a>
@@ -1246,7 +1372,7 @@ pvalue_list &lt;- list(&#39;Unguided GSFA&#39;=dplyr::filter(combined_mast_res,u
 qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) + 
       ggtitle(&quot;&quot;) + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name=&quot;Method&quot;)</code></pre>
-<p><img src="figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-all-combined-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-all-combined-1.png" width="720" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qqplots-gsfa-unguided-all-combined-1">
 Past versions of qqplots-gsfa-unguided-all-combined-1.png
@@ -1271,6 +1397,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/d712d7eff77be9634e772967954745bfdaded535/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-all-combined-1.png" target="_blank">d712d7e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/7337ae00a93825b0e3a48e86ff88910da9a3e0d2/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-all-combined-1.png" target="_blank">7337ae0</a>
 </td>
 <td>
@@ -1285,7 +1422,8 @@ kevinlkx
 </div>
 </div>
 <pre class="r"><code># dev.off()</code></pre>
-<p>QQ-plots of MAST DE p-values for the GSFA only genes vs unguided GSFA only genes.</p>
+<p>QQ-plots of MAST DE p-values for the GSFA only genes vs unguided GSFA
+only genes.</p>
 <pre class="r"><code>qqplots &lt;- list()
 for(i in 1:length(guides)){
   guide &lt;- guides[i]
@@ -1338,6 +1476,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/d712d7eff77be9634e772967954745bfdaded535/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-only-1.png" target="_blank">d712d7e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/7337ae00a93825b0e3a48e86ff88910da9a3e0d2/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-only-1.png" target="_blank">7337ae0</a>
@@ -1393,7 +1542,7 @@ qqplot.pvalue(pvalue_list, pointSize = 1, legendSize = 4) +
       ggtitle(&quot;&quot;) + theme(plot.title = element_text(hjust = 0.5)) +
       scale_colour_discrete(name=&quot;Method&quot;) + 
       coord_cartesian(ylim = c(0, 30)) </code></pre>
-<p><img src="figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-only-combined-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-only-combined-1.png" width="720" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qqplots-gsfa-unguided-only-combined-1">
 Past versions of qqplots-gsfa-unguided-only-combined-1.png
@@ -1418,6 +1567,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kevinlkx/GSFA-analysis/blob/d712d7eff77be9634e772967954745bfdaded535/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-only-combined-1.png" target="_blank">d712d7e</a>
+</td>
+<td>
+kevinlkx
+</td>
+<td>
+2022-09-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kevinlkx/GSFA-analysis/blob/7337ae00a93825b0e3a48e86ff88910da9a3e0d2/docs/figure/unguided_gsfa_Tcells_data.Rmd/qqplots-gsfa-unguided-only-combined-1.png" target="_blank">7337ae0</a>
 </td>
 <td>
@@ -1435,12 +1595,13 @@ kevinlkx
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.4 (2021-02-15)
+<pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: CentOS Linux 7 (Core)
 
@@ -1448,48 +1609,47 @@ Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+ [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C         LC_TIME=C           
+ [4] LC_COLLATE=C         LC_MONETARY=C        LC_MESSAGES=C       
+ [7] LC_PAPER=C           LC_NAME=C            LC_ADDRESS=C        
+[10] LC_TELEPHONE=C       LC_MEASUREMENT=C     LC_IDENTIFICATION=C 
 
 attached base packages:
 [1] grid      stats     graphics  grDevices utils     datasets  methods  
 [8] base     
 
 other attached packages:
-[1] lattice_0.20-45      gridExtra_2.3        dplyr_1.0.10        
-[4] reshape2_1.4.4       ggplot2_3.3.6        ComplexHeatmap_2.6.2
-[7] data.table_1.14.2    workflowr_1.7.0     
+[1] lattice_0.20-45       gridExtra_2.3         dplyr_1.0.9          
+[4] reshape2_1.4.4        ggplot2_3.3.6         ComplexHeatmap_2.12.0
+[7] data.table_1.14.2     workflowr_1.7.0      
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.9          circlize_0.4.15     getPass_0.2-2      
- [4] png_0.1-7           ps_1.7.1            assertthat_0.2.1   
- [7] rprojroot_2.0.2     digest_0.6.29       utf8_1.2.2         
-[10] plyr_1.8.6          R6_2.5.1            stats4_4.0.4       
-[13] evaluate_0.16       highr_0.9           httr_1.4.2         
-[16] pillar_1.8.1        GlobalOptions_0.1.2 rlang_1.0.5        
-[19] rstudioapi_0.13     whisker_0.4         callr_3.7.2        
-[22] jquerylib_0.1.4     S4Vectors_0.28.1    GetoptLong_1.0.5   
-[25] rmarkdown_2.16      labeling_0.4.2      stringr_1.4.0      
-[28] munsell_0.5.0       compiler_4.0.4      httpuv_1.6.5       
-[31] xfun_0.32           pkgconfig_2.0.3     BiocGenerics_0.36.1
-[34] shape_1.4.6         htmltools_0.5.3     tidyselect_1.1.2   
-[37] tibble_3.1.8        IRanges_2.24.1      matrixStats_0.62.0 
-[40] fansi_1.0.3         withr_2.5.0         crayon_1.5.1       
-[43] later_1.3.0         DBI_1.1.3           jsonlite_1.8.0     
-[46] gtable_0.3.0        lifecycle_1.0.1     git2r_0.30.1       
-[49] magrittr_2.0.3      scales_1.2.1        cli_3.3.0          
-[52] stringi_1.7.8       cachem_1.0.6        farver_2.1.1       
-[55] fs_1.5.2            promises_1.2.0.1    bslib_0.4.0        
-[58] ellipsis_0.3.2      vctrs_0.4.1         generics_0.1.3     
-[61] rjson_0.2.21        RColorBrewer_1.1-3  tools_4.0.4        
-[64] Cairo_1.6-0         glue_1.6.2          purrr_0.3.4        
-[67] processx_3.7.0      parallel_4.0.4      fastmap_1.1.0      
-[70] yaml_2.3.5          clue_0.3-61         colorspace_2.0-3   
-[73] cluster_2.1.4       knitr_1.40          sass_0.4.2         </code></pre>
+ [1] Rcpp_1.0.8.3        circlize_0.4.15     getPass_0.2-2      
+ [4] png_0.1-7           ps_1.7.0            assertthat_0.2.1   
+ [7] rprojroot_2.0.3     digest_0.6.29       foreach_1.5.2      
+[10] utf8_1.2.2          plyr_1.8.7          R6_2.5.1           
+[13] stats4_4.2.0        evaluate_0.15       highr_0.9          
+[16] httr_1.4.3          pillar_1.7.0        GlobalOptions_0.1.2
+[19] rlang_1.0.2         rstudioapi_0.13     whisker_0.4        
+[22] callr_3.7.0         jquerylib_0.1.4     S4Vectors_0.34.0   
+[25] GetoptLong_1.0.5    rmarkdown_2.14      labeling_0.4.2     
+[28] stringr_1.4.0       munsell_0.5.0       compiler_4.2.0     
+[31] httpuv_1.6.5        xfun_0.30           pkgconfig_2.0.3    
+[34] BiocGenerics_0.42.0 shape_1.4.6         htmltools_0.5.2    
+[37] tidyselect_1.1.2    tibble_3.1.7        IRanges_2.30.0     
+[40] codetools_0.2-18    matrixStats_0.62.0  fansi_1.0.3        
+[43] withr_2.5.0         crayon_1.5.1        later_1.3.0        
+[46] DBI_1.1.3           jsonlite_1.8.0      gtable_0.3.0       
+[49] lifecycle_1.0.1     git2r_0.30.1        magrittr_2.0.3     
+[52] scales_1.2.0        cli_3.3.0           stringi_1.7.6      
+[55] farver_2.1.0        fs_1.5.2            promises_1.2.0.1   
+[58] doParallel_1.0.17   bslib_0.3.1         ellipsis_0.3.2     
+[61] vctrs_0.4.1         generics_0.1.2      rjson_0.2.21       
+[64] RColorBrewer_1.1-3  iterators_1.0.14    tools_4.2.0        
+[67] glue_1.6.2          purrr_0.3.4         processx_3.5.3     
+[70] parallel_4.2.0      fastmap_1.1.0       yaml_2.3.5         
+[73] clue_0.3-61         colorspace_2.0-3    cluster_2.1.3      
+[76] knitr_1.39          sass_0.4.1         </code></pre>
 </div>
 </div>
 
@@ -1505,6 +1665,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
