@@ -14,10 +14,7 @@ editor_options:
 knitr::opts_chunk$set(results = "hold", fig.align = "center", message=FALSE, warning=FALSE)
 ```
 
-slurm setting
-```{bash eval=FALSE}
-sinteractive --partition=broadwl --account=pi-xinhe --mem=50G --time=10:00:00 --cpus-per-task=5
-```
+MUSIC website: https://github.com/bm2-lab/MUSIC
 
 Scripts for running the analysis:
 
@@ -39,7 +36,24 @@ sbatch --mem=50G --cpus-per-task=5 ~/projects/GSFA_analysis/code/run_music_Tcell
 sbatch --mem=50G --cpus-per-task=5 ~/projects/GSFA_analysis/code/run_music_Tcells_unstimulated_data.sbatch
 ```
 
-MUSIC website: https://github.com/bm2-lab/MUSIC
+Load packages
+```{r load-packages, message=FALSE, warning=FALSE}
+dyn.load('/software/geos-3.7.0-el7-x86_64/lib64/libgeos_c.so') # attach the geos lib for Seurat
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(Seurat))
+suppressPackageStartupMessages(library(MUSIC))
+suppressPackageStartupMessages(library(ComplexHeatmap))
+suppressPackageStartupMessages(library(ggplot2))
+theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
+                             axis.title = element_text(size = 14),
+                             axis.text = element_text(size = 13),
+                             legend.title = element_text(size = 13),
+                             legend.text = element_text(size = 12),
+                             panel.grid.minor = element_blank())
+)
+
+source("code/plotting_functions.R")
+```
 
 Functions
 ```{r functions}
@@ -146,24 +160,6 @@ Empirical_topic_prob_diff <- function(model, perturb_information,
 CROP-seq datasets: `/project2/xinhe/yifan/Factor_analysis/shared_data/`.
 The data are Seurat objects, with raw gene counts stored in `obj@assays$RNA@counts`, and cell meta data stored in `obj@meta.data`.
 Normalized and scaled data used for GSFA are stored in `obj@assays$RNA@scale.data`, the rownames of which are the 6k genes used for GSFA.
-
-Load packages
-```{r load-packages, message=FALSE, warning=FALSE}
-suppressPackageStartupMessages(library(data.table))
-suppressPackageStartupMessages(library(Seurat))
-suppressPackageStartupMessages(library(MUSIC))
-suppressPackageStartupMessages(library(ComplexHeatmap))
-suppressPackageStartupMessages(library(ggplot2))
-theme_set(theme_bw() + theme(plot.title = element_text(size = 14, hjust = 0.5),
-                             axis.title = element_text(size = 14),
-                             axis.text = element_text(size = 13),
-                             legend.title = element_text(size = 13),
-                             legend.text = element_text(size = 12),
-                             panel.grid.minor = element_blank())
-)
-
-source("code/plotting_functions.R")
-```
 
 Set directories
 ```{r set-dir}
@@ -402,8 +398,8 @@ saveRDS(summary_df, "music_output/music_merged_20_topics_ttest_summary.rds")
 ```{r load_summary_df_20topics}
 summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_20_topics_ttest_summary.rds"))
 
-summary_df <- summary_df %>%
-  mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
+summary_df$topic <- gsub("_", " ", summary_df$topic)
+summary_df$topic <- factor(summary_df$topic, levels = paste("Topic", 1:length(unique(summary_df$topic))))
 
 summary_df$fdr <- p.adjust(summary_df$empirical_pval, method = "BH")
 summary_df$bonferroni_adj <- p.adjust(summary_df$empirical_pval, method = "bonferroni")
@@ -426,7 +422,7 @@ rownames(bonferroni_mat) <- bonferroni_mat$knockout
 bonferroni_mat$knockout <- NULL
 ```
 
-```{r empirical_tstats_heatmap_20topics, eval=TRUE, fig.width=12, fig.height=8}
+```{r empirical_tstats_heatmap_20topics, fig.width=12, fig.height=8}
 # pdf("music_output/music_merged_20_topics_empirical_tstats_heatmap.pdf",
 #     width = 12, height = 8)
 ht <- Heatmap(log10_pval_mat,
@@ -440,7 +436,7 @@ draw(ht)
 # dev.off()
 ```
 
-```{r effect_fdr_dotplot_20topics, eval=TRUE, fig.width=9, fig.height=5.5}
+```{r effect_fdr_dotplot_20topics, dev=c('png', 'pdf'), fig.width=9, fig.height=5.5}
 # pdf("music_output/music_merged_20_topics_empirical_tstats_fdr_dotplot.pdf",
 #     width = 12, height = 8)
 KO_names <- rownames(fdr_mat)
@@ -450,11 +446,13 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + 
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))
 # dev.off()
 ```
 
-```{r effect_bonferroni_dotplot_20topics, eval=TRUE, fig.width=9, fig.height=5.5}
+```{r effect_bonferroni_dotplot_20topics, dev=c('png', 'pdf'),  fig.width=9, fig.height=5.5}
 KO_names <- rownames(bonferroni_mat)
 dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
@@ -462,7 +460,9 @@ dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    size_lgd_title = "Bonferroni\nadjusted p-value",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + 
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
 ### Summarize the results using the optimal number of topics selected by the score
@@ -568,8 +568,8 @@ saveRDS(summary_df, "music_output/music_merged_4_topics_ttest_summary.rds")
 ```{r load_summary_df_4topics}
 summary_df <- readRDS(file.path(res_dir, "music_output/music_merged_4_topics_ttest_summary.rds"))
 
-summary_df <- summary_df %>%
-  mutate(topic = factor(topic, levels = paste0("Topic_", 1:length(unique(summary_df$topic)))))
+summary_df$topic <- gsub("_", " ", summary_df$topic)
+summary_df$topic <- factor(summary_df$topic, levels = paste("Topic", 1:length(unique(summary_df$topic))))
 
 summary_df$fdr <- p.adjust(summary_df$empirical_pval, method = "BH")
 summary_df$bonferroni_adj <- p.adjust(summary_df$empirical_pval, method = "bonferroni")
@@ -606,7 +606,7 @@ draw(ht)
 # dev.off()
 ```
 
-```{r effect_fdr_dotplot_4topics, eval=TRUE, fig.width=4, fig.height=5.5}
+```{r effect_fdr_dotplot_4topics, dev=c('png', 'pdf'),  fig.width=4, fig.height=5.5}
 # pdf("music_output/music_merged_4_topics_empirical_tstats_fdr_dotplot.pdf",
 #     width = 12, height = 8)
 KO_names <- rownames(fdr_mat)
@@ -616,12 +616,14 @@ dotplot_effectsize(t(effect_mat), t(fdr_mat),
                    size_lgd_title = "FDR",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + 
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))
 # dev.off()
 ```
 
 
-```{r effect_bonferroni_dotplot_4topics, eval=TRUE, fig.width=4, fig.height=5.5}
+```{r effect_bonferroni_dotplot_4topics, dev=c('png', 'pdf'),  fig.width=4, fig.height=5.5}
 KO_names <- rownames(bonferroni_mat)
 dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    reorder_markers = c(KO_names[KO_names!="CTRL"], "CTRL"),
@@ -629,5 +631,7 @@ dotplot_effectsize(t(effect_mat), t(bonferroni_mat),
                    size_lgd_title = "Bonferroni\nadjusted p-value",
                    max_score = 20,
                    min_score = -20,
-                   by_score = 10) + coord_flip()
+                   by_score = 10) + 
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))
 ```
