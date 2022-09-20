@@ -303,7 +303,6 @@ for(i in 1:length(guides)){
   gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
   
   if(length(tsc_de_genes)>0 && length(gsfa_de_genes) >0){
-    cat("plot", guide, "\n")
     mast_res$tsc_gene <- 0
     mast_res[tsc_de_genes, ]$tsc_gene <- 1
     mast_res$gsfa_gene <- 0
@@ -362,7 +361,6 @@ for(i in 1:length(guides)){
   gsfa_de_genes <- intersect(gsfa_de_genes, rownames(mast_res))
   
   if(length(tsc_de_genes)>0 && length(gsfa_de_genes) >0){
-    cat("plot", guide, "\n")
     mast_res$tsc_only_gene <- 0
     mast_res[setdiff(tsc_de_genes, gsfa_de_genes), ]$tsc_only_gene <- 1
     mast_res$gsfa_only_gene <- 0
