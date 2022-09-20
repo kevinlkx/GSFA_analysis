@@ -198,25 +198,6 @@ First, find DE genes for each factor using F matrix (PIP>0.95).
 
 Then, for each perturbation, find the associated factors, and pull the DE genes for those factors.
 
-<!-- ```{r, include=FALSE, eval=FALSE} -->
-<!-- F_pm <- fit$posterior_means$F_pm -->
-<!-- dim(F_pm) -->
-
-<!-- DEGs.factors <- foreach(i=1:ncol(F_pm)) %do% { -->
-<!--   rownames(F_pm)[which(F_pm[,i]>0.95)] -->
-<!-- } -->
-<!-- names(DEGs.factors) <- colnames(F_pm) -->
-
-<!-- associated.factors <- foreach(i=1:nrow(fdr.mat)) %do% which(fdr.mat[i,]<0.05) -->
-
-<!-- guide.DEGs <- foreach(i=1:nrow(fdr.mat)) %do% unique(unlist(DEGs.factors[ associated.factors[[i]] ])) -->
-<!-- names(guide.DEGs) <- rownames(fdr.mat) -->
-
-<!-- num.guide.DEGs <- sapply(guide.DEGs, length) -->
-<!-- num.guide.DEGs -->
-<!-- ``` -->
-
-
 ```{r get-de-genes}
 F_pm <- fit$posterior_means$F_pm
 # dim(F_pm)
@@ -380,7 +361,7 @@ grid.arrange(grobs = qqplots, nrow = 5, ncol = 3)
 ```
 
 Pooling p-values from all perturbations
-```{r qqplots-gsfa-unguided-all-combined}
+```{r qqplots-gsfa-unguided-all-combined, dev=c('png', 'pdf'), fig.width=7.5, fig.height=6}
 combined_mast_res <- data.frame()
 for(i in 1:length(guides)){
   guide <- guides[i]
@@ -447,7 +428,7 @@ grid.arrange(grobs = qqplots, nrow = 5, ncol = 3)
 
 
 Pooling p-values from all perturbations
-```{r qqplots-gsfa-unguided-only-combined}
+```{r qqplots-gsfa-unguided-only-combined, dev=c('png', 'pdf'), fig.width=7.5, fig.height=6}
 combined_mast_res <- data.frame()
 for(i in 1:length(guides)){
   guide <- guides[i]
